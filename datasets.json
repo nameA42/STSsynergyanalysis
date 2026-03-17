@@ -1,21 +1,35 @@
 {
   "ground_truth": {
-    "file": "StS Synergies 3 Class - All Cards (1).csv",
+    "file": "data/ground_truth/StS Synergies 3 Class - All Cards (1).csv",
     "type": "ground_truth",
     "description": "Human-annotated ground truth synergies (3-class: -1, 0, 1)"
   },
   "gpt4o": {
-    "file": "synergy_results_gpt-4o_1734083994 (1).csv",
+    "file": "data/gpt-4o/synergy_results_gpt-4o_1734083994 (1).csv",
     "type": "model",
     "description": "GPT-4o synergy predictions",
     "model": "gpt-4o",
     "date": "2024-12-13"
   },
   "gpt54": {
-    "file": "synergy_results_gpt-5.4-2026-03-05_1773693790.csv",
+    "file": "data/gpt-5.4/synergy_results_gpt-5.4-2026-03-05_1773693790.csv",
     "type": "model",
     "description": "GPT-5.4 synergy predictions",
     "model": "gpt-5.4",
     "date": "2026-03-05"
+  },
+  "gemini10pro": {
+    "file": "data/combo-pos-neg-single-revised-gemini-1-0-pro/synergy_results_googlegemini-1.0-pro_1734080546.csv",
+    "type": "model",
+    "description": "Gemini 1.0 Pro synergy predictions",
+    "model": "gemini-1.0-pro",
+    "date": "2024-12-13"
+  },
+  "gemini15flash": {
+    "file": "data/combo-pos-neg-single-revised-gemini-1-5-flash/synergy_results_googlegemini-1.5-flash-002_1734241757.csv",
+    "type": "model",
+    "description": "Gemini 1.5 Flash synergy predictions",
+    "model": "gemini-1.5-flash-002",
+    "date": "2024-12-15"
   }
 }

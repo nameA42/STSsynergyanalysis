@@ -1,6 +1,8 @@
+flask>=3.0
 pandas
 numpy
 matplotlib
 seaborn
 scikit-learn
+plotly>=5.0
 rich

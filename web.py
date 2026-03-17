@@ -387,7 +387,10 @@ if __name__ == "__main__":
             webbrowser.open("http://localhost:5000")
         threading.Thread(target=_open, daemon=True).start()
 
+    port = int(os.environ.get("PORT", 5000))
+    is_local = port == 5000
     print("\n  STS Synergy Web App")
-    print("  Running at http://localhost:5000")
-    print("  Press Ctrl+C to stop\n")
-    app.run(debug=True, port=5000, use_reloader=True)
+    print(f"  Running at http://localhost:{port}")
+    if is_local:
+        print("  Press Ctrl+C to stop\n")
+    app.run(debug=is_local, host="0.0.0.0", port=port, use_reloader=is_local)

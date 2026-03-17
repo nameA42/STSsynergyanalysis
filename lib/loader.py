@@ -60,6 +60,10 @@ def load_dataset(name: str) -> pd.DataFrame:
         df.index = cards
         df.columns = cards
 
+    n_missing = df.isna().sum().sum()
+    if n_missing:
+        print(f"  [loader] {name}: filling {n_missing} NaN cell(s) with 0")
+        df = df.fillna(0)
     return df.astype(int)
 
 
