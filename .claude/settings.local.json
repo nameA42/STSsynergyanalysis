@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(head -5 \"c:/Users/Ben-PC/Documents/STSsynergyanalysis/synergy_results_gpt-4o_1734083994 \\(1\\).csv\")",
+      "Bash(head -5 \"c:/Users/Ben-PC/Documents/STSsynergyanalysis/StS Synergies 3 Class - All Cards \\(1\\).csv\")",
+      "Bash(wc -l \"c:/Users/Ben-PC/Documents/STSsynergyanalysis/synergy_results_gpt-5.4-2026-03-05_1773693790.csv\" \"c:/Users/Ben-PC/Documents/STSsynergyanalysis/synergy_results_gpt-4o_1734083994 \\(1\\).csv\" \"c:/Users/Ben-PC/Documents/STSsynergyanalysis/StS Synergies 3 Class - All Cards \\(1\\).csv\")",
+      "Bash(python3 -c \":*)",
+      "Bash(python -c \":*)",
+      "Bash(py -c \":*)",
+      "Bash(py -c \"import sklearn; import seaborn; import matplotlib; import rich; print\\(''all good''\\)\")",
+      "Bash(py -c \"import seaborn; import matplotlib; import rich; print\\(''''seaborn, matplotlib, rich OK''''\\)\")",
+      "Bash(py -m pip install scikit-learn --quiet)",
+      "Bash(py -c \"import matplotlib; import rich; print\\(''OK''\\)\")",
+      "Bash(py -m pip install scikit-learn seaborn rich --quiet)",
+      "Bash(py -c \"import sklearn, seaborn, matplotlib, rich, pandas, numpy; print\\(''All packages OK''\\)\")",
+      "Bash(py browse.py --pair \"Bash\" \"Anger\")",
+      "Bash(py browse.py --card \"Whirlwind\")"
+    ]
+  }
+}

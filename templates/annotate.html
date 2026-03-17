@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-title-row">
+    <h1 class="page-title">Annotate</h1>
+    <span class="page-sub">{{ annotations|length }} saved annotation{{ 's' if annotations|length != 1 else '' }}</span>
+  </div>
+</div>
+
+<!-- Add annotation form -->
+<div class="card section-card">
+  <h2 class="section-title">Add / Update Annotation</h2>
+  <form id="ann-add-form" class="ann-add-form">
+    <div class="ann-add-row">
+      <div class="ann-add-field">
+        <label class="ann-label">Card A</label>
+        <input type="text" id="new-card-a" class="ann-input" placeholder="Bash" list="card-list" autocomplete="off">
+      </div>
+      <div class="ann-add-arrow">→</div>
+      <div class="ann-add-field">
+        <label class="ann-label">Card B</label>
+        <input type="text" id="new-card-b" class="ann-input" placeholder="Anger" list="card-list" autocomplete="off">
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm" id="lookup-btn">Look up</button>
+    </div>
+
+    <!-- Pair preview (shown after lookup) -->
+    <div id="pair-preview" class="pair-preview hidden">
+      <div class="detail-values">
+        <div class="detail-value-row detail-truth">
+          <span class="detail-ds-name">Ground Truth</span>
+          <span id="preview-gt" class="badge badge-neu badge-lg">?</span>
+        </div>
+        {% for name in models %}
+        <div class="detail-value-row" id="preview-row-{{ name }}">
+          <span class="detail-ds-name">{{ name }}</span>
+          <span id="preview-val-{{ name }}" class="badge badge-neu badge-lg">?</span>
+          <span id="preview-verdict-{{ name }}" class="detail-verdict"></span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="ann-field" style="margin-top:16px;">
+      <label class="ann-label">Note</label>
+      <textarea id="new-note" class="ann-textarea" rows="3"
+                placeholder="Research notes, observations, reasons for this synergy rating..."></textarea>
+    </div>
+    <div class="ann-field">
+      <label class="ann-label">Tags <small class="text-muted">(comma-separated)</small></label>
+      <input type="text" id="new-tags" class="ann-input"
+             placeholder="false_negative, interesting, check_later, paper_example">
+    </div>
+    <div class="ann-actions">
+      <button type="submit" class="btn btn-primary">Save Annotation</button>
+    </div>
+  </form>
+</div>
+
+<!-- Filter + annotations list -->
+<div class="card section-card">
+  <div class="ann-list-header">
+    <h2 class="section-title">Saved Annotations</h2>
+    <form method="GET" action="{{ url_for('annotate_page') }}" class="ann-filter-form">
+      <input type="text" name="card" class="filter-input filter-input-sm"
+             placeholder="Filter by card..." value="{{ card_filter }}" list="card-list">
+      <input type="text" name="tag" class="filter-input filter-input-sm"
+             placeholder="Filter by tag..." value="{{ tag_filter }}">
+      <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
+      <a href="{{ url_for('annotate_page') }}" class="btn btn-ghost btn-sm">Clear</a>
+      <a href="{{ url_for('annotate_page') }}" class="btn btn-ghost btn-sm" id="export-link"
+         onclick="window.open('/annotations/annotations.csv'); return false;">Open CSV</a>
+    </form>
+  </div>
+
+  {% if annotations %}
+  <div class="table-scroll">
+  <table class="data-table ann-table">
+    <thead>
+      <tr>
+        <th>Pair</th>
+        <th>GT</th>
+        {% for col in pred_cols %}<th>{{ col.replace('pred_','') }}</th>{% endfor %}
+        <th>Note</th>
+        <th>Tags</th>
+        <th>Added</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ann in annotations %}
+      <tr class="ann-row" data-pair="{{ ann.pair_id }}">
+        <td>
+          <a href="{{ url_for('browse', pair=ann.pair_id) }}" class="pair-link">
+            <strong>{{ ann.card_a }}</strong> → {{ ann.card_b }}
+          </a>
+        </td>
+        <td>
+          <span class="badge badge-{{ 'pos' if ann.ground_truth=='1' else ('neg' if ann.ground_truth=='-1' else 'neu') }}">
+            {{ '+1' if ann.ground_truth=='1' else ann.ground_truth }}
+          </span>
+        </td>
+        {% for col in pred_cols %}
+        {% set v = ann.get(col, '?') %}
+        <td>
+          <span class="badge badge-{{ 'pos' if v=='1' else ('neg' if v=='-1' else 'neu') }}">
+            {{ '+1' if v=='1' else v }}
+          </span>
+        </td>
+        {% endfor %}
+        <td class="note-cell">{{ ann.note or '' }}</td>
+        <td>
+          {% if ann.tags %}
+          {% for tag in ann.tags.split(',') %}
+          <span class="tag-chip">{{ tag.strip() }}</span>
+          {% endfor %}
+          {% endif %}
+        </td>
+        <td class="text-muted text-sm">{{ ann.timestamp or '' }}</td>
+        <td>
+          <button class="btn btn-ghost btn-xs ann-delete-btn"
+                  data-pair-id="{{ ann.pair_id }}" title="Delete">&#10007;</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    No annotations yet. Browse card pairs and add notes from the Browse tab.
+  </div>
+  {% endif %}
+</div>
+
+<datalist id="card-list">
+  {% for c in cards %}<option value="{{ c }}">{% endfor %}
+</datalist>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+const DS_NAMES = {{ models.keys() | list | tojson }};
+
+// Look up pair
+document.getElementById('lookup-btn').addEventListener('click', function() {
+  const ca = document.getElementById('new-card-a').value.trim();
+  const cb = document.getElementById('new-card-b').value.trim();
+  if (!ca || !cb) { showToast('Enter both card names', 'error'); return; }
+
+  fetch(`/api/pair/${encodeURIComponent(ca + '|' + cb)}`)
+    .then(r => r.json())
+    .then(d => {
+      if (d.error) { showToast(d.error, 'error'); return; }
+
+      const gt = d.ground_truth;
+      const gtEl = document.getElementById('preview-gt');
+      gtEl.textContent = gt === 1 ? '+1' : String(gt);
+      gtEl.className = `badge badge-lg badge-${gt===1?'pos':gt===-1?'neg':'neu'}`;
+
+      DS_NAMES.forEach(name => {
+        const val = d.predictions[name];
+        const valEl = document.getElementById(`preview-val-${name}`);
+        const verdEl = document.getElementById(`preview-verdict-${name}`);
+        if (valEl) {
+          valEl.textContent = val === 1 ? '+1' : String(val);
+          valEl.className = `badge badge-lg badge-${val===1?'pos':val===-1?'neg':'neu'}`;
+        }
+        if (verdEl) {
+          verdEl.textContent = val === gt ? 'correct' : 'wrong';
+          verdEl.className = `detail-verdict ${val===gt?'correct':'wrong'}`;
+        }
+      });
+
+      if (d.annotation) {
+        document.getElementById('new-note').value = d.annotation.note || '';
+        document.getElementById('new-tags').value = d.annotation.tags || '';
+      } else {
+        document.getElementById('new-note').value = '';
+        document.getElementById('new-tags').value = '';
+      }
+
+      document.getElementById('pair-preview').classList.remove('hidden');
+    })
+    .catch(() => showToast('Pair not found', 'error'));
+});
+
+// Submit annotation
+document.getElementById('ann-add-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const body = {
+    card_a: document.getElementById('new-card-a').value.trim(),
+    card_b: document.getElementById('new-card-b').value.trim(),
+    note:   document.getElementById('new-note').value.trim(),
+    tags:   document.getElementById('new-tags').value.trim(),
+  };
+  if (!body.card_a || !body.card_b) { showToast('Enter both card names', 'error'); return; }
+
+  fetch('/api/annotate/add', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(body),
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (d.success) {
+      showToast('Saved!', 'success');
+      setTimeout(() => location.reload(), 800);
+    } else {
+      showToast('Error: ' + d.error, 'error');
+    }
+  });
+});
+
+// Delete buttons
+document.querySelectorAll('.ann-delete-btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (!confirm('Delete annotation for ' + this.dataset.pairId + '?')) return;
+    fetch('/api/annotate/delete', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({pair_id: this.dataset.pairId}),
+    })
+    .then(r => r.json())
+    .then(d => {
+      if (d.success) {
+        showToast('Deleted', 'success');
+        this.closest('tr').remove();
+      }
+    });
+  });
+});
+</script>
+{% endblock %}

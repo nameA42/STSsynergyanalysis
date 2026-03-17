@@ -1,0 +1,319 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-title-row">
+    <h1 class="page-title">Browse</h1>
+    <span class="page-sub">{{ total | default(0) | int | string }} pairs{% if filters.errors_only %} · errors only{% endif %}{% if filters.disagree_only %} · disagreements only{% endif %}</span>
+  </div>
+</div>
+
+<!-- Filter bar -->
+<div class="card filter-card">
+  <form method="GET" action="{{ url_for('browse') }}" class="filter-form" id="filter-form">
+    <input type="hidden" name="page" value="1">
+
+    <div class="filter-row">
+      <!-- Dataset -->
+      <div class="filter-group">
+        <label class="filter-label">Dataset</label>
+        <select name="dataset" class="filter-select" onchange="this.form.submit()">
+          {% for name in models %}
+          <option value="{{ name }}" {% if name == ds_name %}selected{% endif %}>{{ name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Card A -->
+      <div class="filter-group">
+        <label class="filter-label">Card A (contains)</label>
+        <input type="text" name="card_a" class="filter-input" placeholder="e.g. Bash"
+               value="{{ filters.card_a }}" list="card-list">
+      </div>
+
+      <!-- Card B -->
+      <div class="filter-group">
+        <label class="filter-label">Card B (contains)</label>
+        <input type="text" name="card_b" class="filter-input" placeholder="e.g. Anger"
+               value="{{ filters.card_b }}" list="card-list">
+      </div>
+
+      <!-- Ground truth -->
+      <div class="filter-group">
+        <label class="filter-label">Ground Truth</label>
+        <select name="gt" class="filter-select">
+          <option value="" {% if not filters.gt %}selected{% endif %}>All</option>
+          <option value="-1" {% if filters.gt=='-1' %}selected{% endif %}>-1 (anti)</option>
+          <option value="0"  {% if filters.gt=='0'  %}selected{% endif %}>0  (neutral)</option>
+          <option value="1"  {% if filters.gt=='1'  %}selected{% endif %}>+1 (synergy)</option>
+        </select>
+      </div>
+
+      <!-- Predicted -->
+      <div class="filter-group">
+        <label class="filter-label">Predicted</label>
+        <select name="pred" class="filter-select">
+          <option value="" {% if not filters.pred %}selected{% endif %}>All</option>
+          <option value="-1" {% if filters.pred=='-1' %}selected{% endif %}>-1 (anti)</option>
+          <option value="0"  {% if filters.pred=='0'  %}selected{% endif %}>0  (neutral)</option>
+          <option value="1"  {% if filters.pred=='1'  %}selected{% endif %}>+1 (synergy)</option>
+        </select>
+      </div>
+
+      <!-- Toggles -->
+      <div class="filter-group filter-toggles">
+        <label class="toggle-label">
+          <input type="checkbox" name="errors_only" value="1" {% if filters.errors_only %}checked{% endif %} onchange="this.form.submit()">
+          Errors only
+        </label>
+        {% if other_ds %}
+        <label class="toggle-label">
+          <input type="checkbox" name="disagree_only" value="1" {% if filters.disagree_only %}checked{% endif %} onchange="this.form.submit()">
+          Disagreements only
+        </label>
+        {% endif %}
+      </div>
+
+      <div class="filter-group filter-actions">
+        <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+        <a href="{{ url_for('browse', dataset=ds_name) }}" class="btn btn-ghost btn-sm">Clear</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<datalist id="card-list">
+  {% for name in models.values() | list | first %}{% endfor %}
+</datalist>
+
+<!-- Selected pair detail panel -->
+{% if selected %}
+<div class="card detail-panel" id="detail-panel">
+  <div class="detail-header">
+    <div class="detail-pair-name">
+      <span class="detail-card">{{ selected.card_a }}</span>
+      <span class="detail-arrow">→</span>
+      <span class="detail-card">{{ selected.card_b }}</span>
+    </div>
+    <a href="{{ url_for('browse', **args_drop('pair')) }}"
+       class="detail-close" title="Close">&times;</a>
+  </div>
+
+  <div class="detail-body">
+    <div class="detail-values">
+      <!-- Ground truth -->
+      <div class="detail-value-row detail-truth">
+        <span class="detail-ds-name">Ground Truth</span>
+        <span class="badge badge-{{ 'pos' if selected.ground_truth==1 else ('neg' if selected.ground_truth==-1 else 'neu') }} badge-lg">
+          {{ '+1' if selected.ground_truth==1 else selected.ground_truth }}
+        </span>
+      </div>
+      <!-- Per-dataset predictions -->
+      {% for ds, val in selected.predictions.items() %}
+      <div class="detail-value-row {% if val == selected.ground_truth %}detail-correct{% else %}detail-wrong{% endif %}">
+        <span class="detail-ds-name">{{ ds }}</span>
+        <span class="badge badge-{{ 'pos' if val==1 else ('neg' if val==-1 else 'neu') }} badge-lg">
+          {{ '+1' if val==1 else val }}
+        </span>
+        {% if val == selected.ground_truth %}
+          <span class="detail-verdict correct">correct</span>
+        {% else %}
+          <span class="detail-verdict wrong">wrong</span>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Annotation form -->
+    <div class="annotation-form-wrap">
+      <h3 class="ann-form-title">
+        {% if selected.annotation %}Edit Annotation{% else %}Add Annotation{% endif %}
+      </h3>
+      <form id="ann-form" class="ann-form">
+        <input type="hidden" id="ann-card-a" value="{{ selected.card_a }}">
+        <input type="hidden" id="ann-card-b" value="{{ selected.card_b }}">
+        <div class="ann-field">
+          <label class="ann-label">Note</label>
+          <textarea id="ann-note" class="ann-textarea" placeholder="Research notes, observations...">{{ selected.annotation.note if selected.annotation else '' }}</textarea>
+        </div>
+        <div class="ann-field">
+          <label class="ann-label">Tags <small class="text-muted">(comma-separated)</small></label>
+          <input type="text" id="ann-tags" class="ann-input"
+                 placeholder="e.g. false_negative, interesting, check_later"
+                 value="{{ selected.annotation.tags if selected.annotation else '' }}">
+        </div>
+        <div class="ann-actions">
+          <button type="submit" class="btn btn-primary btn-sm">Save</button>
+          {% if selected.annotation %}
+          <button type="button" class="btn btn-danger btn-sm" id="ann-delete-btn"
+                  data-pair-id="{{ selected.pair_id }}">Delete</button>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- Results table -->
+<div class="card section-card">
+  <div class="table-toolbar">
+    <span class="table-count">
+      {{ total }} results
+      {% if total > per_page %}
+        &mdash; page {{ page }} of {{ total_pages }}
+      {% endif %}
+    </span>
+    <div class="per-page-select">
+      Show
+      {% for n in [25, 50, 100, 200] %}
+      <a href="{{ url_for('browse', **args_with(per_page=n, page=1)) }}"
+         class="per-page-opt {% if per_page == n %}active{% endif %}">{{ n }}</a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="table-scroll">
+  <table class="data-table browse-table">
+    <thead>
+      <tr>
+        {% macro sort_header(col, label) %}
+          {% set new_order = 'desc' if (sort.col == col and sort.order == 'asc') else 'asc' %}
+          <th class="sortable {% if sort.col == col %}sorted-{{ sort.order }}{% endif %}">
+            <a href="{{ url_for('browse', **args_with(sort=col, order=new_order, page=1)) }}">
+              {{ label }}
+            </a>
+          </th>
+        {% endmacro %}
+        {{ sort_header('card_a', 'Card A') }}
+        {{ sort_header('card_b', 'Card B') }}
+        {{ sort_header('ground_truth', 'GT') }}
+        {{ sort_header('predicted', ds_name) }}
+        {% for n in other_ds %}
+        <th>{{ n }}</th>
+        {% endfor %}
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in pairs %}
+      {% set pid = row.card_a + '|' + row.card_b %}
+      <tr class="pair-row {% if pair_sel == pid %}selected-row{% endif %}"
+          data-pair="{{ pid }}"
+          data-href="{{ url_for('browse', **dict(request.args, pair=pid)) }}">
+        <td><strong>{{ row.card_a }}</strong></td>
+        <td>{{ row.card_b }}</td>
+        <td>
+          <span class="badge badge-{{ 'pos' if row.ground_truth==1 else ('neg' if row.ground_truth==-1 else 'neu') }}">
+            {{ '+1' if row.ground_truth==1 else row.ground_truth }}
+          </span>
+        </td>
+        <td>
+          <span class="badge badge-{{ 'pos' if row.predicted==1 else ('neg' if row.predicted==-1 else 'neu') }}">
+            {{ '+1' if row.predicted==1 else row.predicted }}
+          </span>
+        </td>
+        {% for n in other_ds %}
+        {% set ov = row['pred_' + n] %}
+        <td>
+          <span class="badge badge-{{ 'pos' if ov==1 else ('neg' if ov==-1 else 'neu') }}">
+            {{ '+1' if ov==1 else ov }}
+          </span>
+        </td>
+        {% endfor %}
+        <td>
+          {% if row.correct %}
+            <span class="status-dot correct" title="Correct">&#10003;</span>
+          {% else %}
+            <span class="status-dot wrong" title="Wrong ({{ '%+d' % row.error|int if row.error else '' }})">&#10007;</span>
+          {% endif %}
+        </td>
+        <td class="action-col">
+          {% if pid in ann_ids %}
+          <span class="ann-indicator" title="Has annotation">&#9632;</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="99" class="empty-state">No pairs match the current filters.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+
+  <!-- Pagination -->
+  {% if total_pages > 1 %}
+  <div class="pagination">
+    {% if page > 1 %}
+    <a href="{{ url_for('browse', **args_with(page=page-1)) }}" class="page-btn">&laquo; Prev</a>
+    {% endif %}
+
+    {% for p in range([1, page-3]|max, [total_pages+1, page+4]|min) %}
+    <a href="{{ url_for('browse', **args_with(page=p)) }}"
+       class="page-btn {% if p == page %}active{% endif %}">{{ p }}</a>
+    {% endfor %}
+
+    {% if page < total_pages %}
+    <a href="{{ url_for('browse', **args_with(page=page+1)) }}" class="page-btn">Next &raquo;</a>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Pair row click → show detail panel
+document.querySelectorAll('.pair-row').forEach(row => {
+  row.addEventListener('click', () => {
+    window.location.href = row.dataset.href;
+  });
+});
+
+// Annotation form submit
+const annForm = document.getElementById('ann-form');
+if (annForm) {
+  annForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const body = {
+      card_a: document.getElementById('ann-card-a').value,
+      card_b: document.getElementById('ann-card-b').value,
+      note:   document.getElementById('ann-note').value,
+      tags:   document.getElementById('ann-tags').value,
+    };
+    fetch('/api/annotate/add', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body),
+    })
+    .then(r => r.json())
+    .then(d => {
+      if (d.success) showToast('Annotation saved', 'success');
+      else showToast('Error: ' + d.error, 'error');
+    });
+  });
+
+  const delBtn = document.getElementById('ann-delete-btn');
+  if (delBtn) {
+    delBtn.addEventListener('click', function() {
+      if (!confirm('Delete this annotation?')) return;
+      fetch('/api/annotate/delete', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({pair_id: this.dataset.pairId}),
+      })
+      .then(r => r.json())
+      .then(d => {
+        if (d.success) { showToast('Deleted', 'success'); location.reload(); }
+      });
+    });
+  }
+}
+
+// Scroll detail panel into view if present
+const panel = document.getElementById('detail-panel');
+if (panel) panel.scrollIntoView({behavior: 'smooth', block: 'start'});
+</script>
+{% endblock %}

@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Dataset selector tabs -->
+<div class="page-header">
+  <div class="page-title-row">
+    <h1 class="page-title">Analyze</h1>
+    <span class="page-sub">{{ ds_info.get('description','') }}{% if ds_info.get('date') %} &mdash; {{ ds_info.date }}{% endif %}</span>
+  </div>
+  <div class="dataset-tabs">
+    {% for name, info in models.items() %}
+    <a href="{{ url_for('analyze', ds_name=name) }}"
+       class="ds-tab {% if name == ds_name %}active{% endif %}">
+      {{ name }}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Metric cards -->
+<div class="metric-row">
+  <div class="metric-card">
+    <div class="metric-value">{{ "%.2f"|format(metrics.accuracy*100) }}%</div>
+    <div class="metric-label">Accuracy</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-value">{{ "%.4f"|format(metrics.macro_f1) }}</div>
+    <div class="metric-label">Macro F1</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-value">{{ "%.4f"|format(metrics.weighted_f1) }}</div>
+    <div class="metric-label">Weighted F1</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-value">{{ "%.4f"|format(metrics.macro_precision) }}</div>
+    <div class="metric-label">Macro Precision</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-value">{{ "%.4f"|format(metrics.macro_recall) }}</div>
+    <div class="metric-label">Macro Recall</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-value accent-red">{{ "{:,}".format(metrics.n_errors) }}</div>
+    <div class="metric-label">Errors / {{ "{:,}".format(metrics.n_total) }} pairs</div>
+  </div>
+</div>
+
+<!-- Confusion matrix + class distribution -->
+<div class="chart-grid-2">
+  <div class="card chart-card">
+    <p class="chart-hint">Click a cell to browse those pairs in the Browse tab</p>
+    <div id="chart-confusion"></div>
+    <script type="application/json" id="chart-confusion-data">{{ charts.confusion|safe }}</script>
+  </div>
+  <div class="card chart-card">
+    <div id="chart-class-dist"></div>
+    <script type="application/json" id="chart-class-dist-data">{{ charts.class_dist|safe }}</script>
+  </div>
+</div>
+
+<!-- Per-class metrics table -->
+<div class="card section-card">
+  <h2 class="section-title">Per-Class Metrics</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Class</th><th>Precision</th><th>Recall</th><th>F1</th><th>Support</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for lbl, lname in [(-1,'Negative (-1)'), (0,'Neutral (0)'), (1,'Positive (+1)')] %}
+      <tr>
+        <td><span class="badge badge-{{ 'neg' if lbl==-1 else ('pos' if lbl==1 else 'neu') }}">{{ lname }}</span></td>
+        <td>{{ "%.4f"|format(metrics.per_class[lbl].precision) }}</td>
+        <td>{{ "%.4f"|format(metrics.per_class[lbl].recall) }}</td>
+        <td><strong>{{ "%.4f"|format(metrics.per_class[lbl].f1) }}</strong></td>
+        <td>{{ "{:,}".format(metrics.per_class[lbl].support) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Error breakdown -->
+<div class="card chart-card">
+  <div id="chart-error-breakdown"></div>
+  <script type="application/json" id="chart-error-breakdown-data">{{ charts.error_breakdown|safe }}</script>
+</div>
+
+<!-- Per-card accuracy chart -->
+<div class="card chart-card">
+  <p class="chart-hint">Click a card bar to browse all its synergy pairs</p>
+  <div id="chart-per-card"></div>
+  <script type="application/json" id="chart-per-card-data">{{ charts.per_card|safe }}</script>
+</div>
+
+<!-- Problem/top cards summary -->
+<div class="chart-grid-2">
+  <div class="card section-card">
+    <h2 class="section-title">Problem Cards <span class="badge-count">worst 15</span></h2>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>Card</th><th>Accuracy</th><th>Errors</th><th>FP syn</th><th>FN syn</th></tr></thead>
+      <tbody>
+        {% for row in worst_cards %}
+        <tr class="clickable-row" data-href="{{ url_for('browse', card_a=row.card, dataset=ds_name) }}">
+          <td class="text-muted">{{ loop.index }}</td>
+          <td><strong>{{ row.card }}</strong></td>
+          <td>
+            <div class="acc-bar-wrap">
+              <div class="acc-bar" style="width:{{ (row.accuracy*100)|round(1) }}%;background:{{ '#dc2626' if row.accuracy < 0.6 else ('#f97316' if row.accuracy < 0.75 else ('#84cc16' if row.accuracy < 0.9 else '#16a34a')) }}"></div>
+              <span>{{ "%.1f"|format(row.accuracy*100) }}%</span>
+            </div>
+          </td>
+          <td>{{ row.n_errors }}</td>
+          <td>{{ row.false_pos_synergy }}</td>
+          <td>{{ row.false_neg_synergy }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="card section-card">
+    <h2 class="section-title">Top Cards <span class="badge-count">best 10</span></h2>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>Card</th><th>Accuracy</th><th>Errors</th></tr></thead>
+      <tbody>
+        {% for row in best_cards %}
+        <tr class="clickable-row" data-href="{{ url_for('browse', card_a=row.card, dataset=ds_name) }}">
+          <td class="text-muted">{{ loop.index }}</td>
+          <td><strong>{{ row.card }}</strong></td>
+          <td>
+            <div class="acc-bar-wrap">
+              <div class="acc-bar" style="width:{{ (row.accuracy*100)|round(1) }}%;background:#16a34a"></div>
+              <span>{{ "%.1f"|format(row.accuracy*100) }}%</span>
+            </div>
+          </td>
+          <td>{{ row.n_errors }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Prediction heatmap -->
+<div class="card chart-card">
+  <p class="chart-hint">Click any cell to jump to that pair in Browse</p>
+  <div id="chart-pred-heatmap"></div>
+  <script type="application/json" id="chart-pred-heatmap-data">{{ charts.pred_heatmap|safe }}</script>
+</div>
+
+<!-- Error heatmap -->
+<div class="card chart-card">
+  <p class="chart-hint">Click any cell to jump to that pair in Browse</p>
+  <div id="chart-error-heatmap"></div>
+  <script type="application/json" id="chart-error-heatmap-data">{{ charts.error_heatmap|safe }}</script>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+const DS_NAME = {{ ds_name | tojson }};
+
+// Confusion matrix click → filtered browse
+document.getElementById('chart-confusion').addEventListener('sts:plotly_click', function(e) {
+  const pt = e.detail;
+  const parseClass = s => s.includes('-1') ? '-1' : (s.includes('+1') || s.endsWith('1)')) ? '1' : '0';
+  const gt   = parseClass(pt.y);
+  const pred = parseClass(pt.x);
+  window.location.href = `/browse?gt=${gt}&pred=${pred}&dataset=${DS_NAME}`;
+});
+
+// Prediction heatmap click → browse pair
+document.getElementById('chart-pred-heatmap').addEventListener('sts:plotly_click', function(e) {
+  const pt = e.detail;
+  window.location.href = `/browse?pair=${encodeURIComponent(pt.y+'|'+pt.x)}&dataset=${DS_NAME}`;
+});
+
+// Error heatmap click → browse pair
+document.getElementById('chart-error-heatmap').addEventListener('sts:plotly_click', function(e) {
+  const pt = e.detail;
+  window.location.href = `/browse?pair=${encodeURIComponent(pt.y+'|'+pt.x)}&dataset=${DS_NAME}`;
+});
+
+// Per-card accuracy click → browse that card
+document.getElementById('chart-per-card').addEventListener('sts:plotly_click', function(e) {
+  const pt = e.detail;
+  window.location.href = `/browse?card_a=${encodeURIComponent(pt.y)}&dataset=${DS_NAME}`;
+});
+
+// Clickable table rows
+document.querySelectorAll('.clickable-row').forEach(row => {
+  row.addEventListener('click', () => window.location.href = row.dataset.href);
+});
+</script>
+{% endblock %}

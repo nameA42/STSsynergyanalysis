@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-title-row">
+    <h1 class="page-title">Compare</h1>
+    {% if names %}<span class="page-sub">{{ names | join(' vs ') }}</span>{% endif %}
+  </div>
+</div>
+
+<!-- Dataset selection form -->
+<div class="card section-card">
+  <h2 class="section-title">Select Datasets to Compare</h2>
+  <form method="POST" action="{{ url_for('compare') }}" class="compare-form">
+    <div class="checkbox-group">
+      {% for name, info in models.items() %}
+      <label class="checkbox-label">
+        <input type="checkbox" name="datasets" value="{{ name }}"
+               {% if names and name in names %}checked{% endif %}>
+        <span class="checkbox-text">
+          <strong>{{ name }}</strong>
+          <small class="text-muted">{{ info.get('description','') }}</small>
+        </span>
+      </label>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Compare Selected</button>
+  </form>
+</div>
+
+{% if names %}
+
+<!-- Summary metrics table -->
+<div class="card section-card">
+  <h2 class="section-title">Metrics Summary</h2>
+  <div class="table-scroll">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        {% for n in names %}<th>{{ n }}</th>{% endfor %}
+        {% if names|length == 2 %}<th>Delta ({{ names[1] }} &minus; {{ names[0] }})</th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% set mkeys = [('accuracy','Accuracy','pct'),('macro_f1','Macro F1','f4'),
+                      ('weighted_f1','Weighted F1','f4'),('macro_precision','Macro Prec.','f4'),
+                      ('macro_recall','Macro Rec.','f4')] %}
+      {% for key, label, fmt in mkeys %}
+      <tr>
+        <td><strong>{{ label }}</strong></td>
+        {% for n in names %}
+          <td>
+            {% if fmt == 'pct' %}{{ "%.2f"|format(metrics[n][key]*100) }}%
+            {% else %}{{ "%.4f"|format(metrics[n][key]) }}{% endif %}
+          </td>
+        {% endfor %}
+        {% if names|length == 2 %}
+          {% set delta = metrics[names[1]][key] - metrics[names[0]][key] %}
+          <td class="{{ 'text-green' if delta > 0 else ('text-red' if delta < 0 else '') }}">
+            {% if fmt == 'pct' %}{{ "%+.2f"|format(delta*100) }}%
+            {% else %}{{ "%+.4f"|format(delta) }}{% endif %}
+          </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- Per-class F1 -->
+<div class="card section-card">
+  <h2 class="section-title">Per-Class F1</h2>
+  <div class="table-scroll">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Class</th>
+        {% for n in names %}<th>{{ n }}</th>{% endfor %}
+        {% if names|length == 2 %}<th>Delta</th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for lbl, lname in [(-1,'Negative (-1)'), (0,'Neutral (0)'), (1,'Positive (+1)')] %}
+      <tr>
+        <td><span class="badge badge-{{ 'neg' if lbl==-1 else ('pos' if lbl==1 else 'neu') }}">{{ lname }}</span></td>
+        {% for n in names %}<td>{{ "%.4f"|format(per_class[lbl][n].f1) }}</td>{% endfor %}
+        {% if names|length == 2 %}
+          {% set d = per_class[lbl][names[1]].f1 - per_class[lbl][names[0]].f1 %}
+          <td class="{{ 'text-green' if d > 0 else ('text-red' if d < 0 else '') }}">{{ "%+.4f"|format(d) }}</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- Agreement stats (2 datasets only) -->
+{% if names|length == 2 and agreement %}
+<div class="card section-card">
+  <h2 class="section-title">Agreement Statistics</h2>
+  <div class="metric-row">
+    <div class="metric-card">
+      <div class="metric-value">{{ "%.2f"|format(agreement.agreement_rate*100) }}%</div>
+      <div class="metric-label">Agreement Rate</div>
+    </div>
+    {% if agreement.both_correct is defined %}
+    <div class="metric-card">
+      <div class="metric-value accent-green">{{ "%.2f"|format(agreement.both_correct*100) }}%</div>
+      <div class="metric-label">Both Correct</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value accent-red">{{ "%.2f"|format(agreement.both_wrong*100) }}%</div>
+      <div class="metric-label">Both Wrong</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">{{ "%.2f"|format(agreement.only_first_correct*100) }}%</div>
+      <div class="metric-label">Only {{ names[0] }} correct</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">{{ "%.2f"|format(agreement.only_second_correct*100) }}%</div>
+      <div class="metric-label">Only {{ names[1] }} correct</div>
+    </div>
+    {% endif %}
+  </div>
+  <div class="browse-links" style="margin-top:12px;">
+    <a href="{{ url_for('browse', disagree_only=1, dataset=names[0]) }}" class="btn btn-secondary btn-sm">
+      Browse disagreements
+    </a>
+  </div>
+</div>
+{% endif %}
+
+<!-- Charts -->
+<div class="card chart-card">
+  <div id="chart-metrics"></div>
+  <script type="application/json" id="chart-metrics-data">{{ charts.metrics|safe }}</script>
+</div>
+
+<div class="card chart-card">
+  <div id="chart-per-card-cmp"></div>
+  <script type="application/json" id="chart-per-card-cmp-data">{{ charts.per_card|safe }}</script>
+</div>
+
+{% if 'delta' in charts %}
+<div class="card chart-card">
+  <div id="chart-delta"></div>
+  <script type="application/json" id="chart-delta-data">{{ charts.delta|safe }}</script>
+</div>
+{% endif %}
+
+<div class="card chart-card">
+  <div id="chart-agreement"></div>
+  <script type="application/json" id="chart-agreement-data">{{ charts.agreement|safe }}</script>
+</div>
+
+<!-- Delta table -->
+{% if delta_table and names|length == 2 %}
+<div class="chart-grid-2">
+  <div class="card section-card">
+    <h2 class="section-title">Most Improved <span class="text-green">({{ names[0] }} → {{ names[1] }})</span></h2>
+    <table class="data-table">
+      <thead><tr><th>Card</th><th>{{ names[0] }}</th><th>{{ names[1] }}</th><th>Delta</th></tr></thead>
+      <tbody>
+        {% for row in delta_table | sort(attribute='delta', reverse=True) | list %}
+        {% if loop.index <= 10 %}
+        <tr class="clickable-row" data-href="{{ url_for('browse', card_a=row.card) }}">
+          <td>{{ row.card }}</td>
+          <td>{{ "%.1f"|format(row.acc1) }}%</td>
+          <td>{{ "%.1f"|format(row.acc2) }}%</td>
+          <td class="text-green"><strong>{{ "%+.1f"|format(row.delta) }}%</strong></td>
+        </tr>
+        {% endif %}{% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="card section-card">
+    <h2 class="section-title">Most Degraded <span class="text-red">({{ names[0] }} → {{ names[1] }})</span></h2>
+    <table class="data-table">
+      <thead><tr><th>Card</th><th>{{ names[0] }}</th><th>{{ names[1] }}</th><th>Delta</th></tr></thead>
+      <tbody>
+        {% for row in delta_table | sort(attribute='delta') | list %}
+        {% if loop.index <= 10 %}
+        <tr class="clickable-row" data-href="{{ url_for('browse', card_a=row.card) }}">
+          <td>{{ row.card }}</td>
+          <td>{{ "%.1f"|format(row.acc1) }}%</td>
+          <td>{{ "%.1f"|format(row.acc2) }}%</td>
+          <td class="text-red"><strong>{{ "%+.1f"|format(row.delta) }}%</strong></td>
+        </tr>
+        {% endif %}{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+{% endif %}{# end if names #}
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('.clickable-row').forEach(r =>
+  r.addEventListener('click', () => window.location.href = r.dataset.href)
+);
+</script>
+{% endblock %}
