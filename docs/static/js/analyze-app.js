@@ -110,10 +110,11 @@
   // ── Charts ─────────────────────────────────────────────────────────────────
 
   function renderCharts(ds) {
-    const m      = METRICS[ds];
-    const pcData = PER_CARD;
-    const pc_a   = (pcData.as_a && pcData.as_a[ds]) ? pcData.as_a[ds] : (pcData[ds] || null);
-    const pc_b   = (pcData.as_b && pcData.as_b[ds]) ? pcData.as_b[ds] : null;
+    const m         = METRICS[ds];
+    const pcData    = PER_CARD;
+    const pc_a      = (pcData.as_a && pcData.as_a[ds]) ? pcData.as_a[ds] : (pcData[ds] || null);
+    const pc_b      = (pcData.as_b && pcData.as_b[ds]) ? pcData.as_b[ds] : null;
+    const pc_combined = (pcData.combined && pcData.combined[ds]) ? pcData.combined[ds] : null;
     const cards  = CONFIG.cards;
     const pairs  = PAIRS;
 
@@ -182,6 +183,25 @@
           const card = data.points[0].y;
           window.location.href = `browse.html?card_b=${encodeURIComponent(card)}&ds=${encodeURIComponent(pcBEl._dsName)}`;
         });
+      }
+    }
+
+    // Per-card accuracy — combined
+    if (pc_combined) {
+      const fig = perCardAccuracy(pc_combined, `Per-Card Accuracy — Combined — ${ds}`);
+      Plotly.react('chart-per-card-combined', fig.data, fig.layout, CHART_CONFIG);
+
+      const pcCEl = document.getElementById('chart-per-card-combined');
+      if (pcCEl) {
+        pcCEl._dsName = ds;
+        if (!pcCEl._clickBound) {
+          pcCEl._clickBound = true;
+          pcCEl.on('plotly_click', function (data) {
+            if (!data.points || !data.points.length) return;
+            const card = data.points[0].y;
+            window.location.href = `browse.html?card_a=${encodeURIComponent(card)}&ds=${encodeURIComponent(pcCEl._dsName)}`;
+          });
+        }
       }
     }
 

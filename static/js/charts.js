@@ -448,6 +448,83 @@ function agreementHeatmap(names, pairsData, title) {
   };
 }
 
+// ── Card profile charts ───────────────────────────────────────────────────────
+
+/**
+ * Fused view: all models + GT as grouped bars, one group per other card.
+ * @param {Array}    profileData  - list of {other_card, gt, model1, model2, ...}
+ * @param {string[]} modelNames   - enabled model names
+ * @param {string}   card
+ * @param {string}   role         - 'a' or 'b'
+ * @param {string}   title
+ */
+function cardProfileFused(profileData, modelNames, card, role, title) {
+    const otherCards = profileData.map(r => r.other_card);
+    const gtVals = profileData.map(r => r.gt);
+    const COLORS = {
+        GT: '#1e293b', gpt4o: '#2563eb', gpt54: '#7c3aed',
+        gemini10pro: '#16a34a', gemini15flash: '#059669',
+        gpt4omini: '#ea580c', gpt4ominift: '#dc2626',
+    };
+    const DEF_COLORS = ['#2563eb','#7c3aed','#16a34a','#ea580c','#dc2626','#0891b2','#ca8a04'];
+
+    const traces = [{
+        type: 'bar', name: 'GT', x: otherCards, y: gtVals,
+        marker: {color: COLORS.GT || '#1e293b'}, opacity: 0.9,
+        hovertemplate: '<b>%{x}</b><br>GT: %{y}<extra></extra>',
+    }];
+    modelNames.forEach((n, i) => {
+        traces.push({
+            type: 'bar', name: n,
+            x: otherCards, y: profileData.map(r => r[n] !== undefined ? r[n] : 0),
+            marker: {color: COLORS[n] || DEF_COLORS[i % DEF_COLORS.length]},
+            opacity: 0.82,
+            hovertemplate: `<b>%{x}</b><br>${n}: %{y}<extra></extra>`,
+        });
+    });
+    return {
+        data: traces,
+        layout: baseLayout({
+            title: {text: title, font: {size: 15}},
+            barmode: 'group', height: 500,
+            yaxis: {title: 'Synergy Value', tickvals: [-1,0,1], ticktext: ['-1','0','+1'], range: [-1.5,1.5]},
+            xaxis: {tickangle: 90, tickfont: {size: 7}},
+            legend: {orientation: 'h', yanchor: 'bottom', y: 1.02, x: 0},
+            margin: {l: 80, r: 20, t: 70, b: 160},
+        }),
+    };
+}
+
+/**
+ * Separate view for one model: GT vs model predictions as grouped bars.
+ * @param {Array}  profileData - list of {other_card, gt, <modelName>}
+ * @param {string} modelName
+ * @param {string} card
+ * @param {string} role        - 'a' or 'b'
+ * @param {string} title
+ */
+function cardProfileSeparate(profileData, modelName, card, role, title) {
+    const otherCards = profileData.map(r => r.other_card);
+    return {
+        data: [
+            {type:'bar', name:'GT', x: otherCards, y: profileData.map(r=>r.gt),
+             marker:{color:'#1e293b'}, opacity:0.85,
+             hovertemplate:'<b>%{x}</b><br>GT: %{y}<extra></extra>'},
+            {type:'bar', name: modelName, x: otherCards, y: profileData.map(r=>r[modelName]||0),
+             marker:{color:'#2563eb'}, opacity:0.82,
+             hovertemplate:`<b>%{x}</b><br>${modelName}: %{y}<extra></extra>`},
+        ],
+        layout: baseLayout({
+            title: {text: title, font: {size: 15}},
+            barmode: 'group', height: 460,
+            yaxis: {title:'Synergy Value', tickvals:[-1,0,1], ticktext:['-1','0','+1'], range:[-1.5,1.5]},
+            xaxis: {tickangle:90, tickfont:{size:7}},
+            legend: {orientation:'h', yanchor:'bottom', y:1.02, x:0},
+            margin: {l:80, r:20, t:70, b:160},
+        }),
+    };
+}
+
 // ── Delta per-card ────────────────────────────────────────────────────────────
 
 /**

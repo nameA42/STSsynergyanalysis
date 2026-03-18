@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STS Synergy · Card</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.0.min.js" charset="utf-8"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-brand" href="analyze.html">STS Synergy</a>
+  <div class="nav-links">
+    <a href="analyze.html"  class="nav-link">Analyze</a>
+    <a href="compare.html"  class="nav-link">Compare</a>
+    <a href="browse.html"   class="nav-link">Browse</a>
+    <a href="card.html"     class="nav-link active">Card</a>
+    <a href="annotate.html" class="nav-link">Annotate</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-header">
+    <div class="page-title-row">
+      <h1 class="page-title">Card Profile</h1>
+      <span class="page-sub" id="card-sub">Select a card to explore its synergy profile</span>
+    </div>
+  </div>
+
+  <!-- Controls card -->
+  <div class="card section-card">
+    <div class="filter-form" id="card-form">
+      <div class="filter-row">
+
+        <!-- Card selector -->
+        <div class="filter-group">
+          <label class="filter-label">Card</label>
+          <input type="text" id="f-card" class="filter-input" placeholder="e.g. Bash"
+                 list="card-list" autocomplete="off">
+        </div>
+
+        <!-- Role toggle -->
+        <div class="filter-group">
+          <label class="filter-label">Role</label>
+          <div class="role-toggle" id="role-toggle">
+            <button type="button" class="btn btn-sm btn-primary" id="role-a-btn" data-role="a">As Card A</button>
+            <button type="button" class="btn btn-sm btn-secondary" id="role-b-btn" data-role="b">As Card B</button>
+          </div>
+        </div>
+
+        <!-- View toggle -->
+        <div class="filter-group">
+          <label class="filter-label">View</label>
+          <div class="role-toggle" id="view-toggle">
+            <button type="button" class="btn btn-sm btn-primary" id="view-fused-btn" data-view="fused">Fused</button>
+            <button type="button" class="btn btn-sm btn-secondary" id="view-sep-btn" data-view="separate">Separate</button>
+          </div>
+        </div>
+
+        <!-- Model toggles -->
+        <div class="filter-group">
+          <label class="filter-label">Models</label>
+          <div class="model-toggle-group" id="model-toggles"></div>
+        </div>
+
+        <div class="filter-group filter-actions">
+          <button type="button" class="btn btn-primary btn-sm" id="go-btn">Go</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts container -->
+  <div id="charts-container"></div>
+
+  <datalist id="card-list"></datalist>
+
+</div>
+
+<div id="toast" class="toast" role="alert"></div>
+
+<script src="static/js/app.js"></script>
+<script src="static/js/charts.js"></script>
+<script src="static/js/card-app.js"></script>
+</body>
+</html>

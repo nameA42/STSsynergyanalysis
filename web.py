@@ -85,16 +85,18 @@ def analyze(ds_name=None):
     truth = _truth()
     pred  = _get(ds_name)
     m     = M.overall(pred, truth)
-    pc_a  = M.per_card(pred, truth)
-    pc_b  = M.per_card_as_b(pred, truth)
-    eb    = M.error_breakdown(pred, truth)
+    pc_a       = M.per_card(pred, truth)
+    pc_b       = M.per_card_as_b(pred, truth)
+    pc_combined = M.per_card_combined(pred, truth)
+    eb         = M.error_breakdown(pred, truth)
 
     charts = {
-        "confusion":       PC.confusion_matrix(m["confusion_matrix"], [-1, 0, 1],
-                                               "Confusion Matrix"),
-        "class_dist":      PC.class_distribution(pred, truth, "Class Distribution"),
-        "per_card_a":      PC.per_card_accuracy(pc_a, f"Per-Card Accuracy — as Card A"),
-        "per_card_b":      PC.per_card_accuracy(pc_b, f"Per-Card Accuracy — as Card B"),
+        "confusion":        PC.confusion_matrix(m["confusion_matrix"], [-1, 0, 1],
+                                                "Confusion Matrix"),
+        "class_dist":       PC.class_distribution(pred, truth, "Class Distribution"),
+        "per_card_a":       PC.per_card_accuracy(pc_a, f"Per-Card Accuracy — as Card A"),
+        "per_card_b":       PC.per_card_accuracy(pc_b, f"Per-Card Accuracy — as Card B"),
+        "per_card_combined": PC.per_card_accuracy(pc_combined, "Per-Card Accuracy — Combined"),
         "pred_heatmap":    PC.synergy_heatmap(pred, f"Predictions — {ds_name}"),
         "error_heatmap":   PC.error_heatmap(pred, truth, f"Errors — {ds_name}"),
         "error_breakdown": PC.error_breakdown(eb, "Error Breakdown"),
@@ -224,6 +226,13 @@ def browse():
 
     pairs_df = M.pair_table(pred_df, truth, extra=extra) if pred_df is not None else pd.DataFrame()
 
+    if not pairs_df.empty:
+        cards_list = list(truth.index)
+        card_idx = {c: i for i, c in enumerate(cards_list)}
+        pairs_df["pair_idx"] = pairs_df.apply(
+            lambda r: card_idx.get(r["card_a"], 0) * 1000 + card_idx.get(r["card_b"], 0), axis=1
+        )
+
     # Compute correct_<n> for every extra dataset
     if not pairs_df.empty:
         for n in other_ds:
@@ -267,12 +276,14 @@ def browse():
             if col in pairs_df.columns:
                 pairs_df = pairs_df[pairs_df[col] == int(val)]
 
-        # Sorting — valid columns: ground_truth, predicted, pred_<n>, n_correct
-        valid_sort = {"ground_truth", "predicted", "n_correct"}
+        # Sorting — valid columns: ground_truth, predicted, pred_<n>, n_correct, pair_idx
+        valid_sort = {"ground_truth", "predicted", "n_correct", "pair_idx"}
         for n in other_ds:
             valid_sort.add(f"pred_{n}")
         if sort_col in valid_sort and sort_col in pairs_df.columns:
             pairs_df = pairs_df.sort_values(sort_col, ascending=(sort_dir == "asc"))
+        elif "pair_idx" in pairs_df.columns:
+            pairs_df = pairs_df.sort_values("pair_idx")
 
     total       = len(pairs_df)
     total_pages = max(1, (total + per_page - 1) // per_page)
@@ -323,6 +334,57 @@ def browse():
         sort=dict(col=sort_col, order=sort_dir),
         pair_sel=pair_sel,
         selected=selected,
+    )
+
+
+# ── CARD ──────────────────────────────────────────────────────────────────────
+
+@app.route("/card")
+def card_page():
+    models  = _all_models()
+    truth   = _truth()
+    cards   = list(truth.index)
+
+    card    = request.args.get("card", cards[0] if cards else "")
+    role    = request.args.get("role", "a")
+    view    = request.args.get("view", "fused")  # "fused" or "separate"
+    enabled_str = request.args.get("models", ",".join(models.keys()))
+    enabled = [n for n in enabled_str.split(",") if n in models]
+    if not enabled:
+        enabled = list(models.keys())
+
+    profile = []
+    charts  = {}
+
+    if card in cards:
+        pred_dfs = {n: _get(n) for n in enabled}
+        all_pred_dfs = {n: _get(n) for n in models}
+        profile = M.card_profile(card, role, all_pred_dfs, truth)
+
+        role_label = "Card A" if role == "a" else "Card B"
+
+        if view == "fused":
+            charts["fused"] = PC.card_profile_fused(
+                profile, enabled, card, role,
+                f"{card} as {role_label} — All Models"
+            )
+        else:
+            for n in enabled:
+                charts[f"sep_{n}"] = PC.card_profile_separate(
+                    profile, n, card, role,
+                    f"{card} as {role_label} — {n}"
+                )
+
+    return render_template("card.html",
+        active="card",
+        models=models,
+        cards=cards,
+        card=card,
+        role=role,
+        view=view,
+        enabled=enabled,
+        profile=profile,
+        charts=charts,
     )
 
 

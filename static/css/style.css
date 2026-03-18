@@ -496,3 +496,19 @@ a:hover { text-decoration: underline; }
   display: flex; gap: 6px; margin-top: 8px;
   padding-top: 8px; border-top: 1px solid var(--border);
 }
+
+/* ── Card profile page ──────────────────────────────────────── */
+.role-toggle { display: flex; gap: 4px; }
+.model-toggle-group { display: flex; flex-wrap: wrap; gap: 4px; }
+
+/* ── Browse pagination improvements ────────────────────────── */
+.page-jump-wrap { display: inline-flex; align-items: center; gap: 4px; font-size: .875rem; color: var(--text-secondary); }
+.page-jump-input {
+  width: 4ch; text-align: center; padding: 2px 4px;
+  border: 1px solid var(--border); border-radius: 4px;
+  font-size: .875rem; font-family: inherit;
+  background: var(--bg-secondary);
+}
+.page-jump-input:focus { outline: none; border-color: var(--primary); background: white; }
+.page-btn-first, .page-btn-last { font-weight: 700; }
+.page-btn.disabled { pointer-events: none; opacity: 0.4; }

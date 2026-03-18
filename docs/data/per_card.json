@@ -9026,5 +9026,2719 @@
         "n_total": 74.0
       }
     }
+  },
+  "combined": {
+    "gpt4o": {
+      "Bash": {
+        "accuracy": 0.918918918918919,
+        "macro_f1": 0.6213750407298795,
+        "n_errors": 12.0,
+        "n_total": 148.0
+      },
+      "Defend": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.5463995463995465,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Strike": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.5376068376068376,
+        "n_errors": 14.0,
+        "n_total": 148.0
+      },
+      "Anger": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.5041634139994796,
+        "n_errors": 26.0,
+        "n_total": 148.0
+      },
+      "Armaments": {
+        "accuracy": 0.7094594594594594,
+        "macro_f1": 0.5389566785618357,
+        "n_errors": 43.0,
+        "n_total": 148.0
+      },
+      "Body Slam": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.535580207186609,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Clash": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.5115278076270985,
+        "n_errors": 44.0,
+        "n_total": 148.0
+      },
+      "Cleave": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.5283477732178142,
+        "n_errors": 16.0,
+        "n_total": 148.0
+      },
+      "Clothesline": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.4889986824769434,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Flex": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.5204681316830849,
+        "n_errors": 32.0,
+        "n_total": 148.0
+      },
+      "Havoc": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.4929860871564908,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Headbutt": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.4909098596313208,
+        "n_errors": 34.0,
+        "n_total": 148.0
+      },
+      "Heavy Blade": {
+        "accuracy": 0.9662162162162162,
+        "macro_f1": 0.6233874323761964,
+        "n_errors": 5.0,
+        "n_total": 148.0
+      },
+      "Iron Wave": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.6217480076401238,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Perfected Strike": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.768381217176398,
+        "n_errors": 16.0,
+        "n_total": 148.0
+      },
+      "Pommel Strike": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.6433490659415081,
+        "n_errors": 32.0,
+        "n_total": 148.0
+      },
+      "Shrug it Off": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.617694106066199,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Sword Boomerang": {
+        "accuracy": 0.918918918918919,
+        "macro_f1": 0.5558439418283689,
+        "n_errors": 12.0,
+        "n_total": 148.0
+      },
+      "Thunderclap": {
+        "accuracy": 0.9324324324324325,
+        "macro_f1": 0.6211795092552733,
+        "n_errors": 10.0,
+        "n_total": 148.0
+      },
+      "True Grit": {
+        "accuracy": 0.6216216216216216,
+        "macro_f1": 0.5117192331478045,
+        "n_errors": 56.0,
+        "n_total": 148.0
+      },
+      "Twin Strike": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.5611749680715198,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Warcry": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.5158061934959931,
+        "n_errors": 34.0,
+        "n_total": 148.0
+      },
+      "Wild Strike": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.5652282046111448,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Battle Trance": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.6508465939360248,
+        "n_errors": 34.0,
+        "n_total": 148.0
+      },
+      "Blood for Blood": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.7705516989404457,
+        "n_errors": 16.0,
+        "n_total": 148.0
+      },
+      "Bloodletting": {
+        "accuracy": 0.7635135135135135,
+        "macro_f1": 0.5124530327428878,
+        "n_errors": 35.0,
+        "n_total": 148.0
+      },
+      "Burning Pact": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.5128840676911711,
+        "n_errors": 38.0,
+        "n_total": 148.0
+      },
+      "Carnage": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.5843573988735279,
+        "n_errors": 14.0,
+        "n_total": 148.0
+      },
+      "Combust": {
+        "accuracy": 0.8108108108108109,
+        "macro_f1": 0.3819176319176319,
+        "n_errors": 28.0,
+        "n_total": 148.0
+      },
+      "Dark Embrace": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.7178133028832429,
+        "n_errors": 20.0,
+        "n_total": 148.0
+      },
+      "Disarm": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.42625577231175193,
+        "n_errors": 24.0,
+        "n_total": 148.0
+      },
+      "Dropkick": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5741298701298702,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "Dual Wield": {
+        "accuracy": 0.5202702702702703,
+        "macro_f1": 0.36832611832611833,
+        "n_errors": 71.0,
+        "n_total": 148.0
+      },
+      "Entrench": {
+        "accuracy": 0.9324324324324325,
+        "macro_f1": 0.6193633952254642,
+        "n_errors": 10.0,
+        "n_total": 148.0
+      },
+      "Evolve": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.4266666666666667,
+        "n_errors": 30.0,
+        "n_total": 148.0
+      },
+      "Feel No Pain": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.5975012493753123,
+        "n_errors": 16.0,
+        "n_total": 148.0
+      },
+      "Fire Breathing": {
+        "accuracy": 0.8986486486486487,
+        "macro_f1": 0.5737947352854186,
+        "n_errors": 15.0,
+        "n_total": 148.0
+      },
+      "Flame Barrier": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.41896325459317585,
+        "n_errors": 30.0,
+        "n_total": 148.0
+      },
+      "Ghostly Armor": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.5958441558441558,
+        "n_errors": 20.0,
+        "n_total": 148.0
+      },
+      "Hemokinesis": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.575599128540305,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Infernal Blade": {
+        "accuracy": 0.8108108108108109,
+        "macro_f1": 0.46728395061728395,
+        "n_errors": 28.0,
+        "n_total": 148.0
+      },
+      "Inflame": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5711218464841653,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "Intimidate": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.35448966408268734,
+        "n_errors": 32.0,
+        "n_total": 148.0
+      },
+      "Metallicize": {
+        "accuracy": 0.8445945945945946,
+        "macro_f1": 0.3879525593008739,
+        "n_errors": 23.0,
+        "n_total": 148.0
+      },
+      "Power Through": {
+        "accuracy": 0.75,
+        "macro_f1": 0.5081288021816657,
+        "n_errors": 37.0,
+        "n_total": 148.0
+      },
+      "Pummel": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.5830065359477125,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Rage": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.5329285861288331,
+        "n_errors": 34.0,
+        "n_total": 148.0
+      },
+      "Rampage": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.4206896551724138,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Reckless Charge": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.5235605241014545,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Rupture": {
+        "accuracy": 0.9662162162162162,
+        "macro_f1": 0.5877616747181965,
+        "n_errors": 5.0,
+        "n_total": 148.0
+      },
+      "Searing Blow": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.5832689832689834,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Second Wind": {
+        "accuracy": 0.6418918918918919,
+        "macro_f1": 0.5077947794779478,
+        "n_errors": 53.0,
+        "n_total": 148.0
+      },
+      "Seeing Red": {
+        "accuracy": 0.6081081081081081,
+        "macro_f1": 0.37141602358993664,
+        "n_errors": 58.0,
+        "n_total": 148.0
+      },
+      "Sentinel": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.46884888161483906,
+        "n_errors": 32.0,
+        "n_total": 148.0
+      },
+      "Sever Soul": {
+        "accuracy": 0.581081081081081,
+        "macro_f1": 0.5266059502125077,
+        "n_errors": 62.0,
+        "n_total": 148.0
+      },
+      "Shockwave": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.5598971250114816,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Spot Weakness": {
+        "accuracy": 0.8716216216216216,
+        "macro_f1": 0.5805152979066023,
+        "n_errors": 19.0,
+        "n_total": 148.0
+      },
+      "Uppercut": {
+        "accuracy": 0.918918918918919,
+        "macro_f1": 0.6080701754385965,
+        "n_errors": 12.0,
+        "n_total": 148.0
+      },
+      "Whirlwind": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.5788359788359788,
+        "n_errors": 16.0,
+        "n_total": 148.0
+      },
+      "Barricade": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.5666525801756116,
+        "n_errors": 18.0,
+        "n_total": 148.0
+      },
+      "Berserk": {
+        "accuracy": 0.6486486486486487,
+        "macro_f1": 0.36824575517119484,
+        "n_errors": 52.0,
+        "n_total": 148.0
+      },
+      "Bludgeon": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.5598290598290597,
+        "n_errors": 14.0,
+        "n_total": 148.0
+      },
+      "Brutality": {
+        "accuracy": 0.6824324324324325,
+        "macro_f1": 0.3761487050960735,
+        "n_errors": 47.0,
+        "n_total": 148.0
+      },
+      "Corruption": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.6606125356125356,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Demon Form": {
+        "accuracy": 0.6824324324324325,
+        "macro_f1": 0.34270095268423423,
+        "n_errors": 47.0,
+        "n_total": 148.0
+      },
+      "Double Tap": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.6167046812208102,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Exhume": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.5919317912686508,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Feed": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.475394337463303,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      },
+      "Fiend Fire": {
+        "accuracy": 0.4189189189189189,
+        "macro_f1": 0.4201646090534979,
+        "n_errors": 86.0,
+        "n_total": 148.0
+      },
+      "Immolate": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.5046296296296297,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Impervious": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5711286089238845,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "Juggernaut": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.5263875968992249,
+        "n_errors": 18.0,
+        "n_total": 148.0
+      },
+      "Limit Break": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.6206060606060606,
+        "n_errors": 14.0,
+        "n_total": 148.0
+      },
+      "Offering": {
+        "accuracy": 0.6959459459459459,
+        "macro_f1": 0.5490711688829125,
+        "n_errors": 45.0,
+        "n_total": 148.0
+      },
+      "Reaper": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.5404521404521404,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      }
+    },
+    "gpt54": {
+      "Bash": {
+        "accuracy": 0.9459459459459459,
+        "macro_f1": 0.6384432560903149,
+        "n_errors": 8.0,
+        "n_total": 148.0
+      },
+      "Defend": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.5078880407124682,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Strike": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.5362532808398951,
+        "n_errors": 20.0,
+        "n_total": 148.0
+      },
+      "Anger": {
+        "accuracy": 0.8445945945945946,
+        "macro_f1": 0.5136763108521774,
+        "n_errors": 23.0,
+        "n_total": 148.0
+      },
+      "Armaments": {
+        "accuracy": 0.6554054054054054,
+        "macro_f1": 0.49661858974358974,
+        "n_errors": 51.0,
+        "n_total": 148.0
+      },
+      "Body Slam": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.5697981672007646,
+        "n_errors": 16.0,
+        "n_total": 148.0
+      },
+      "Clash": {
+        "accuracy": 0.6283783783783784,
+        "macro_f1": 0.4810423873437572,
+        "n_errors": 55.0,
+        "n_total": 148.0
+      },
+      "Cleave": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.5705645161290323,
+        "n_errors": 16.0,
+        "n_total": 148.0
+      },
+      "Clothesline": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.5611749680715198,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Flex": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.5274009766684753,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      },
+      "Havoc": {
+        "accuracy": 0.7635135135135135,
+        "macro_f1": 0.4903895569945524,
+        "n_errors": 35.0,
+        "n_total": 148.0
+      },
+      "Headbutt": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.47675299106466756,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Heavy Blade": {
+        "accuracy": 0.9459459459459459,
+        "macro_f1": 0.6195286195286195,
+        "n_errors": 8.0,
+        "n_total": 148.0
+      },
+      "Iron Wave": {
+        "accuracy": 0.8851351351351351,
+        "macro_f1": 0.638246409674981,
+        "n_errors": 17.0,
+        "n_total": 148.0
+      },
+      "Perfected Strike": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.8050944224857268,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Pommel Strike": {
+        "accuracy": 0.6756756756756757,
+        "macro_f1": 0.4912542794895736,
+        "n_errors": 48.0,
+        "n_total": 148.0
+      },
+      "Shrug it Off": {
+        "accuracy": 0.6621621621621622,
+        "macro_f1": 0.5008912655971479,
+        "n_errors": 50.0,
+        "n_total": 148.0
+      },
+      "Sword Boomerang": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.5708222811671088,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Thunderclap": {
+        "accuracy": 0.9459459459459459,
+        "macro_f1": 0.6348681794815304,
+        "n_errors": 8.0,
+        "n_total": 148.0
+      },
+      "True Grit": {
+        "accuracy": 0.4527027027027027,
+        "macro_f1": 0.43930946045949354,
+        "n_errors": 81.0,
+        "n_total": 148.0
+      },
+      "Twin Strike": {
+        "accuracy": 0.8986486486486487,
+        "macro_f1": 0.5719425965440776,
+        "n_errors": 15.0,
+        "n_total": 148.0
+      },
+      "Warcry": {
+        "accuracy": 0.6486486486486487,
+        "macro_f1": 0.43675823083259946,
+        "n_errors": 52.0,
+        "n_total": 148.0
+      },
+      "Wild Strike": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.5360187743219559,
+        "n_errors": 30.0,
+        "n_total": 148.0
+      },
+      "Battle Trance": {
+        "accuracy": 0.7635135135135135,
+        "macro_f1": 0.6075280297759685,
+        "n_errors": 35.0,
+        "n_total": 148.0
+      },
+      "Blood for Blood": {
+        "accuracy": 0.8851351351351351,
+        "macro_f1": 0.7968763523348676,
+        "n_errors": 17.0,
+        "n_total": 148.0
+      },
+      "Bloodletting": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.41322305912469853,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Burning Pact": {
+        "accuracy": 0.7094594594594594,
+        "macro_f1": 0.5032323232323231,
+        "n_errors": 43.0,
+        "n_total": 148.0
+      },
+      "Carnage": {
+        "accuracy": 0.8716216216216216,
+        "macro_f1": 0.551594746716698,
+        "n_errors": 19.0,
+        "n_total": 148.0
+      },
+      "Combust": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.5092109836635385,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Dark Embrace": {
+        "accuracy": 0.831081081081081,
+        "macro_f1": 0.6040300212106379,
+        "n_errors": 25.0,
+        "n_total": 148.0
+      },
+      "Disarm": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.4823568354849388,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Dropkick": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.736490212296664,
+        "n_errors": 18.0,
+        "n_total": 148.0
+      },
+      "Dual Wield": {
+        "accuracy": 0.4797297297297297,
+        "macro_f1": 0.2961616161616161,
+        "n_errors": 77.0,
+        "n_total": 148.0
+      },
+      "Entrench": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.5894704338428284,
+        "n_errors": 14.0,
+        "n_total": 148.0
+      },
+      "Evolve": {
+        "accuracy": 0.7635135135135135,
+        "macro_f1": 0.3972109761583446,
+        "n_errors": 35.0,
+        "n_total": 148.0
+      },
+      "Feel No Pain": {
+        "accuracy": 0.8986486486486487,
+        "macro_f1": 0.5941741873945263,
+        "n_errors": 15.0,
+        "n_total": 148.0
+      },
+      "Fire Breathing": {
+        "accuracy": 0.8716216216216216,
+        "macro_f1": 0.5653374320439473,
+        "n_errors": 19.0,
+        "n_total": 148.0
+      },
+      "Flame Barrier": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.4793529161345253,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Ghostly Armor": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.5209361163820366,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Hemokinesis": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.575599128540305,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Infernal Blade": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.5437580437580438,
+        "n_errors": 18.0,
+        "n_total": 148.0
+      },
+      "Inflame": {
+        "accuracy": 0.9324324324324325,
+        "macro_f1": 0.6419753086419754,
+        "n_errors": 10.0,
+        "n_total": 148.0
+      },
+      "Intimidate": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.37487179487179484,
+        "n_errors": 30.0,
+        "n_total": 148.0
+      },
+      "Metallicize": {
+        "accuracy": 0.8445945945945946,
+        "macro_f1": 0.504442223332778,
+        "n_errors": 23.0,
+        "n_total": 148.0
+      },
+      "Power Through": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.5485370295496877,
+        "n_errors": 32.0,
+        "n_total": 148.0
+      },
+      "Pummel": {
+        "accuracy": 0.9256756756756757,
+        "macro_f1": 0.5967320261437908,
+        "n_errors": 11.0,
+        "n_total": 148.0
+      },
+      "Rage": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.5401914219919401,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Rampage": {
+        "accuracy": 0.7635135135135135,
+        "macro_f1": 0.4318414060903331,
+        "n_errors": 35.0,
+        "n_total": 148.0
+      },
+      "Reckless Charge": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.5229273661041819,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Rupture": {
+        "accuracy": 0.9324324324324325,
+        "macro_f1": 0.5433006535947712,
+        "n_errors": 10.0,
+        "n_total": 148.0
+      },
+      "Searing Blow": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.5732670371453642,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Second Wind": {
+        "accuracy": 0.5540540540540541,
+        "macro_f1": 0.45919985148055326,
+        "n_errors": 66.0,
+        "n_total": 148.0
+      },
+      "Seeing Red": {
+        "accuracy": 0.722972972972973,
+        "macro_f1": 0.4640070074852684,
+        "n_errors": 41.0,
+        "n_total": 148.0
+      },
+      "Sentinel": {
+        "accuracy": 0.7364864864864865,
+        "macro_f1": 0.42424242424242425,
+        "n_errors": 39.0,
+        "n_total": 148.0
+      },
+      "Sever Soul": {
+        "accuracy": 0.5472972972972973,
+        "macro_f1": 0.4695613533930045,
+        "n_errors": 67.0,
+        "n_total": 148.0
+      },
+      "Shockwave": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.588274557792858,
+        "n_errors": 18.0,
+        "n_total": 148.0
+      },
+      "Spot Weakness": {
+        "accuracy": 0.9459459459459459,
+        "macro_f1": 0.6367771280051981,
+        "n_errors": 8.0,
+        "n_total": 148.0
+      },
+      "Uppercut": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.6126330577619279,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Whirlwind": {
+        "accuracy": 0.6418918918918919,
+        "macro_f1": 0.5361055220210149,
+        "n_errors": 53.0,
+        "n_total": 148.0
+      },
+      "Barricade": {
+        "accuracy": 0.9256756756756757,
+        "macro_f1": 0.7697026408816802,
+        "n_errors": 11.0,
+        "n_total": 148.0
+      },
+      "Berserk": {
+        "accuracy": 0.668918918918919,
+        "macro_f1": 0.35540754914467015,
+        "n_errors": 49.0,
+        "n_total": 148.0
+      },
+      "Bludgeon": {
+        "accuracy": 0.8851351351351351,
+        "macro_f1": 0.5478431864775533,
+        "n_errors": 17.0,
+        "n_total": 148.0
+      },
+      "Brutality": {
+        "accuracy": 0.75,
+        "macro_f1": 0.39615823507036896,
+        "n_errors": 37.0,
+        "n_total": 148.0
+      },
+      "Corruption": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.6332084131963979,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Demon Form": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.47611876615716686,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      },
+      "Double Tap": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.6674696232485177,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Exhume": {
+        "accuracy": 0.918918918918919,
+        "macro_f1": 0.5891756772468317,
+        "n_errors": 12.0,
+        "n_total": 148.0
+      },
+      "Feed": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.44433271884252273,
+        "n_errors": 44.0,
+        "n_total": 148.0
+      },
+      "Fiend Fire": {
+        "accuracy": 0.3918918918918919,
+        "macro_f1": 0.4240899248148251,
+        "n_errors": 90.0,
+        "n_total": 148.0
+      },
+      "Immolate": {
+        "accuracy": 0.777027027027027,
+        "macro_f1": 0.49763729246487864,
+        "n_errors": 33.0,
+        "n_total": 148.0
+      },
+      "Impervious": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5705686189557158,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "Juggernaut": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.532034632034632,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Limit Break": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.6127962085308057,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Offering": {
+        "accuracy": 0.6891891891891891,
+        "macro_f1": 0.5062063200458791,
+        "n_errors": 46.0,
+        "n_total": 148.0
+      },
+      "Reaper": {
+        "accuracy": 0.831081081081081,
+        "macro_f1": 0.612951705504897,
+        "n_errors": 25.0,
+        "n_total": 148.0
+      }
+    },
+    "gemini10pro": {
+      "Bash": {
+        "accuracy": 0.47297297297297297,
+        "macro_f1": 0.32634032634032634,
+        "n_errors": 78.0,
+        "n_total": 148.0
+      },
+      "Defend": {
+        "accuracy": 0.5,
+        "macro_f1": 0.31969462861911374,
+        "n_errors": 74.0,
+        "n_total": 148.0
+      },
+      "Strike": {
+        "accuracy": 0.6216216216216216,
+        "macro_f1": 0.3632230361202324,
+        "n_errors": 56.0,
+        "n_total": 148.0
+      },
+      "Anger": {
+        "accuracy": 0.3581081081081081,
+        "macro_f1": 0.29094908933168834,
+        "n_errors": 95.0,
+        "n_total": 148.0
+      },
+      "Armaments": {
+        "accuracy": 0.5945945945945946,
+        "macro_f1": 0.38162868751104045,
+        "n_errors": 60.0,
+        "n_total": 148.0
+      },
+      "Body Slam": {
+        "accuracy": 0.5945945945945946,
+        "macro_f1": 0.3970950542379114,
+        "n_errors": 60.0,
+        "n_total": 148.0
+      },
+      "Clash": {
+        "accuracy": 0.32432432432432434,
+        "macro_f1": 0.28040209218698925,
+        "n_errors": 100.0,
+        "n_total": 148.0
+      },
+      "Cleave": {
+        "accuracy": 0.5202702702702703,
+        "macro_f1": 0.297251258226868,
+        "n_errors": 71.0,
+        "n_total": 148.0
+      },
+      "Clothesline": {
+        "accuracy": 0.34459459459459457,
+        "macro_f1": 0.22135642135642133,
+        "n_errors": 97.0,
+        "n_total": 148.0
+      },
+      "Flex": {
+        "accuracy": 0.5135135135135135,
+        "macro_f1": 0.3456466089886912,
+        "n_errors": 72.0,
+        "n_total": 148.0
+      },
+      "Havoc": {
+        "accuracy": 0.5540540540540541,
+        "macro_f1": 0.35266073959541294,
+        "n_errors": 66.0,
+        "n_total": 148.0
+      },
+      "Headbutt": {
+        "accuracy": 0.44594594594594594,
+        "macro_f1": 0.2961287078934138,
+        "n_errors": 82.0,
+        "n_total": 148.0
+      },
+      "Heavy Blade": {
+        "accuracy": 0.5945945945945946,
+        "macro_f1": 0.3415578132559265,
+        "n_errors": 60.0,
+        "n_total": 148.0
+      },
+      "Iron Wave": {
+        "accuracy": 0.3716216216216216,
+        "macro_f1": 0.23968399281185362,
+        "n_errors": 93.0,
+        "n_total": 148.0
+      },
+      "Perfected Strike": {
+        "accuracy": 0.6013513513513513,
+        "macro_f1": 0.39231192117393326,
+        "n_errors": 59.0,
+        "n_total": 148.0
+      },
+      "Pommel Strike": {
+        "accuracy": 0.4189189189189189,
+        "macro_f1": 0.3424703214619181,
+        "n_errors": 86.0,
+        "n_total": 148.0
+      },
+      "Shrug it Off": {
+        "accuracy": 0.3783783783783784,
+        "macro_f1": 0.30401234567901236,
+        "n_errors": 92.0,
+        "n_total": 148.0
+      },
+      "Sword Boomerang": {
+        "accuracy": 0.5878378378378378,
+        "macro_f1": 0.327866630523177,
+        "n_errors": 61.0,
+        "n_total": 148.0
+      },
+      "Thunderclap": {
+        "accuracy": 0.44594594594594594,
+        "macro_f1": 0.2989583333333333,
+        "n_errors": 82.0,
+        "n_total": 148.0
+      },
+      "True Grit": {
+        "accuracy": 0.43243243243243246,
+        "macro_f1": 0.3440875363952287,
+        "n_errors": 84.0,
+        "n_total": 148.0
+      },
+      "Twin Strike": {
+        "accuracy": 0.5878378378378378,
+        "macro_f1": 0.3313522825150732,
+        "n_errors": 61.0,
+        "n_total": 148.0
+      },
+      "Warcry": {
+        "accuracy": 0.39864864864864863,
+        "macro_f1": 0.36056720104747547,
+        "n_errors": 89.0,
+        "n_total": 148.0
+      },
+      "Wild Strike": {
+        "accuracy": 0.4391891891891892,
+        "macro_f1": 0.3684238838084992,
+        "n_errors": 83.0,
+        "n_total": 148.0
+      },
+      "Battle Trance": {
+        "accuracy": 0.3918918918918919,
+        "macro_f1": 0.36063889670700816,
+        "n_errors": 90.0,
+        "n_total": 148.0
+      },
+      "Blood for Blood": {
+        "accuracy": 0.46621621621621623,
+        "macro_f1": 0.35909104621046595,
+        "n_errors": 79.0,
+        "n_total": 148.0
+      },
+      "Bloodletting": {
+        "accuracy": 0.3581081081081081,
+        "macro_f1": 0.32380002597065316,
+        "n_errors": 95.0,
+        "n_total": 148.0
+      },
+      "Burning Pact": {
+        "accuracy": 0.31756756756756754,
+        "macro_f1": 0.29345861070299223,
+        "n_errors": 101.0,
+        "n_total": 148.0
+      },
+      "Carnage": {
+        "accuracy": 0.4797297297297297,
+        "macro_f1": 0.31621954979956834,
+        "n_errors": 77.0,
+        "n_total": 148.0
+      },
+      "Combust": {
+        "accuracy": 0.3108108108108108,
+        "macro_f1": 0.1743503142883948,
+        "n_errors": 102.0,
+        "n_total": 148.0
+      },
+      "Dark Embrace": {
+        "accuracy": 0.46621621621621623,
+        "macro_f1": 0.3142606186084447,
+        "n_errors": 79.0,
+        "n_total": 148.0
+      },
+      "Disarm": {
+        "accuracy": 0.35135135135135137,
+        "macro_f1": 0.20124582535930055,
+        "n_errors": 96.0,
+        "n_total": 148.0
+      },
+      "Dropkick": {
+        "accuracy": 0.35135135135135137,
+        "macro_f1": 0.30026954177897575,
+        "n_errors": 96.0,
+        "n_total": 148.0
+      },
+      "Dual Wield": {
+        "accuracy": 0.3783783783783784,
+        "macro_f1": 0.3009138758748337,
+        "n_errors": 92.0,
+        "n_total": 148.0
+      },
+      "Entrench": {
+        "accuracy": 0.36486486486486486,
+        "macro_f1": 0.23811931243680484,
+        "n_errors": 94.0,
+        "n_total": 148.0
+      },
+      "Evolve": {
+        "accuracy": 0.5337837837837838,
+        "macro_f1": 0.3260267651130595,
+        "n_errors": 69.0,
+        "n_total": 148.0
+      },
+      "Feel No Pain": {
+        "accuracy": 0.42567567567567566,
+        "macro_f1": 0.28483020035584433,
+        "n_errors": 85.0,
+        "n_total": 148.0
+      },
+      "Fire Breathing": {
+        "accuracy": 0.4797297297297297,
+        "macro_f1": 0.30343915343915345,
+        "n_errors": 77.0,
+        "n_total": 148.0
+      },
+      "Flame Barrier": {
+        "accuracy": 0.25,
+        "macro_f1": 0.15822923515231208,
+        "n_errors": 111.0,
+        "n_total": 148.0
+      },
+      "Ghostly Armor": {
+        "accuracy": 0.41216216216216217,
+        "macro_f1": 0.28770053475935825,
+        "n_errors": 87.0,
+        "n_total": 148.0
+      },
+      "Hemokinesis": {
+        "accuracy": 0.49324324324324326,
+        "macro_f1": 0.2983838030223467,
+        "n_errors": 75.0,
+        "n_total": 148.0
+      },
+      "Infernal Blade": {
+        "accuracy": 0.30405405405405406,
+        "macro_f1": 0.20341614906832298,
+        "n_errors": 103.0,
+        "n_total": 148.0
+      },
+      "Inflame": {
+        "accuracy": 0.5,
+        "macro_f1": 0.3401347571828121,
+        "n_errors": 74.0,
+        "n_total": 148.0
+      },
+      "Intimidate": {
+        "accuracy": 0.18243243243243243,
+        "macro_f1": 0.11459170013386881,
+        "n_errors": 121.0,
+        "n_total": 148.0
+      },
+      "Metallicize": {
+        "accuracy": 0.44594594594594594,
+        "macro_f1": 0.24148077458348247,
+        "n_errors": 82.0,
+        "n_total": 148.0
+      },
+      "Power Through": {
+        "accuracy": 0.3108108108108108,
+        "macro_f1": 0.32998668379588075,
+        "n_errors": 102.0,
+        "n_total": 148.0
+      },
+      "Pummel": {
+        "accuracy": 0.4864864864864865,
+        "macro_f1": 0.29903774981495185,
+        "n_errors": 76.0,
+        "n_total": 148.0
+      },
+      "Rage": {
+        "accuracy": 0.5067567567567568,
+        "macro_f1": 0.34156237218813906,
+        "n_errors": 73.0,
+        "n_total": 148.0
+      },
+      "Rampage": {
+        "accuracy": 0.6283783783783784,
+        "macro_f1": 0.40127880057325543,
+        "n_errors": 55.0,
+        "n_total": 148.0
+      },
+      "Reckless Charge": {
+        "accuracy": 0.5067567567567568,
+        "macro_f1": 0.3672467765209701,
+        "n_errors": 73.0,
+        "n_total": 148.0
+      },
+      "Rupture": {
+        "accuracy": 0.4797297297297297,
+        "macro_f1": 0.2738202924770089,
+        "n_errors": 77.0,
+        "n_total": 148.0
+      },
+      "Searing Blow": {
+        "accuracy": 0.5878378378378378,
+        "macro_f1": 0.3512525389302641,
+        "n_errors": 61.0,
+        "n_total": 148.0
+      },
+      "Second Wind": {
+        "accuracy": 0.2972972972972973,
+        "macro_f1": 0.26017984277761325,
+        "n_errors": 104.0,
+        "n_total": 148.0
+      },
+      "Seeing Red": {
+        "accuracy": 0.35135135135135137,
+        "macro_f1": 0.315755832534356,
+        "n_errors": 96.0,
+        "n_total": 148.0
+      },
+      "Sentinel": {
+        "accuracy": 0.5540540540540541,
+        "macro_f1": 0.4394506866416979,
+        "n_errors": 66.0,
+        "n_total": 148.0
+      },
+      "Sever Soul": {
+        "accuracy": 0.28378378378378377,
+        "macro_f1": 0.24737945492662472,
+        "n_errors": 106.0,
+        "n_total": 148.0
+      },
+      "Shockwave": {
+        "accuracy": 0.31756756756756754,
+        "macro_f1": 0.19896640826873382,
+        "n_errors": 101.0,
+        "n_total": 148.0
+      },
+      "Spot Weakness": {
+        "accuracy": 0.4864864864864865,
+        "macro_f1": 0.32939942302648834,
+        "n_errors": 76.0,
+        "n_total": 148.0
+      },
+      "Uppercut": {
+        "accuracy": 0.38513513513513514,
+        "macro_f1": 0.2663292847503374,
+        "n_errors": 91.0,
+        "n_total": 148.0
+      },
+      "Whirlwind": {
+        "accuracy": 0.5405405405405406,
+        "macro_f1": 0.33107727016356453,
+        "n_errors": 68.0,
+        "n_total": 148.0
+      },
+      "Barricade": {
+        "accuracy": 0.32432432432432434,
+        "macro_f1": 0.2213599054645332,
+        "n_errors": 100.0,
+        "n_total": 148.0
+      },
+      "Berserk": {
+        "accuracy": 0.25,
+        "macro_f1": 0.20324046167928023,
+        "n_errors": 111.0,
+        "n_total": 148.0
+      },
+      "Bludgeon": {
+        "accuracy": 0.4797297297297297,
+        "macro_f1": 0.28733687301865146,
+        "n_errors": 77.0,
+        "n_total": 148.0
+      },
+      "Brutality": {
+        "accuracy": 0.4527027027027027,
+        "macro_f1": 0.36375076734192757,
+        "n_errors": 81.0,
+        "n_total": 148.0
+      },
+      "Corruption": {
+        "accuracy": 0.4594594594594595,
+        "macro_f1": 0.4142745314730396,
+        "n_errors": 80.0,
+        "n_total": 148.0
+      },
+      "Demon Form": {
+        "accuracy": 0.42567567567567566,
+        "macro_f1": 0.2912507339988256,
+        "n_errors": 85.0,
+        "n_total": 148.0
+      },
+      "Double Tap": {
+        "accuracy": 0.47297297297297297,
+        "macro_f1": 0.38115079365079363,
+        "n_errors": 78.0,
+        "n_total": 148.0
+      },
+      "Exhume": {
+        "accuracy": 0.32432432432432434,
+        "macro_f1": 0.2199087462245357,
+        "n_errors": 100.0,
+        "n_total": 148.0
+      },
+      "Feed": {
+        "accuracy": 0.3918918918918919,
+        "macro_f1": 0.25324595893403234,
+        "n_errors": 90.0,
+        "n_total": 148.0
+      },
+      "Fiend Fire": {
+        "accuracy": 0.2972972972972973,
+        "macro_f1": 0.23185011709601874,
+        "n_errors": 104.0,
+        "n_total": 148.0
+      },
+      "Immolate": {
+        "accuracy": 0.4527027027027027,
+        "macro_f1": 0.3491671372106155,
+        "n_errors": 81.0,
+        "n_total": 148.0
+      },
+      "Impervious": {
+        "accuracy": 0.3581081081081081,
+        "macro_f1": 0.2666044820740954,
+        "n_errors": 95.0,
+        "n_total": 148.0
+      },
+      "Juggernaut": {
+        "accuracy": 0.36486486486486486,
+        "macro_f1": 0.24191729323308273,
+        "n_errors": 94.0,
+        "n_total": 148.0
+      },
+      "Limit Break": {
+        "accuracy": 0.4797297297297297,
+        "macro_f1": 0.3300307592682532,
+        "n_errors": 77.0,
+        "n_total": 148.0
+      },
+      "Offering": {
+        "accuracy": 0.3581081081081081,
+        "macro_f1": 0.23158077390248133,
+        "n_errors": 95.0,
+        "n_total": 148.0
+      },
+      "Reaper": {
+        "accuracy": 0.39864864864864863,
+        "macro_f1": 0.3640972396262217,
+        "n_errors": 89.0,
+        "n_total": 148.0
+      }
+    },
+    "gemini15flash": {
+      "Bash": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.4991821213859325,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Defend": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.43647580489685756,
+        "n_errors": 20.0,
+        "n_total": 148.0
+      },
+      "Strike": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.4290123456790123,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "Anger": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.40226757369614513,
+        "n_errors": 34.0,
+        "n_total": 148.0
+      },
+      "Armaments": {
+        "accuracy": 0.4864864864864865,
+        "macro_f1": 0.3362478907807946,
+        "n_errors": 76.0,
+        "n_total": 148.0
+      },
+      "Body Slam": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.4871217804451113,
+        "n_errors": 24.0,
+        "n_total": 148.0
+      },
+      "Clash": {
+        "accuracy": 0.6554054054054054,
+        "macro_f1": 0.4859196581492977,
+        "n_errors": 51.0,
+        "n_total": 148.0
+      },
+      "Cleave": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.39662351427057313,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Clothesline": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.6298016448959846,
+        "n_errors": 14.0,
+        "n_total": 148.0
+      },
+      "Flex": {
+        "accuracy": 0.75,
+        "macro_f1": 0.477647224868565,
+        "n_errors": 37.0,
+        "n_total": 148.0
+      },
+      "Havoc": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.4281540504648074,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Headbutt": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.44046919179194316,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      },
+      "Heavy Blade": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.512097721400047,
+        "n_errors": 18.0,
+        "n_total": 148.0
+      },
+      "Iron Wave": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.5399666554269229,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Perfected Strike": {
+        "accuracy": 0.777027027027027,
+        "macro_f1": 0.45556145657745856,
+        "n_errors": 33.0,
+        "n_total": 148.0
+      },
+      "Pommel Strike": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.5920778405524169,
+        "n_errors": 38.0,
+        "n_total": 148.0
+      },
+      "Shrug it Off": {
+        "accuracy": 0.668918918918919,
+        "macro_f1": 0.5382166499686326,
+        "n_errors": 49.0,
+        "n_total": 148.0
+      },
+      "Sword Boomerang": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.4920997042670046,
+        "n_errors": 16.0,
+        "n_total": 148.0
+      },
+      "Thunderclap": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.5046524356869184,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      },
+      "True Grit": {
+        "accuracy": 0.6756756756756757,
+        "macro_f1": 0.5596621325142607,
+        "n_errors": 48.0,
+        "n_total": 148.0
+      },
+      "Twin Strike": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.47834931705899447,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Warcry": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.4462481962481963,
+        "n_errors": 34.0,
+        "n_total": 148.0
+      },
+      "Wild Strike": {
+        "accuracy": 0.6283783783783784,
+        "macro_f1": 0.43402794937264916,
+        "n_errors": 55.0,
+        "n_total": 148.0
+      },
+      "Battle Trance": {
+        "accuracy": 0.7094594594594594,
+        "macro_f1": 0.5402694708631565,
+        "n_errors": 43.0,
+        "n_total": 148.0
+      },
+      "Blood for Blood": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.5470755876277877,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Bloodletting": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.3425916708146673,
+        "n_errors": 42.0,
+        "n_total": 148.0
+      },
+      "Burning Pact": {
+        "accuracy": 0.6283783783783784,
+        "macro_f1": 0.4188925736106924,
+        "n_errors": 55.0,
+        "n_total": 148.0
+      },
+      "Carnage": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5003428347536487,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "Combust": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.33788073788073786,
+        "n_errors": 32.0,
+        "n_total": 148.0
+      },
+      "Dark Embrace": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.6818181818181818,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Disarm": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.45206812652068135,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Dropkick": {
+        "accuracy": 0.722972972972973,
+        "macro_f1": 0.5070917255791205,
+        "n_errors": 41.0,
+        "n_total": 148.0
+      },
+      "Dual Wield": {
+        "accuracy": 0.6283783783783784,
+        "macro_f1": 0.3787957448974398,
+        "n_errors": 55.0,
+        "n_total": 148.0
+      },
+      "Entrench": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.4974161482505513,
+        "n_errors": 24.0,
+        "n_total": 148.0
+      },
+      "Evolve": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.3828700403896413,
+        "n_errors": 38.0,
+        "n_total": 148.0
+      },
+      "Feel No Pain": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.48648648648648657,
+        "n_errors": 30.0,
+        "n_total": 148.0
+      },
+      "Fire Breathing": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.4686788836986466,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Flame Barrier": {
+        "accuracy": 0.6486486486486487,
+        "macro_f1": 0.41233831705701035,
+        "n_errors": 52.0,
+        "n_total": 148.0
+      },
+      "Ghostly Armor": {
+        "accuracy": 0.831081081081081,
+        "macro_f1": 0.5532656342050345,
+        "n_errors": 25.0,
+        "n_total": 148.0
+      },
+      "Hemokinesis": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.4893117218698613,
+        "n_errors": 20.0,
+        "n_total": 148.0
+      },
+      "Infernal Blade": {
+        "accuracy": 0.6756756756756757,
+        "macro_f1": 0.3657219973009447,
+        "n_errors": 48.0,
+        "n_total": 148.0
+      },
+      "Inflame": {
+        "accuracy": 0.8716216216216216,
+        "macro_f1": 0.5535646053293112,
+        "n_errors": 19.0,
+        "n_total": 148.0
+      },
+      "Intimidate": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.4918436293436293,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Metallicize": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.4364876385336744,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Power Through": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.5558441558441558,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Pummel": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.46418892760356173,
+        "n_errors": 24.0,
+        "n_total": 148.0
+      },
+      "Rage": {
+        "accuracy": 0.6418918918918919,
+        "macro_f1": 0.42613017751479293,
+        "n_errors": 53.0,
+        "n_total": 148.0
+      },
+      "Rampage": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.3991596638655462,
+        "n_errors": 38.0,
+        "n_total": 148.0
+      },
+      "Reckless Charge": {
+        "accuracy": 0.7635135135135135,
+        "macro_f1": 0.5430323299888516,
+        "n_errors": 35.0,
+        "n_total": 148.0
+      },
+      "Rupture": {
+        "accuracy": 0.9391891891891891,
+        "macro_f1": 0.5344655344655345,
+        "n_errors": 9.0,
+        "n_total": 148.0
+      },
+      "Searing Blow": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.5291228070175439,
+        "n_errors": 14.0,
+        "n_total": 148.0
+      },
+      "Second Wind": {
+        "accuracy": 0.6891891891891891,
+        "macro_f1": 0.46439027960767093,
+        "n_errors": 46.0,
+        "n_total": 148.0
+      },
+      "Seeing Red": {
+        "accuracy": 0.6824324324324325,
+        "macro_f1": 0.4546085858585858,
+        "n_errors": 47.0,
+        "n_total": 148.0
+      },
+      "Sentinel": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.4213166144200627,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Sever Soul": {
+        "accuracy": 0.5675675675675675,
+        "macro_f1": 0.425703564727955,
+        "n_errors": 64.0,
+        "n_total": 148.0
+      },
+      "Shockwave": {
+        "accuracy": 0.75,
+        "macro_f1": 0.4653577070638682,
+        "n_errors": 37.0,
+        "n_total": 148.0
+      },
+      "Spot Weakness": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.4879206814690686,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      },
+      "Uppercut": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.48445266443185764,
+        "n_errors": 34.0,
+        "n_total": 148.0
+      },
+      "Whirlwind": {
+        "accuracy": 0.6891891891891891,
+        "macro_f1": 0.38262599469496017,
+        "n_errors": 46.0,
+        "n_total": 148.0
+      },
+      "Barricade": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.5860800576992428,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Berserk": {
+        "accuracy": 0.722972972972973,
+        "macro_f1": 0.3957994579945799,
+        "n_errors": 41.0,
+        "n_total": 148.0
+      },
+      "Bludgeon": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.49009324009324007,
+        "n_errors": 18.0,
+        "n_total": 148.0
+      },
+      "Brutality": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.35764193966779634,
+        "n_errors": 32.0,
+        "n_total": 148.0
+      },
+      "Corruption": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.4884078391187396,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Demon Form": {
+        "accuracy": 0.75,
+        "macro_f1": 0.3667341430499325,
+        "n_errors": 37.0,
+        "n_total": 148.0
+      },
+      "Double Tap": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.5341223428942726,
+        "n_errors": 42.0,
+        "n_total": 148.0
+      },
+      "Exhume": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.48657638393917796,
+        "n_errors": 30.0,
+        "n_total": 148.0
+      },
+      "Feed": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.4256038647342995,
+        "n_errors": 38.0,
+        "n_total": 148.0
+      },
+      "Fiend Fire": {
+        "accuracy": 0.5608108108108109,
+        "macro_f1": 0.3672385620915033,
+        "n_errors": 65.0,
+        "n_total": 148.0
+      },
+      "Immolate": {
+        "accuracy": 0.6891891891891891,
+        "macro_f1": 0.44471046987716906,
+        "n_errors": 46.0,
+        "n_total": 148.0
+      },
+      "Impervious": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.4244897959183674,
+        "n_errors": 32.0,
+        "n_total": 148.0
+      },
+      "Juggernaut": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.513095238095238,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Limit Break": {
+        "accuracy": 0.7364864864864865,
+        "macro_f1": 0.3954400769857132,
+        "n_errors": 39.0,
+        "n_total": 148.0
+      },
+      "Offering": {
+        "accuracy": 0.6148648648648649,
+        "macro_f1": 0.5085246958343405,
+        "n_errors": 57.0,
+        "n_total": 148.0
+      },
+      "Reaper": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.5373925729768166,
+        "n_errors": 44.0,
+        "n_total": 148.0
+      }
+    },
+    "gpt4omini": {
+      "Bash": {
+        "accuracy": 0.777027027027027,
+        "macro_f1": 0.5138401559454191,
+        "n_errors": 33.0,
+        "n_total": 148.0
+      },
+      "Defend": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.5025854988052569,
+        "n_errors": 26.0,
+        "n_total": 148.0
+      },
+      "Strike": {
+        "accuracy": 0.7635135135135135,
+        "macro_f1": 0.42830967812508547,
+        "n_errors": 35.0,
+        "n_total": 148.0
+      },
+      "Anger": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.41839477726574503,
+        "n_errors": 44.0,
+        "n_total": 148.0
+      },
+      "Armaments": {
+        "accuracy": 0.47297297297297297,
+        "macro_f1": 0.3224400871459695,
+        "n_errors": 78.0,
+        "n_total": 148.0
+      },
+      "Body Slam": {
+        "accuracy": 0.7635135135135135,
+        "macro_f1": 0.4672909522553416,
+        "n_errors": 35.0,
+        "n_total": 148.0
+      },
+      "Clash": {
+        "accuracy": 0.5472972972972973,
+        "macro_f1": 0.48527443105756357,
+        "n_errors": 67.0,
+        "n_total": 148.0
+      },
+      "Cleave": {
+        "accuracy": 0.6959459459459459,
+        "macro_f1": 0.3706505661841371,
+        "n_errors": 45.0,
+        "n_total": 148.0
+      },
+      "Clothesline": {
+        "accuracy": 0.6283783783783784,
+        "macro_f1": 0.34541186513017497,
+        "n_errors": 55.0,
+        "n_total": 148.0
+      },
+      "Flex": {
+        "accuracy": 0.7635135135135135,
+        "macro_f1": 0.5037886084890516,
+        "n_errors": 35.0,
+        "n_total": 148.0
+      },
+      "Havoc": {
+        "accuracy": 0.6621621621621622,
+        "macro_f1": 0.403110317802261,
+        "n_errors": 50.0,
+        "n_total": 148.0
+      },
+      "Headbutt": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.4433734939759037,
+        "n_errors": 42.0,
+        "n_total": 148.0
+      },
+      "Heavy Blade": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.40356883494138396,
+        "n_errors": 38.0,
+        "n_total": 148.0
+      },
+      "Iron Wave": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.4184259259259259,
+        "n_errors": 42.0,
+        "n_total": 148.0
+      },
+      "Perfected Strike": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.5122168563872601,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Pommel Strike": {
+        "accuracy": 0.5945945945945946,
+        "macro_f1": 0.445728810932909,
+        "n_errors": 60.0,
+        "n_total": 148.0
+      },
+      "Shrug it Off": {
+        "accuracy": 0.5472972972972973,
+        "macro_f1": 0.4003535717821432,
+        "n_errors": 67.0,
+        "n_total": 148.0
+      },
+      "Sword Boomerang": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.41030499197389547,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Thunderclap": {
+        "accuracy": 0.6959459459459459,
+        "macro_f1": 0.4639854149967781,
+        "n_errors": 45.0,
+        "n_total": 148.0
+      },
+      "True Grit": {
+        "accuracy": 0.6351351351351351,
+        "macro_f1": 0.43399076048329777,
+        "n_errors": 54.0,
+        "n_total": 148.0
+      },
+      "Twin Strike": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.4529244551640968,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Warcry": {
+        "accuracy": 0.6013513513513513,
+        "macro_f1": 0.45454545454545453,
+        "n_errors": 59.0,
+        "n_total": 148.0
+      },
+      "Wild Strike": {
+        "accuracy": 0.6148648648648649,
+        "macro_f1": 0.44693596736940394,
+        "n_errors": 57.0,
+        "n_total": 148.0
+      },
+      "Battle Trance": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.6533209635573548,
+        "n_errors": 38.0,
+        "n_total": 148.0
+      },
+      "Blood for Blood": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.483970999301188,
+        "n_errors": 42.0,
+        "n_total": 148.0
+      },
+      "Bloodletting": {
+        "accuracy": 0.6486486486486487,
+        "macro_f1": 0.38059618424274805,
+        "n_errors": 52.0,
+        "n_total": 148.0
+      },
+      "Burning Pact": {
+        "accuracy": 0.6081081081081081,
+        "macro_f1": 0.4366744366744366,
+        "n_errors": 58.0,
+        "n_total": 148.0
+      },
+      "Carnage": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.520717377860235,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "Combust": {
+        "accuracy": 0.5878378378378378,
+        "macro_f1": 0.2672101449275362,
+        "n_errors": 61.0,
+        "n_total": 148.0
+      },
+      "Dark Embrace": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.4580023536334216,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Disarm": {
+        "accuracy": 0.6351351351351351,
+        "macro_f1": 0.30195517405817834,
+        "n_errors": 54.0,
+        "n_total": 148.0
+      },
+      "Dropkick": {
+        "accuracy": 0.49324324324324326,
+        "macro_f1": 0.4294221392260608,
+        "n_errors": 75.0,
+        "n_total": 148.0
+      },
+      "Dual Wield": {
+        "accuracy": 0.4391891891891892,
+        "macro_f1": 0.3396619231815654,
+        "n_errors": 83.0,
+        "n_total": 148.0
+      },
+      "Entrench": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.45639943741209565,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      },
+      "Evolve": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.4219327583171977,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      },
+      "Feel No Pain": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.4618298368298368,
+        "n_errors": 38.0,
+        "n_total": 148.0
+      },
+      "Fire Breathing": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.525,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "Flame Barrier": {
+        "accuracy": 0.722972972972973,
+        "macro_f1": 0.36334329757927436,
+        "n_errors": 41.0,
+        "n_total": 148.0
+      },
+      "Ghostly Armor": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.4841873278236915,
+        "n_errors": 26.0,
+        "n_total": 148.0
+      },
+      "Hemokinesis": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.43409806567701303,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Infernal Blade": {
+        "accuracy": 0.527027027027027,
+        "macro_f1": 0.3163265306122449,
+        "n_errors": 70.0,
+        "n_total": 148.0
+      },
+      "Inflame": {
+        "accuracy": 0.8108108108108109,
+        "macro_f1": 0.5292508417508417,
+        "n_errors": 28.0,
+        "n_total": 148.0
+      },
+      "Intimidate": {
+        "accuracy": 0.6351351351351351,
+        "macro_f1": 0.2825999598151497,
+        "n_errors": 54.0,
+        "n_total": 148.0
+      },
+      "Metallicize": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.34306195596518174,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Power Through": {
+        "accuracy": 0.43243243243243246,
+        "macro_f1": 0.43713802013721814,
+        "n_errors": 84.0,
+        "n_total": 148.0
+      },
+      "Pummel": {
+        "accuracy": 0.7635135135135135,
+        "macro_f1": 0.43573472688814235,
+        "n_errors": 35.0,
+        "n_total": 148.0
+      },
+      "Rage": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.4855701877276548,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Rampage": {
+        "accuracy": 0.6891891891891891,
+        "macro_f1": 0.4098303911388023,
+        "n_errors": 46.0,
+        "n_total": 148.0
+      },
+      "Reckless Charge": {
+        "accuracy": 0.6148648648648649,
+        "macro_f1": 0.4719761995881399,
+        "n_errors": 57.0,
+        "n_total": 148.0
+      },
+      "Rupture": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.4688387635756057,
+        "n_errors": 16.0,
+        "n_total": 148.0
+      },
+      "Searing Blow": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.4330470480203101,
+        "n_errors": 32.0,
+        "n_total": 148.0
+      },
+      "Second Wind": {
+        "accuracy": 0.6621621621621622,
+        "macro_f1": 0.4706866876372486,
+        "n_errors": 50.0,
+        "n_total": 148.0
+      },
+      "Seeing Red": {
+        "accuracy": 0.5743243243243243,
+        "macro_f1": 0.4121676535469639,
+        "n_errors": 63.0,
+        "n_total": 148.0
+      },
+      "Sentinel": {
+        "accuracy": 0.6081081081081081,
+        "macro_f1": 0.5223798055481224,
+        "n_errors": 58.0,
+        "n_total": 148.0
+      },
+      "Sever Soul": {
+        "accuracy": 0.5472972972972973,
+        "macro_f1": 0.43238288713149053,
+        "n_errors": 67.0,
+        "n_total": 148.0
+      },
+      "Shockwave": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.4611111111111111,
+        "n_errors": 44.0,
+        "n_total": 148.0
+      },
+      "Spot Weakness": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.46745658702180437,
+        "n_errors": 42.0,
+        "n_total": 148.0
+      },
+      "Uppercut": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.5039548022598871,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Whirlwind": {
+        "accuracy": 0.7364864864864865,
+        "macro_f1": 0.4279365079365079,
+        "n_errors": 39.0,
+        "n_total": 148.0
+      },
+      "Barricade": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5466893039049235,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "Berserk": {
+        "accuracy": 0.4864864864864865,
+        "macro_f1": 0.3159014898145333,
+        "n_errors": 76.0,
+        "n_total": 148.0
+      },
+      "Bludgeon": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.44083107497741647,
+        "n_errors": 30.0,
+        "n_total": 148.0
+      },
+      "Brutality": {
+        "accuracy": 0.722972972972973,
+        "macro_f1": 0.4222285983343634,
+        "n_errors": 41.0,
+        "n_total": 148.0
+      },
+      "Corruption": {
+        "accuracy": 0.777027027027027,
+        "macro_f1": 0.5741545893719806,
+        "n_errors": 33.0,
+        "n_total": 148.0
+      },
+      "Demon Form": {
+        "accuracy": 0.6486486486486487,
+        "macro_f1": 0.27428660533291754,
+        "n_errors": 52.0,
+        "n_total": 148.0
+      },
+      "Double Tap": {
+        "accuracy": 0.668918918918919,
+        "macro_f1": 0.44851344974044355,
+        "n_errors": 49.0,
+        "n_total": 148.0
+      },
+      "Exhume": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.41069389087010233,
+        "n_errors": 42.0,
+        "n_total": 148.0
+      },
+      "Feed": {
+        "accuracy": 0.5540540540540541,
+        "macro_f1": 0.33037037037037037,
+        "n_errors": 66.0,
+        "n_total": 148.0
+      },
+      "Fiend Fire": {
+        "accuracy": 0.5067567567567568,
+        "macro_f1": 0.3827080556084555,
+        "n_errors": 73.0,
+        "n_total": 148.0
+      },
+      "Immolate": {
+        "accuracy": 0.6756756756756757,
+        "macro_f1": 0.45599575089223626,
+        "n_errors": 48.0,
+        "n_total": 148.0
+      },
+      "Impervious": {
+        "accuracy": 0.8108108108108109,
+        "macro_f1": 0.5374564459930314,
+        "n_errors": 28.0,
+        "n_total": 148.0
+      },
+      "Juggernaut": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.48870056497175146,
+        "n_errors": 26.0,
+        "n_total": 148.0
+      },
+      "Limit Break": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.457070707070707,
+        "n_errors": 42.0,
+        "n_total": 148.0
+      },
+      "Offering": {
+        "accuracy": 0.527027027027027,
+        "macro_f1": 0.40890114128831706,
+        "n_errors": 70.0,
+        "n_total": 148.0
+      },
+      "Reaper": {
+        "accuracy": 0.5878378378378378,
+        "macro_f1": 0.42948250007073535,
+        "n_errors": 61.0,
+        "n_total": 148.0
+      }
+    },
+    "gpt4ominift": {
+      "Bash": {
+        "accuracy": 0.8108108108108109,
+        "macro_f1": 0.5042424242424243,
+        "n_errors": 28.0,
+        "n_total": 148.0
+      },
+      "Defend": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.6836535783904205,
+        "n_errors": 16.0,
+        "n_total": 148.0
+      },
+      "Strike": {
+        "accuracy": 0.8986486486486487,
+        "macro_f1": 0.4983734547820429,
+        "n_errors": 15.0,
+        "n_total": 148.0
+      },
+      "Anger": {
+        "accuracy": 0.8108108108108109,
+        "macro_f1": 0.45508349186218555,
+        "n_errors": 28.0,
+        "n_total": 148.0
+      },
+      "Armaments": {
+        "accuracy": 0.5,
+        "macro_f1": 0.31688912791929463,
+        "n_errors": 74.0,
+        "n_total": 148.0
+      },
+      "Body Slam": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.5002754820936639,
+        "n_errors": 24.0,
+        "n_total": 148.0
+      },
+      "Clash": {
+        "accuracy": 0.6216216216216216,
+        "macro_f1": 0.4609720392329088,
+        "n_errors": 56.0,
+        "n_total": 148.0
+      },
+      "Cleave": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.5146344846719378,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Clothesline": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.5118527906867577,
+        "n_errors": 16.0,
+        "n_total": 148.0
+      },
+      "Flex": {
+        "accuracy": 0.7094594594594594,
+        "macro_f1": 0.4626237959571293,
+        "n_errors": 43.0,
+        "n_total": 148.0
+      },
+      "Havoc": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.4301242236024845,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Headbutt": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.4451851851851852,
+        "n_errors": 38.0,
+        "n_total": 148.0
+      },
+      "Heavy Blade": {
+        "accuracy": 0.8716216216216216,
+        "macro_f1": 0.4706838499941948,
+        "n_errors": 19.0,
+        "n_total": 148.0
+      },
+      "Iron Wave": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.4568405139833711,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Perfected Strike": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.558987558987559,
+        "n_errors": 24.0,
+        "n_total": 148.0
+      },
+      "Pommel Strike": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.566730102961987,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Shrug it Off": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.5621274150685915,
+        "n_errors": 44.0,
+        "n_total": 148.0
+      },
+      "Sword Boomerang": {
+        "accuracy": 0.8986486486486487,
+        "macro_f1": 0.47474597273853786,
+        "n_errors": 15.0,
+        "n_total": 148.0
+      },
+      "Thunderclap": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.5226115603474094,
+        "n_errors": 26.0,
+        "n_total": 148.0
+      },
+      "True Grit": {
+        "accuracy": 0.7094594594594594,
+        "macro_f1": 0.4854473942969518,
+        "n_errors": 43.0,
+        "n_total": 148.0
+      },
+      "Twin Strike": {
+        "accuracy": 0.9459459459459459,
+        "macro_f1": 0.5542260208926876,
+        "n_errors": 8.0,
+        "n_total": 148.0
+      },
+      "Warcry": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.506877845587523,
+        "n_errors": 38.0,
+        "n_total": 148.0
+      },
+      "Wild Strike": {
+        "accuracy": 0.7364864864864865,
+        "macro_f1": 0.47087676272225626,
+        "n_errors": 39.0,
+        "n_total": 148.0
+      },
+      "Battle Trance": {
+        "accuracy": 0.722972972972973,
+        "macro_f1": 0.5441930618401206,
+        "n_errors": 41.0,
+        "n_total": 148.0
+      },
+      "Blood for Blood": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.49020921748194474,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      },
+      "Bloodletting": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.42371320996025386,
+        "n_errors": 42.0,
+        "n_total": 148.0
+      },
+      "Burning Pact": {
+        "accuracy": 0.6959459459459459,
+        "macro_f1": 0.4782020619118679,
+        "n_errors": 45.0,
+        "n_total": 148.0
+      },
+      "Carnage": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.4572905131044666,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "Combust": {
+        "accuracy": 0.8445945945945946,
+        "macro_f1": 0.3628037282474004,
+        "n_errors": 23.0,
+        "n_total": 148.0
+      },
+      "Dark Embrace": {
+        "accuracy": 0.831081081081081,
+        "macro_f1": 0.525365922978542,
+        "n_errors": 25.0,
+        "n_total": 148.0
+      },
+      "Disarm": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.39674586498572273,
+        "n_errors": 20.0,
+        "n_total": 148.0
+      },
+      "Dropkick": {
+        "accuracy": 0.7364864864864865,
+        "macro_f1": 0.40896656534954406,
+        "n_errors": 39.0,
+        "n_total": 148.0
+      },
+      "Dual Wield": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.3999100314889788,
+        "n_errors": 34.0,
+        "n_total": 148.0
+      },
+      "Entrench": {
+        "accuracy": 0.8986486486486487,
+        "macro_f1": 0.540685741880961,
+        "n_errors": 15.0,
+        "n_total": 148.0
+      },
+      "Evolve": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.3978946087379822,
+        "n_errors": 32.0,
+        "n_total": 148.0
+      },
+      "Feel No Pain": {
+        "accuracy": 0.8851351351351351,
+        "macro_f1": 0.5414965986394558,
+        "n_errors": 17.0,
+        "n_total": 148.0
+      },
+      "Fire Breathing": {
+        "accuracy": 0.8445945945945946,
+        "macro_f1": 0.4770939205721814,
+        "n_errors": 23.0,
+        "n_total": 148.0
+      },
+      "Flame Barrier": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.4578111946532999,
+        "n_errors": 14.0,
+        "n_total": 148.0
+      },
+      "Ghostly Armor": {
+        "accuracy": 0.8445945945945946,
+        "macro_f1": 0.4421644626842985,
+        "n_errors": 23.0,
+        "n_total": 148.0
+      },
+      "Hemokinesis": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.42377622377622376,
+        "n_errors": 24.0,
+        "n_total": 148.0
+      },
+      "Infernal Blade": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.39672727272727276,
+        "n_errors": 32.0,
+        "n_total": 148.0
+      },
+      "Inflame": {
+        "accuracy": 0.831081081081081,
+        "macro_f1": 0.5365981799418332,
+        "n_errors": 25.0,
+        "n_total": 148.0
+      },
+      "Intimidate": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.3584760649978041,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Metallicize": {
+        "accuracy": 0.8108108108108109,
+        "macro_f1": 0.3613505747126437,
+        "n_errors": 28.0,
+        "n_total": 148.0
+      },
+      "Power Through": {
+        "accuracy": 0.7635135135135135,
+        "macro_f1": 0.556755030892962,
+        "n_errors": 35.0,
+        "n_total": 148.0
+      },
+      "Pummel": {
+        "accuracy": 0.8716216216216216,
+        "macro_f1": 0.49310222851078883,
+        "n_errors": 19.0,
+        "n_total": 148.0
+      },
+      "Rage": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.4980749746707193,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Rampage": {
+        "accuracy": 0.7094594594594594,
+        "macro_f1": 0.38716462445276,
+        "n_errors": 43.0,
+        "n_total": 148.0
+      },
+      "Reckless Charge": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.39451570101724903,
+        "n_errors": 44.0,
+        "n_total": 148.0
+      },
+      "Rupture": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.46727898966704934,
+        "n_errors": 16.0,
+        "n_total": 148.0
+      },
+      "Searing Blow": {
+        "accuracy": 0.918918918918919,
+        "macro_f1": 0.5337825696316263,
+        "n_errors": 12.0,
+        "n_total": 148.0
+      },
+      "Second Wind": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.5363675363675363,
+        "n_errors": 34.0,
+        "n_total": 148.0
+      },
+      "Seeing Red": {
+        "accuracy": 0.668918918918919,
+        "macro_f1": 0.3764880952380952,
+        "n_errors": 49.0,
+        "n_total": 148.0
+      },
+      "Sentinel": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.4301242236024845,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Sever Soul": {
+        "accuracy": 0.722972972972973,
+        "macro_f1": 0.5277777777777778,
+        "n_errors": 41.0,
+        "n_total": 148.0
+      },
+      "Shockwave": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.5131174761311748,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Spot Weakness": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.5301587301587302,
+        "n_errors": 26.0,
+        "n_total": 148.0
+      },
+      "Uppercut": {
+        "accuracy": 0.75,
+        "macro_f1": 0.47213390125382443,
+        "n_errors": 37.0,
+        "n_total": 148.0
+      },
+      "Whirlwind": {
+        "accuracy": 0.8716216216216216,
+        "macro_f1": 0.48030888030888025,
+        "n_errors": 19.0,
+        "n_total": 148.0
+      },
+      "Barricade": {
+        "accuracy": 0.8851351351351351,
+        "macro_f1": 0.5665297996764962,
+        "n_errors": 17.0,
+        "n_total": 148.0
+      },
+      "Berserk": {
+        "accuracy": 0.6824324324324325,
+        "macro_f1": 0.34860493042311225,
+        "n_errors": 47.0,
+        "n_total": 148.0
+      },
+      "Bludgeon": {
+        "accuracy": 0.8986486486486487,
+        "macro_f1": 0.504941599281222,
+        "n_errors": 15.0,
+        "n_total": 148.0
+      },
+      "Brutality": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.5295800134255612,
+        "n_errors": 32.0,
+        "n_total": 148.0
+      },
+      "Corruption": {
+        "accuracy": 0.777027027027027,
+        "macro_f1": 0.5661013125801858,
+        "n_errors": 33.0,
+        "n_total": 148.0
+      },
+      "Demon Form": {
+        "accuracy": 0.722972972972973,
+        "macro_f1": 0.3646754873561419,
+        "n_errors": 41.0,
+        "n_total": 148.0
+      },
+      "Double Tap": {
+        "accuracy": 0.75,
+        "macro_f1": 0.4902998236331569,
+        "n_errors": 37.0,
+        "n_total": 148.0
+      },
+      "Exhume": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.43975322922691346,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Feed": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.4888888888888889,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Fiend Fire": {
+        "accuracy": 0.6756756756756757,
+        "macro_f1": 0.48721670486376367,
+        "n_errors": 48.0,
+        "n_total": 148.0
+      },
+      "Immolate": {
+        "accuracy": 0.831081081081081,
+        "macro_f1": 0.5669884984699799,
+        "n_errors": 25.0,
+        "n_total": 148.0
+      },
+      "Impervious": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.5380116959064327,
+        "n_errors": 14.0,
+        "n_total": 148.0
+      },
+      "Juggernaut": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.5097112860892389,
+        "n_errors": 18.0,
+        "n_total": 148.0
+      },
+      "Limit Break": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.5345736434108527,
+        "n_errors": 26.0,
+        "n_total": 148.0
+      },
+      "Offering": {
+        "accuracy": 0.6351351351351351,
+        "macro_f1": 0.41824114120949996,
+        "n_errors": 54.0,
+        "n_total": 148.0
+      },
+      "Reaper": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.5644340555605502,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      }
+    }
   }
 }

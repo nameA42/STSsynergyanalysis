@@ -144,6 +144,60 @@ def compute_agreement(pred1_df: pd.DataFrame, pred2_df: pd.DataFrame,
     return result
 
 
+def per_card_combined(pred_df: pd.DataFrame, truth_df: pd.DataFrame,
+                      exclude_diag: bool = True) -> pd.DataFrame:
+    cards = list(pred_df.index)
+    rows = []
+    for i, card in enumerate(cards):
+        yp_a = pred_df.iloc[i].values.astype(int)
+        yt_a = truth_df.iloc[i].values.astype(int)
+        yp_b = pred_df.iloc[:, i].values.astype(int)
+        yt_b = truth_df.iloc[:, i].values.astype(int)
+        if exclude_diag:
+            mask = np.ones(len(cards), dtype=bool)
+            mask[i] = False
+            yp_a, yt_a = yp_a[mask], yt_a[mask]
+            yp_b, yt_b = yp_b[mask], yt_b[mask]
+        yp = np.concatenate([yp_a, yp_b])
+        yt = np.concatenate([yt_a, yt_b])
+        _, _, f1, _ = precision_recall_fscore_support(yt, yp, labels=LABELS, zero_division=0)
+        rows.append({
+            "card": card,
+            "accuracy": float(accuracy_score(yt, yp)),
+            "macro_f1": float(np.mean(f1)),
+            "n_errors": int(np.sum(yp != yt)),
+            "n_total": len(yp),
+        })
+    return pd.DataFrame(rows).set_index("card")
+
+
+def card_profile(card: str, role: str, pred_dfs: dict,
+                 truth_df: pd.DataFrame) -> list:
+    """
+    role: 'a' = card is Card A (row), 'b' = card is Card B (column).
+    Returns list of dicts sorted by gt value then other_card name:
+      [{other_card, gt, model1_pred, model2_pred, ...}, ...]
+    pred_dfs: {model_name: DataFrame}
+    """
+    cards = list(truth_df.index)
+    rows = []
+    for other in cards:
+        if other == card:
+            continue
+        if role == 'a':
+            gt = int(truth_df.loc[card, other])
+            preds = {n: int(df.loc[card, other]) for n, df in pred_dfs.items()}
+        else:
+            gt = int(truth_df.loc[other, card])
+            preds = {n: int(df.loc[other, card]) for n, df in pred_dfs.items()}
+        row = {"other_card": other, "gt": gt}
+        row.update(preds)
+        rows.append(row)
+    # Sort by gt descending then other_card
+    rows.sort(key=lambda r: (-r["gt"], r["other_card"]))
+    return rows
+
+
 def error_breakdown(pred_df: pd.DataFrame, truth_df: pd.DataFrame,
                     exclude_diag: bool = True) -> dict:
     """Detailed breakdown of error types."""

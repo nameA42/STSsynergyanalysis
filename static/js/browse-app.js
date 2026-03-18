@@ -466,18 +466,32 @@
 
   // ── Sorting ────────────────────────────────────────────────────────────────
 
+  function cardIndexOf(cardName) {
+    return CONFIG.cards ? CONFIG.cards.indexOf(cardName) : -1;
+  }
+
+  function pairIdx(p) {
+    const ai = cardIndexOf(p.card_a);
+    const bi = cardIndexOf(p.card_b);
+    return (ai < 0 ? 9999 : ai) * 1000 + (bi < 0 ? 9999 : bi);
+  }
+
   function applySorting(rows) {
-    if (!fSortCol) return rows;
     const ds_name = MODEL_ORDER[0];
-    const validCols = new Set(['ground_truth', 'predicted', 'n_correct',
+    const validCols = new Set(['ground_truth', 'predicted', 'n_correct', 'pair_idx',
       ...MODEL_ORDER.filter(n => n !== ds_name).map(n => `pred_${n}`)]);
-    if (!validCols.has(fSortCol)) return rows;
+
+    if (!fSortCol || !validCols.has(fSortCol)) {
+      // Default: sort by pair_idx (card index order)
+      return [...rows].sort((a, b) => pairIdx(a) - pairIdx(b));
+    }
 
     return [...rows].sort((a, b) => {
       let av, bv;
       if (fSortCol === 'ground_truth') { av = a.gt; bv = b.gt; }
       else if (fSortCol === 'predicted') { av = a[ds_name]; bv = b[ds_name]; }
       else if (fSortCol === 'n_correct') { av = computeNCorrect(a); bv = computeNCorrect(b); }
+      else if (fSortCol === 'pair_idx') { av = pairIdx(a); bv = pairIdx(b); }
       else {
         // pred_<n>
         const n = fSortCol.slice(5);
@@ -615,7 +629,7 @@
     }).join('');
 
     return `<tr>
-      <th>Card A</th>
+      ${sortLink('pair_idx', 'Card A \u2195 Card B')}
       <th>Card B</th>
       ${sortLink('ground_truth', 'GT')}
       ${modelHeaders}
@@ -624,34 +638,69 @@
     </tr>`;
   }
 
-  function renderPagination(totalPages) {
-    const pg = document.getElementById('pagination');
-    if (totalPages <= 1) { pg.innerHTML = ''; return; }
-
-    const pages = [];
+  function buildPaginationHTML(totalPages, position) {
+    if (totalPages <= 1) return '';
     const lo = Math.max(1, currentPage - 3);
     const hi = Math.min(totalPages, currentPage + 3);
+    const parts = [];
 
+    parts.push(`<a href="#" class="page-btn page-btn-first${currentPage === 1 ? ' disabled' : ''}" data-page="1" title="First">&laquo;&laquo;</a>`);
     if (currentPage > 1) {
-      pages.push(`<a href="#" class="page-btn" data-page="${currentPage - 1}">&laquo; Prev</a>`);
+      parts.push(`<a href="#" class="page-btn" data-page="${currentPage - 1}">&laquo; Prev</a>`);
+    } else {
+      parts.push(`<span class="page-btn disabled">&laquo; Prev</span>`);
     }
     for (let p = lo; p <= hi; p++) {
-      pages.push(`<a href="#" class="page-btn${p === currentPage ? ' active' : ''}" data-page="${p}">${p}</a>`);
+      parts.push(`<a href="#" class="page-btn${p === currentPage ? ' active' : ''}" data-page="${p}">${p}</a>`);
     }
+    parts.push(`<span class="page-jump-wrap">page <input type="number" class="page-jump-input" id="page-jump-${position}" min="1" max="${totalPages}" value="${currentPage}" data-total="${totalPages}"> of ${totalPages}</span>`);
     if (currentPage < totalPages) {
-      pages.push(`<a href="#" class="page-btn" data-page="${currentPage + 1}">Next &raquo;</a>`);
+      parts.push(`<a href="#" class="page-btn" data-page="${currentPage + 1}">Next &raquo;</a>`);
+    } else {
+      parts.push(`<span class="page-btn disabled">Next &raquo;</span>`);
     }
-    pg.innerHTML = pages.join('');
+    parts.push(`<a href="#" class="page-btn page-btn-last${currentPage === totalPages ? ' disabled' : ''}" data-page="${totalPages}" title="Last">&raquo;&raquo;</a>`);
+    return parts.join('');
+  }
 
-    pg.querySelectorAll('.page-btn').forEach(a => {
+  function wirePaginationEvents(container) {
+    container.querySelectorAll('.page-btn[data-page]').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
+        if (a.classList.contains('disabled')) return;
         currentPage = parseInt(a.dataset.page, 10);
         applyAndRender();
         pushUrlParams();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     });
+    container.querySelectorAll('.page-jump-input').forEach(input => {
+      function navigate() {
+        const p = parseInt(input.value, 10);
+        const total = parseInt(input.dataset.total, 10);
+        if (!isNaN(p) && p >= 1 && p <= total) {
+          currentPage = p;
+          applyAndRender();
+          pushUrlParams();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); navigate(); }
+      });
+      input.addEventListener('change', navigate);
+    });
+  }
+
+  function renderPagination(totalPages) {
+    const html = buildPaginationHTML(totalPages, 'top');
+    const pgTop = document.getElementById('pagination-top');
+    const pgBottom = document.getElementById('pagination-bottom');
+    const pgLegacy = document.getElementById('pagination');
+
+    if (pgTop) { pgTop.innerHTML = html; wirePaginationEvents(pgTop); }
+    if (pgBottom) { pgBottom.innerHTML = buildPaginationHTML(totalPages, 'bottom'); wirePaginationEvents(pgBottom); }
+    if (pgLegacy) { pgLegacy.innerHTML = html; wirePaginationEvents(pgLegacy); }
   }
 
   function showDetailPanel(pair) {

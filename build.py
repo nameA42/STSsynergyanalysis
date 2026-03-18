@@ -150,10 +150,12 @@ def main():
     per_card_out = {
         "as_a": {},
         "as_b": {},
+        "combined": {},
     }
     for ds_name, df in model_dfs.items():
-        pc_a_df = mlib.per_card(df, truth_df)
-        pc_b_df = mlib.per_card_as_b(df, truth_df)
+        pc_a_df   = mlib.per_card(df, truth_df)
+        pc_b_df   = mlib.per_card_as_b(df, truth_df)
+        pc_comb_df = mlib.per_card_combined(df, truth_df)
         per_card_out["as_a"][ds_name] = {
             card: nan_safe(row.to_dict())
             for card, row in pc_a_df.iterrows()
@@ -162,10 +164,14 @@ def main():
             card: nan_safe(row.to_dict())
             for card, row in pc_b_df.iterrows()
         }
+        per_card_out["combined"][ds_name] = {
+            card: nan_safe(row.to_dict())
+            for card, row in pc_comb_df.iterrows()
+        }
     (DOCS_DATA / "per_card.json").write_text(
         json.dumps(per_card_out, indent=2), encoding="utf-8"
     )
-    print(f"  {len(cards)} cards × {len(model_dfs)} models (as_a and as_b)")
+    print(f"  {len(cards)} cards × {len(model_dfs)} models (as_a, as_b, combined)")
 
     # ── annotations.json ──────────────────────────────────────────
     print("\n[6/6] Loading annotations...")

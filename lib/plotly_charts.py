@@ -387,6 +387,96 @@ def agreement_heatmap(datasets_dict: dict, title: str) -> str:
     return _j(fig)
 
 
+def card_profile_fused(profile_data: list, model_names: list, card: str,
+                       role: str, title: str) -> str:
+    """
+    Fused view: all models + GT as grouped bars, one group per other card.
+    profile_data: list of dicts from metrics.card_profile()
+    Bars: GT first, then each model. Sorted by GT value desc already.
+    """
+    other_cards = [r["other_card"] for r in profile_data]
+    gt_vals = [r["gt"] for r in profile_data]
+
+    COLORS = {
+        "GT": "#1e293b",
+        "gpt4o": "#2563eb",
+        "gpt54": "#7c3aed",
+        "gemini10pro": "#16a34a",
+        "gemini15flash": "#059669",
+        "gpt4omini": "#ea580c",
+        "gpt4ominift": "#dc2626",
+    }
+    DEFAULT_COLORS = ["#2563eb","#7c3aed","#16a34a","#ea580c","#dc2626","#0891b2","#ca8a04"]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        name="GT", x=other_cards, y=gt_vals,
+        marker_color=COLORS.get("GT", "#1e293b"),
+        opacity=0.9,
+        hovertemplate="<b>%{x}</b><br>GT: %{y}<extra></extra>",
+    ))
+    for i, n in enumerate(model_names):
+        vals = [r.get(n, 0) for r in profile_data]
+        fig.add_trace(go.Bar(
+            name=n, x=other_cards, y=vals,
+            marker_color=COLORS.get(n, DEFAULT_COLORS[i % len(DEFAULT_COLORS)]),
+            opacity=0.82,
+            hovertemplate=f"<b>%{{x}}</b><br>{n}: %{{y}}<extra></extra>",
+        ))
+
+    role_label = "Card A" if role == "a" else "Card B"
+    fig.update_layout(
+        **_base_layout(
+            title=dict(text=title, font_size=15),
+            barmode="group",
+            height=500,
+            yaxis=dict(title="Synergy Value", tickvals=[-1, 0, 1],
+                       ticktext=["-1 (anti)", "0 (neutral)", "+1 (synergy)"],
+                       range=[-1.5, 1.5]),
+            xaxis=dict(tickangle=90, tickfont_size=7),
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, x=0),
+            margin=dict(l=80, r=20, t=70, b=160),
+        )
+    )
+    return _j(fig)
+
+
+def card_profile_separate(profile_data: list, model_name: str, card: str,
+                          role: str, title: str) -> str:
+    """
+    Separate view for one model: GT vs model predictions as grouped bars.
+    """
+    other_cards = [r["other_card"] for r in profile_data]
+    gt_vals  = [r["gt"] for r in profile_data]
+    pred_vals = [r.get(model_name, 0) for r in profile_data]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        name="GT", x=other_cards, y=gt_vals,
+        marker_color="#1e293b", opacity=0.85,
+        hovertemplate="<b>%{x}</b><br>GT: %{y}<extra></extra>",
+    ))
+    fig.add_trace(go.Bar(
+        name=model_name, x=other_cards, y=pred_vals,
+        marker_color="#2563eb", opacity=0.82,
+        hovertemplate=f"<b>%{{x}}</b><br>{model_name}: %{{y}}<extra></extra>",
+    ))
+
+    fig.update_layout(
+        **_base_layout(
+            title=dict(text=title, font_size=15),
+            barmode="group",
+            height=460,
+            yaxis=dict(title="Synergy Value", tickvals=[-1, 0, 1],
+                       ticktext=["-1", "0", "+1"], range=[-1.5, 1.5]),
+            xaxis=dict(tickangle=90, tickfont_size=7),
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, x=0),
+            margin=dict(l=80, r=20, t=70, b=160),
+        )
+    )
+    return _j(fig)
+
+
 def delta_per_card(pc_df1: pd.DataFrame, pc_df2: pd.DataFrame,
                    name1: str, name2: str, title: str) -> str:
     delta = (pc_df2["accuracy"] - pc_df1["accuracy"]) * 100

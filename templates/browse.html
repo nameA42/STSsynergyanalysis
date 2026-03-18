@@ -170,6 +170,37 @@
 </div>
 {% endif %}
 
+{% macro render_pagination(position) %}
+  {% if total_pages > 1 %}
+  <div class="pagination" id="pagination-{{ position }}">
+    <a href="{{ url_for('browse', **args_with(page=1)) }}" class="page-btn page-btn-first {% if page == 1 %}disabled{% endif %}" title="First">&laquo;&laquo;</a>
+    {% if page > 1 %}
+    <a href="{{ url_for('browse', **args_with(page=page-1)) }}" class="page-btn">&laquo; Prev</a>
+    {% else %}
+    <span class="page-btn disabled">&laquo; Prev</span>
+    {% endif %}
+
+    {% for p in range([1, page-3]|max, [total_pages+1, page+4]|min) %}
+    <a href="{{ url_for('browse', **args_with(page=p)) }}"
+       class="page-btn {% if p == page %}active{% endif %}">{{ p }}</a>
+    {% endfor %}
+
+    <span class="page-jump-wrap">
+      page <input type="number" class="page-jump-input" id="page-jump-{{ position }}"
+                  min="1" max="{{ total_pages }}" value="{{ page }}"
+                  data-total="{{ total_pages }}"> of {{ total_pages }}
+    </span>
+
+    {% if page < total_pages %}
+    <a href="{{ url_for('browse', **args_with(page=page+1)) }}" class="page-btn">Next &raquo;</a>
+    {% else %}
+    <span class="page-btn disabled">Next &raquo;</span>
+    {% endif %}
+    <a href="{{ url_for('browse', **args_with(page=total_pages)) }}" class="page-btn page-btn-last {% if page == total_pages %}disabled{% endif %}" title="Last">&raquo;&raquo;</a>
+  </div>
+  {% endif %}
+{% endmacro %}
+
 <!-- Results table -->
 <div class="card section-card">
   <div class="table-toolbar">
@@ -188,6 +219,8 @@
     </div>
   </div>
 
+  {{ render_pagination('top') }}
+
   <div class="table-scroll">
   <table class="data-table browse-table">
     <thead>
@@ -200,7 +233,9 @@
             </a>
           </th>
         {% endmacro %}
-        <th>Card A</th>
+        <th class="sortable {% if sort.col == 'pair_idx' %}sorted-{{ sort.order }}{% endif %}">
+          <a href="{{ url_for('browse', **args_with(sort='pair_idx', order='asc', page=1)) }}">Card A ↕ Card B</a>
+        </th>
         <th>Card B</th>
         {{ sort_header('ground_truth', 'GT') }}
         {% for n in model_order %}
@@ -268,23 +303,7 @@
   </table>
   </div>
 
-  <!-- Pagination -->
-  {% if total_pages > 1 %}
-  <div class="pagination">
-    {% if page > 1 %}
-    <a href="{{ url_for('browse', **args_with(page=page-1)) }}" class="page-btn">&laquo; Prev</a>
-    {% endif %}
-
-    {% for p in range([1, page-3]|max, [total_pages+1, page+4]|min) %}
-    <a href="{{ url_for('browse', **args_with(page=p)) }}"
-       class="page-btn {% if p == page %}active{% endif %}">{{ p }}</a>
-    {% endfor %}
-
-    {% if page < total_pages %}
-    <a href="{{ url_for('browse', **args_with(page=page+1)) }}" class="page-btn">Next &raquo;</a>
-    {% endif %}
-  </div>
-  {% endif %}
+  {{ render_pagination('bottom') }}
 </div>
 
 {% endblock %}
@@ -455,5 +474,22 @@ if (annForm) {
 // Scroll detail panel into view if present
 const panel = document.getElementById('detail-panel');
 if (panel) panel.scrollIntoView({behavior: 'smooth', block: 'start'});
+
+// ── Page jump inputs ─────────────────────────────────────────────────────────
+document.querySelectorAll('.page-jump-input').forEach(function(input) {
+  function navigate() {
+    const p = parseInt(input.value, 10);
+    const total = parseInt(input.dataset.total, 10);
+    if (!isNaN(p) && p >= 1 && p <= total) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('page', String(p));
+      window.location.href = url.toString();
+    }
+  }
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); navigate(); }
+  });
+  input.addEventListener('change', navigate);
+});
 </script>
 {% endblock %}

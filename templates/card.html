@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-title-row">
+    <h1 class="page-title">Card Profile</h1>
+    <span class="page-sub">{{ card }} as {{ 'Card A' if role=='a' else 'Card B' }}</span>
+  </div>
+</div>
+
+<!-- Controls card -->
+<div class="card section-card">
+  <form method="GET" action="{{ url_for('card_page') }}" class="filter-form" id="card-form">
+    <div class="filter-row">
+      <!-- Card selector -->
+      <div class="filter-group">
+        <label class="filter-label">Card</label>
+        <input type="text" name="card" class="filter-input" value="{{ card }}" list="card-list" autocomplete="off">
+      </div>
+
+      <!-- Role toggle -->
+      <div class="filter-group">
+        <label class="filter-label">Role</label>
+        <div class="role-toggle">
+          <a href="{{ url_for('card_page', card=card, role='a', view=view, models=enabled|join(',')) }}"
+             class="btn btn-sm {% if role=='a' %}btn-primary{% else %}btn-secondary{% endif %}">As Card A</a>
+          <a href="{{ url_for('card_page', card=card, role='b', view=view, models=enabled|join(',')) }}"
+             class="btn btn-sm {% if role=='b' %}btn-primary{% else %}btn-secondary{% endif %}">As Card B</a>
+        </div>
+      </div>
+
+      <!-- View toggle -->
+      <div class="filter-group">
+        <label class="filter-label">View</label>
+        <div class="role-toggle">
+          <a href="{{ url_for('card_page', card=card, role=role, view='fused', models=enabled|join(',')) }}"
+             class="btn btn-sm {% if view=='fused' %}btn-primary{% else %}btn-secondary{% endif %}">Fused</a>
+          <a href="{{ url_for('card_page', card=card, role=role, view='separate', models=enabled|join(',')) }}"
+             class="btn btn-sm {% if view=='separate' %}btn-primary{% else %}btn-secondary{% endif %}">Separate</a>
+        </div>
+      </div>
+
+      <!-- Model toggles -->
+      <div class="filter-group">
+        <label class="filter-label">Models</label>
+        <div class="model-toggle-group">
+          {% for name in models %}
+          <a href="{{ url_for('card_page', card=card, role=role, view=view,
+                     models=((enabled|reject('equalto',name)|list if name in enabled else enabled+[name])|join(','))) }}"
+             class="btn btn-xs {% if name in enabled %}btn-primary{% else %}btn-ghost{% endif %}">{{ name }}</a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="filter-group filter-actions">
+        <button type="submit" class="btn btn-primary btn-sm">Go</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Charts -->
+{% if profile %}
+  {% if view == 'fused' %}
+  <div class="card section-card">
+    <h2 class="section-title">{{ card }} as {{ 'Card A' if role=='a' else 'Card B' }} — All Models</h2>
+    <div id="chart-fused"></div>
+    <script type="application/json" id="chart-fused-data">{{ charts.fused | safe }}</script>
+  </div>
+  {% else %}
+    {% for name in enabled %}
+    <div class="card section-card">
+      <h2 class="section-title">{{ card }} vs {{ name }}</h2>
+      <div id="chart-sep-{{ name }}"></div>
+      <script type="application/json" id="chart-sep-{{ name }}-data">{{ charts['sep_' + name] | safe }}</script>
+    </div>
+    {% endfor %}
+  {% endif %}
+{% else %}
+<div class="card section-card">
+  <div class="empty-state">Select a card to see its profile.</div>
+</div>
+{% endif %}
+
+<datalist id="card-list">
+  {% for c in cards %}<option value="{{ c }}">{% endfor %}
+</datalist>
+
+{% endblock %}
