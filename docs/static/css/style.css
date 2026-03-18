@@ -512,3 +512,20 @@ a:hover { text-decoration: underline; }
 .page-jump-input:focus { outline: none; border-color: var(--primary); background: white; }
 .page-btn-first, .page-btn-last { font-weight: 700; }
 .page-btn.disabled { pointer-events: none; opacity: 0.4; }
+
+/* ── Card profile confusion matrices ────────────────────────── */
+.cm-grid {
+  display: flex; flex-wrap: wrap; gap: 16px;
+}
+.cm-cell {
+  flex: 1; min-width: 280px;
+}
+.cm-label {
+  font-size: .8rem; font-weight: 600; color: var(--text-secondary);
+  margin-bottom: 4px; text-align: center;
+}
+.sep-chart-row {
+  display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;
+}
+.sep-bar  { flex: 2; min-width: 300px; }
+.sep-cm   { flex: 1; min-width: 280px; }

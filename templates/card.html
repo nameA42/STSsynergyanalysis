@@ -67,12 +67,25 @@
     <div id="chart-fused"></div>
     <script type="application/json" id="chart-fused-data">{{ charts.fused | safe }}</script>
   </div>
+  <div class="card section-card">
+    <h2 class="section-title">Confusion Matrix — All Models Combined</h2>
+    <div id="chart-cm-fused"></div>
+    <script type="application/json" id="chart-cm-fused-data">{{ charts.cm_fused | safe }}</script>
+  </div>
   {% else %}
     {% for name in enabled %}
     <div class="card section-card">
       <h2 class="section-title">{{ card }} vs {{ name }}</h2>
-      <div id="chart-sep-{{ name }}"></div>
-      <script type="application/json" id="chart-sep-{{ name }}-data">{{ charts['sep_' + name] | safe }}</script>
+      <div class="sep-chart-row">
+        <div class="sep-bar">
+          <div id="chart-sep-{{ name }}"></div>
+          <script type="application/json" id="chart-sep-{{ name }}-data">{{ charts['sep_' ~ name] | safe }}</script>
+        </div>
+        <div class="sep-cm">
+          <div id="chart-cm-{{ name }}"></div>
+          <script type="application/json" id="chart-cm-{{ name }}-data">{{ charts['cm_' ~ name] | safe }}</script>
+        </div>
+      </div>
     </div>
     {% endfor %}
   {% endif %}

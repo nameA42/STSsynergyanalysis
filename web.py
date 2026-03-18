@@ -357,7 +357,8 @@ def card_page():
     charts  = {}
 
     if card in cards:
-        pred_dfs = {n: _get(n) for n in enabled}
+        import numpy as np
+        from sklearn.metrics import confusion_matrix as sk_cm
         all_pred_dfs = {n: _get(n) for n in models}
         profile = M.card_profile(card, role, all_pred_dfs, truth)
 
@@ -374,6 +375,20 @@ def card_page():
                     profile, n, card, role,
                     f"{card} as {role_label} — {n}"
                 )
+
+        # Confusion matrices
+        yt = [r["gt"] for r in profile]
+        if view == "fused":
+            # Pool all enabled models into one combined CM
+            yt_all = yt * len(enabled)
+            yp_all = [r[n] for n in enabled for r in profile]
+            cm = sk_cm(yt_all, yp_all, labels=[-1, 0, 1])
+            charts["cm_fused"] = PC.confusion_matrix(cm, [-1, 0, 1], "All Models Combined")
+        else:
+            for n in enabled:
+                yp = [r[n] for r in profile]
+                cm = sk_cm(yt, yp, labels=[-1, 0, 1])
+                charts[f"cm_{n}"] = PC.confusion_matrix(cm, [-1, 0, 1], f"{n}")
 
     return render_template("card.html",
         active="card",
