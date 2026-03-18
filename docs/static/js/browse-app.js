@@ -6,17 +6,20 @@
   const ANN_KEY = 'sts_annotations';
 
   let CONFIG      = null;
+  let METRICS     = null;
   let PAIRS       = null;
   let ANNOTATIONS = {};  // pair_id → annotation
+  let MODEL_ORDER = [];  // model names sorted by accuracy descending
 
   // Filter state
-  let fDs       = '';
   let fCardA    = '';
   let fCardB    = '';
   let fGt       = '';
-  let fPred     = '';
-  let fCorrect  = {};   // {dsName: '1'|'0'|''}
+  let fCorrect  = {};   // {dsName: '1'|'0'|'-1'|'+1'|''}
+  let fPred     = {};   // {dsName: '1'|'0'|'-1'|''}
   let fPair     = '';
+  let fSortCol  = '';
+  let fSortDir  = 'asc';
 
   // Pagination
   let perPage    = 50;
@@ -26,11 +29,20 @@
 
   Promise.all([
     fetch('data/config.json').then(r => r.json()),
+    fetch('data/metrics.json').then(r => r.json()),
     fetch('data/pairs.json').then(r => r.json()),
     fetch('data/annotations.json').then(r => r.json()),
-  ]).then(([cfg, pairs, seedAnn]) => {
-    CONFIG = cfg;
-    PAIRS  = pairs;
+  ]).then(([cfg, met, pairs, seedAnn]) => {
+    CONFIG  = cfg;
+    METRICS = met;
+    PAIRS   = pairs;
+
+    // Sort models by accuracy descending
+    MODEL_ORDER = Object.keys(CONFIG.models).sort((a, b) => {
+      const accA = METRICS[a] ? METRICS[a].accuracy : 0;
+      const accB = METRICS[b] ? METRICS[b].accuracy : 0;
+      return accB - accA;
+    });
 
     // Load annotations from localStorage (merging seed)
     loadAnnotations(seedAnn);
@@ -43,17 +55,11 @@
       dl.appendChild(opt);
     });
 
-    // Build dataset select
-    const dsSel = document.getElementById('f-dataset');
-    Object.keys(CONFIG.models).forEach(name => {
-      const opt = document.createElement('option');
-      opt.value = name;
-      opt.textContent = name;
-      dsSel.appendChild(opt);
-    });
-
     // Build correctness filter rows
     buildCorrFilter();
+
+    // Build prediction filter rows
+    buildPredFilter();
 
     // Restore state from URL params
     readUrlParams();
@@ -89,12 +95,12 @@
     localStorage.setItem(ANN_KEY, JSON.stringify(Object.values(ANNOTATIONS)));
   }
 
-  // ── Correctness filter ─────────────────────────────────────────────────────
+  // ── Correctness filter (5-state) ───────────────────────────────────────────
 
   function buildCorrFilter() {
     const container = document.getElementById('corr-rows');
     container.innerHTML = '';
-    Object.keys(CONFIG.models).forEach(name => {
+    MODEL_ORDER.forEach(name => {
       const div = document.createElement('div');
       div.className = 'corr-row';
       div.innerHTML = `
@@ -111,7 +117,8 @@
         const ds  = this.dataset.ds;
         const inp = document.getElementById(`corr-${ds}`);
         const cur = inp.value;
-        const next = cur === '' ? '1' : cur === '1' ? '0' : '';
+        // 5-state cycle: '' → '1' → '0' → '-1' → '+1' → ''
+        const next = cur === '' ? '1' : cur === '1' ? '0' : cur === '0' ? '-1' : cur === '-1' ? '+1' : '';
         inp.value = next;
         fCorrect[ds] = next;
         applyCorrState(this, next);
@@ -120,13 +127,19 @@
   }
 
   function applyCorrState(btn, val) {
-    btn.classList.remove('state-any', 'state-ok', 'state-err');
+    btn.classList.remove('state-any', 'state-ok', 'state-err', 'state-under', 'state-over');
     if (val === '1') {
       btn.textContent = '✓';
       btn.classList.add('state-ok');
     } else if (val === '0') {
       btn.textContent = '✗';
       btn.classList.add('state-err');
+    } else if (val === '-1') {
+      btn.textContent = '-x';
+      btn.classList.add('state-under');
+    } else if (val === '+1') {
+      btn.textContent = '+x';
+      btn.classList.add('state-over');
     } else {
       btn.textContent = '—';
       btn.classList.add('state-any');
@@ -149,47 +162,113 @@
       : 'Filter by model &#9660;';
   }
 
+  // ── Prediction filter ──────────────────────────────────────────────────────
+
+  function buildPredFilter() {
+    const container = document.getElementById('pred-rows');
+    if (!container) return;
+    container.innerHTML = '';
+    MODEL_ORDER.forEach(name => {
+      const div = document.createElement('div');
+      div.className = 'pred-row';
+      div.innerHTML = `
+        <span class="pred-name">${escHtml(name)}</span>
+        <button type="button" class="pred-state-btn state-any" data-ds="${escHtml(name)}">—</button>
+        <input type="hidden" id="pred-inp-${escHtml(name)}" value="">`;
+      container.appendChild(div);
+      fPred[name] = '';
+    });
+
+    // Wire buttons
+    document.querySelectorAll('.pred-state-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const ds  = this.dataset.ds;
+        const inp = document.getElementById(`pred-inp-${ds}`);
+        const cur = inp.value;
+        // 4-state cycle: '' → '1' → '0' → '-1' → ''
+        const next = cur === '' ? '1' : cur === '1' ? '0' : cur === '0' ? '-1' : '';
+        inp.value = next;
+        fPred[ds] = next;
+        applyPredState(this, next);
+      });
+    });
+  }
+
+  function applyPredState(btn, val) {
+    btn.classList.remove('state-any', 'state-pos', 'state-neu', 'state-neg');
+    if (val === '1') {
+      btn.textContent = '+1';
+      btn.classList.add('state-pos');
+    } else if (val === '0') {
+      btn.textContent = '0';
+      btn.classList.add('state-neu');
+    } else if (val === '-1') {
+      btn.textContent = '-1';
+      btn.classList.add('state-neg');
+    } else {
+      btn.textContent = '—';
+      btn.classList.add('state-any');
+    }
+  }
+
+  function syncPredFilterUI() {
+    document.querySelectorAll('.pred-state-btn').forEach(btn => {
+      const ds  = btn.dataset.ds;
+      const inp = document.getElementById(`pred-inp-${ds}`);
+      const val = fPred[ds] || '';
+      inp.value = val;
+      applyPredState(btn, val);
+    });
+  }
+
   // ── URL params ─────────────────────────────────────────────────────────────
 
   function readUrlParams() {
     const params = new URLSearchParams(window.location.search);
-    fDs      = params.get('ds')     || Object.keys(CONFIG.models)[0];
     fCardA   = params.get('card_a') || '';
     fCardB   = params.get('card_b') || '';
     fGt      = params.get('gt')     || '';
-    fPred    = params.get('pred')   || '';
     fPair    = params.get('pair')   || '';
+    fSortCol = params.get('sort')   || '';
+    fSortDir = params.get('order')  || 'asc';
     perPage  = parseInt(params.get('pp') || '50', 10);
     currentPage = parseInt(params.get('page') || '1', 10);
 
     // Correctness filters
-    Object.keys(CONFIG.models).forEach(ds => {
+    MODEL_ORDER.forEach(ds => {
       fCorrect[ds] = params.get(`correct_${ds}`) || '';
     });
 
+    // Prediction filters
+    MODEL_ORDER.forEach(ds => {
+      fPred[ds] = params.get(`pred_${ds}`) || '';
+    });
+
     // Sync UI
-    document.getElementById('f-dataset').value = fDs;
-    document.getElementById('f-card-a').value  = fCardA;
-    document.getElementById('f-card-b').value  = fCardB;
-    document.getElementById('f-gt').value       = fGt;
-    document.getElementById('f-pred').value     = fPred;
+    document.getElementById('f-card-a').value = fCardA;
+    document.getElementById('f-card-b').value = fCardB;
+    document.getElementById('f-gt').value     = fGt;
     syncCorrFilterUI();
+    syncPredFilterUI();
     updatePerPageUI();
   }
 
   function pushUrlParams() {
     const url = new URL(window.location.href);
     url.search = '';
-    if (fDs)     url.searchParams.set('ds',     fDs);
     if (fCardA)  url.searchParams.set('card_a', fCardA);
     if (fCardB)  url.searchParams.set('card_b', fCardB);
     if (fGt)     url.searchParams.set('gt',     fGt);
-    if (fPred)   url.searchParams.set('pred',   fPred);
     if (fPair)   url.searchParams.set('pair',   fPair);
+    if (fSortCol) url.searchParams.set('sort',  fSortCol);
+    if (fSortDir !== 'asc') url.searchParams.set('order', fSortDir);
     if (perPage !== 50) url.searchParams.set('pp', String(perPage));
     if (currentPage > 1) url.searchParams.set('page', String(currentPage));
     Object.entries(fCorrect).forEach(([ds, val]) => {
       if (val !== '') url.searchParams.set(`correct_${ds}`, val);
+    });
+    Object.entries(fPred).forEach(([ds, val]) => {
+      if (val !== '') url.searchParams.set(`pred_${ds}`, val);
     });
     window.history.pushState({}, '', url.toString());
   }
@@ -197,26 +276,19 @@
   // ── Events ─────────────────────────────────────────────────────────────────
 
   function wireEvents() {
-    // Dataset change
-    document.getElementById('f-dataset').addEventListener('change', function () {
-      fDs = this.value;
-      currentPage = 1;
-      applyAndRender();
-      pushUrlParams();
-    });
-
     // Filter button
     document.getElementById('filter-btn').addEventListener('click', collectAndFilter);
 
     // Clear button
     document.getElementById('clear-btn').addEventListener('click', () => {
-      fCardA = ''; fCardB = ''; fGt = ''; fPred = ''; fPair = '';
+      fCardA = ''; fCardB = ''; fGt = ''; fPair = ''; fSortCol = ''; fSortDir = 'asc';
       Object.keys(fCorrect).forEach(k => { fCorrect[k] = ''; });
+      Object.keys(fPred).forEach(k => { fPred[k] = ''; });
       document.getElementById('f-card-a').value = '';
       document.getElementById('f-card-b').value = '';
       document.getElementById('f-gt').value     = '';
-      document.getElementById('f-pred').value   = '';
       syncCorrFilterUI();
+      syncPredFilterUI();
       currentPage = 1;
       applyAndRender();
       pushUrlParams();
@@ -238,12 +310,48 @@
     document.getElementById('corr-toggle').addEventListener('click', function (e) {
       e.stopPropagation();
       document.getElementById('corr-panel').classList.toggle('open');
+      const predPanel = document.getElementById('pred-panel');
+      if (predPanel) predPanel.classList.remove('open');
     });
     document.addEventListener('click', function (e) {
       if (!document.getElementById('corr-wrap').contains(e.target)) {
         document.getElementById('corr-panel').classList.remove('open');
       }
     });
+
+    // Pred toggle
+    const predToggle = document.getElementById('pred-toggle');
+    if (predToggle) {
+      predToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        document.getElementById('pred-panel').classList.toggle('open');
+        document.getElementById('corr-panel').classList.remove('open');
+      });
+      document.addEventListener('click', function (e) {
+        const predWrap = document.getElementById('pred-wrap');
+        if (predWrap && !predWrap.contains(e.target)) {
+          document.getElementById('pred-panel').classList.remove('open');
+        }
+      });
+    }
+
+    // Pred apply
+    const predApply = document.getElementById('pred-apply');
+    if (predApply) {
+      predApply.addEventListener('click', () => {
+        document.getElementById('pred-panel').classList.remove('open');
+        collectAndFilter();
+      });
+    }
+
+    // Pred clear
+    const predClear = document.getElementById('pred-clear');
+    if (predClear) {
+      predClear.addEventListener('click', () => {
+        Object.keys(fPred).forEach(k => { fPred[k] = ''; });
+        syncPredFilterUI();
+      });
+    }
 
     // Per-page
     document.querySelectorAll('.per-page-opt').forEach(a => {
@@ -305,7 +413,6 @@
     fCardA = document.getElementById('f-card-a').value.trim();
     fCardB = document.getElementById('f-card-b').value.trim();
     fGt    = document.getElementById('f-gt').value;
-    fPred  = document.getElementById('f-pred').value;
     currentPage = 1;
     applyAndRender();
     pushUrlParams();
@@ -320,9 +427,6 @@
   // ── Filtering ──────────────────────────────────────────────────────────────
 
   function applyFilters() {
-    const ds      = fDs || Object.keys(CONFIG.models)[0];
-    const allDs   = Object.keys(CONFIG.models);
-
     return PAIRS.filter(p => {
       // Pair filter
       if (fPair && p.pair_id !== fPair) return false;
@@ -334,18 +438,55 @@
       // GT
       if (fGt !== '' && p.gt !== parseInt(fGt, 10)) return false;
 
-      // Pred (uses current ds)
-      if (fPred !== '' && p[ds] !== parseInt(fPred, 10)) return false;
+      // Correctness filters (5 states)
+      for (const [ds, val] of Object.entries(fCorrect)) {
+        if (val === '') continue;
+        const pred = p[ds];
+        if (val === '1'  && pred !== p.gt) return false;
+        if (val === '0'  && pred === p.gt) return false;
+        if (val === '-1' && !(pred < p.gt)) return false;
+        if (val === '+1' && !(pred > p.gt)) return false;
+      }
 
-      // Correctness filters
-      for (const [corrDs, corrVal] of Object.entries(fCorrect)) {
-        if (corrVal === '') continue;
-        const correct = p[corrDs] === p.gt;
-        if (corrVal === '1' && !correct) return false;
-        if (corrVal === '0' &&  correct) return false;
+      // Prediction filters
+      for (const [ds, val] of Object.entries(fPred)) {
+        if (!val || ![-1, 0, 1].includes(parseInt(val, 10))) continue;
+        if (p[ds] !== parseInt(val, 10)) return false;
       }
 
       return true;
+    });
+  }
+
+  // ── Compute n_correct for a pair ──────────────────────────────────────────
+
+  function computeNCorrect(p) {
+    return MODEL_ORDER.reduce((sum, ds) => sum + (p[ds] === p.gt ? 1 : 0), 0);
+  }
+
+  // ── Sorting ────────────────────────────────────────────────────────────────
+
+  function applySorting(rows) {
+    if (!fSortCol) return rows;
+    const ds_name = MODEL_ORDER[0];
+    const validCols = new Set(['ground_truth', 'predicted', 'n_correct',
+      ...MODEL_ORDER.filter(n => n !== ds_name).map(n => `pred_${n}`)]);
+    if (!validCols.has(fSortCol)) return rows;
+
+    return [...rows].sort((a, b) => {
+      let av, bv;
+      if (fSortCol === 'ground_truth') { av = a.gt; bv = b.gt; }
+      else if (fSortCol === 'predicted') { av = a[ds_name]; bv = b[ds_name]; }
+      else if (fSortCol === 'n_correct') { av = computeNCorrect(a); bv = computeNCorrect(b); }
+      else {
+        // pred_<n>
+        const n = fSortCol.slice(5);
+        av = a[n];
+        bv = b[n];
+      }
+      if (av === bv) return 0;
+      const dir = fSortDir === 'desc' ? -1 : 1;
+      return (av < bv ? -1 : 1) * dir;
     });
   }
 
@@ -353,16 +494,16 @@
 
   function applyAndRender() {
     const filtered = applyFilters();
-    const total    = filtered.length;
+    const sorted   = applySorting(filtered);
+    const total    = sorted.length;
     const totalPages = Math.max(1, Math.ceil(total / perPage));
     currentPage = Math.min(currentPage, totalPages);
 
     const start = (currentPage - 1) * perPage;
-    const page  = filtered.slice(start, start + perPage);
+    const page  = sorted.slice(start, start + perPage);
 
-    const ds      = fDs || Object.keys(CONFIG.models)[0];
-    const allDs   = Object.keys(CONFIG.models);
-    const otherDs = allDs.filter(n => n !== ds);
+    const ds_name = MODEL_ORDER[0] || '';
+    const otherDs = MODEL_ORDER.slice(1);
 
     // Subtitle
     const active = Object.values(fCorrect).filter(v => v !== '').length;
@@ -371,15 +512,24 @@
 
     // Table head
     const thead = document.getElementById('browse-thead');
-    thead.innerHTML = `<tr>
-      <th>Card A</th>
-      <th>Card B</th>
-      <th>GT</th>
-      <th>${escHtml(ds)}</th>
-      ${otherDs.map(n => `<th>${escHtml(n)}</th>`).join('')}
-      <th class="corr-col-header" title="Correctness per model (${allDs.map(escHtml).join(', ')})">Correctness</th>
-      <th></th>
-    </tr>`;
+    thead.innerHTML = buildTableHead(ds_name, otherDs);
+
+    // Wire sort header clicks
+    thead.querySelectorAll('[data-sort-col]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const col = a.dataset.sortCol;
+        if (fSortCol === col) {
+          fSortDir = fSortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+          fSortCol = col;
+          fSortDir = 'asc';
+        }
+        currentPage = 1;
+        applyAndRender();
+        pushUrlParams();
+      });
+    });
 
     // Table body
     const tbody = document.getElementById('browse-tbody');
@@ -391,21 +541,29 @@
         const selected = fPair === pid;
         const hasAnn   = !!ANNOTATIONS[pid];
 
-        const gtBadge   = badge(p.gt);
-        const predBadge = badge(p[ds]);
-        const otherCells = otherDs.map(n => `<td>${badge(p[n])}</td>`).join('');
+        const gtBadge = badge(p.gt);
 
-        const corrIcons = allDs.map(n => {
-          const ok = p[n] === p.gt;
-          return `<span class="c-icon ${ok ? 'c-ok' : 'c-err'}" title="${escHtml(n)}: ${ok ? 'correct' : 'wrong'}">${ok ? '✓' : '✗'}</span>`;
+        // Prediction cells in model_order
+        const predCells = MODEL_ORDER.map(n => `<td>${badge(p[n])}</td>`).join('');
+
+        // Correctness icons in model_order
+        const corrIcons = MODEL_ORDER.map(n => {
+          const pred = p[n];
+          const gt   = p.gt;
+          if (pred === gt) {
+            return `<span class="c-icon c-ok" title="${escHtml(n)}: correct">✓</span>`;
+          } else if (pred < gt) {
+            return `<span class="c-icon c-under" title="${escHtml(n)}: under">-x</span>`;
+          } else {
+            return `<span class="c-icon c-over" title="${escHtml(n)}: over">+x</span>`;
+          }
         }).join('');
 
         return `<tr class="pair-row${selected ? ' selected-row' : ''}" data-pair="${escHtml(pid)}">
           <td><strong>${escHtml(p.card_a)}</strong></td>
           <td>${escHtml(p.card_b)}</td>
           <td>${gtBadge}</td>
-          <td>${predBadge}</td>
-          ${otherCells}
+          ${predCells}
           <td class="corr-col">${corrIcons}</td>
           <td class="action-col">${hasAnn ? '<span class="ann-indicator" title="Has annotation">&#9632;</span>' : ''}</td>
         </tr>`;
@@ -436,10 +594,34 @@
     // Detail panel
     if (fPair) {
       const pair = PAIRS.find(p => p.pair_id === fPair);
-      if (pair) showDetailPanel(pair, ds, allDs);
+      if (pair) showDetailPanel(pair);
     } else {
       document.getElementById('detail-panel').style.display = 'none';
     }
+  }
+
+  function buildTableHead(ds_name, otherDs) {
+    function sortLink(col, label) {
+      const isActive = fSortCol === col;
+      const nextDir  = (isActive && fSortDir === 'asc') ? 'desc' : 'asc';
+      const arrow    = isActive ? (fSortDir === 'asc' ? ' ↑' : ' ↓') : '';
+      const cls      = isActive ? `sortable sorted-${fSortDir}` : 'sortable';
+      return `<th class="${cls}"><a href="#" data-sort-col="${escHtml(col)}">${escHtml(label)}${arrow}</a></th>`;
+    }
+
+    const modelHeaders = MODEL_ORDER.map(n => {
+      const col = (n === ds_name) ? 'predicted' : `pred_${n}`;
+      return sortLink(col, n);
+    }).join('');
+
+    return `<tr>
+      <th>Card A</th>
+      <th>Card B</th>
+      ${sortLink('ground_truth', 'GT')}
+      ${modelHeaders}
+      ${sortLink('n_correct', 'Correctness')}
+      <th></th>
+    </tr>`;
   }
 
   function renderPagination(totalPages) {
@@ -472,7 +654,7 @@
     });
   }
 
-  function showDetailPanel(pair, ds, allDs) {
+  function showDetailPanel(pair) {
     const panel = document.getElementById('detail-panel');
     panel.style.display = '';
 
@@ -485,15 +667,19 @@
         <span class="detail-ds-name">Ground Truth</span>
         ${badgeLg(pair.gt)}
       </div>`,
-      ...allDs.map(n => {
+      ...MODEL_ORDER.map(n => {
         const val     = pair[n];
         const correct = val === pair.gt;
         const cls     = correct ? 'detail-correct' : 'detail-wrong';
-        const verdict = correct ? 'correct' : 'wrong';
+        let verdict;
+        if (correct) { verdict = 'correct'; }
+        else if (val < pair.gt) { verdict = '-x under'; }
+        else { verdict = '+x over'; }
+        const verdictCls = correct ? 'correct' : 'wrong';
         return `<div class="detail-value-row ${cls}">
           <span class="detail-ds-name">${escHtml(n)}</span>
           ${badgeLg(val)}
-          <span class="detail-verdict ${verdict}">${verdict}</span>
+          <span class="detail-verdict ${verdictCls}">${verdict}</span>
         </div>`;
       }),
     ];

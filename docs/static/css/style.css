@@ -449,8 +449,50 @@ a:hover { text-decoration: underline; }
 .corr-col-header { white-space: nowrap; }
 
 .c-icon {
-  display: inline-block; width: 16px; text-align: center;
-  font-size: .75rem; font-weight: 700; cursor: default;
+  display: inline-block; width: 20px; text-align: center;
+  font-size: .72rem; font-weight: 700; cursor: default;
 }
-.c-icon.c-ok  { color: #16a34a; }
-.c-icon.c-err { color: #dc2626; }
+.c-icon.c-ok    { color: #16a34a; }
+.c-icon.c-err   { color: #dc2626; }
+.c-icon.c-under { color: #7c3aed; }
+.c-icon.c-over  { color: #ea580c; }
+
+/* ── New correctness states ────────────────────────────────── */
+.corr-state-btn.state-under { background: #f5f3ff; border-color: #c4b5fd; color: #7c3aed; }
+.corr-state-btn.state-over  { background: #fff7ed; border-color: #fed7aa; color: #ea580c; }
+
+/* ── Prediction filter — same structure as corr-filter ──────── */
+.pred-wrap { position: relative; }
+.pred-panel {
+  display: none;
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 200;
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-md);
+  padding: 10px; min-width: 220px;
+}
+.pred-panel.open { display: block; }
+.pred-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 0;
+}
+.pred-name {
+  flex: 1; font-size: .8rem; font-weight: 500;
+  color: var(--text-primary); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.pred-state-btn {
+  width: 28px; height: 28px; border-radius: 6px;
+  border: 1.5px solid var(--border); background: var(--bg-secondary);
+  cursor: pointer; font-size: .75rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s; flex-shrink: 0;
+}
+.pred-state-btn.state-pos  { background: #f0fdf4; border-color: #86efac; color: #16a34a; }
+.pred-state-btn.state-neu  { background: #f8fafc; border-color: #94a3b8; color: #475569; }
+.pred-state-btn.state-neg  { background: #fef2f2; border-color: #fca5a5; color: #dc2626; }
+.pred-state-btn.state-any  { color: var(--text-muted); }
+.pred-state-btn:hover { border-color: var(--primary); }
+.pred-footer {
+  display: flex; gap: 6px; margin-top: 8px;
+  padding-top: 8px; border-top: 1px solid var(--border);
+}

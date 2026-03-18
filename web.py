@@ -85,22 +85,26 @@ def analyze(ds_name=None):
     truth = _truth()
     pred  = _get(ds_name)
     m     = M.overall(pred, truth)
-    pc    = M.per_card(pred, truth)
+    pc_a  = M.per_card(pred, truth)
+    pc_b  = M.per_card_as_b(pred, truth)
     eb    = M.error_breakdown(pred, truth)
 
     charts = {
         "confusion":       PC.confusion_matrix(m["confusion_matrix"], [-1, 0, 1],
                                                "Confusion Matrix"),
         "class_dist":      PC.class_distribution(pred, truth, "Class Distribution"),
-        "per_card":        PC.per_card_accuracy(pc, "Per-Card Accuracy"),
+        "per_card_a":      PC.per_card_accuracy(pc_a, f"Per-Card Accuracy — as Card A"),
+        "per_card_b":      PC.per_card_accuracy(pc_b, f"Per-Card Accuracy — as Card B"),
         "pred_heatmap":    PC.synergy_heatmap(pred, f"Predictions — {ds_name}"),
         "error_heatmap":   PC.error_heatmap(pred, truth, f"Errors — {ds_name}"),
         "error_breakdown": PC.error_breakdown(eb, "Error Breakdown"),
     }
 
-    # Per-card table (worst 15 for summary)
-    worst = pc.sort_values("accuracy").head(15).reset_index()
-    best  = pc.sort_values("accuracy").tail(10).iloc[::-1].reset_index()
+    # Per-card tables (worst 15 / best 10 for each role)
+    worst_a = pc_a.sort_values("accuracy").head(15).reset_index()
+    best_a  = pc_a.sort_values("accuracy").tail(10).iloc[::-1].reset_index()
+    worst_b = pc_b.sort_values("accuracy").head(15).reset_index()
+    best_b  = pc_b.sort_values("accuracy").tail(10).iloc[::-1].reset_index()
 
     return render_template("analyze.html",
         active="analyze",
@@ -108,8 +112,10 @@ def analyze(ds_name=None):
         ds_name=ds_name,
         ds_info=load_config().get(ds_name, {}),
         metrics=m,
-        worst_cards=worst.to_dict("records"),
-        best_cards=best.to_dict("records"),
+        worst_a=worst_a.to_dict("records"),
+        best_a=best_a.to_dict("records"),
+        worst_b=worst_b.to_dict("records"),
+        best_b=best_b.to_dict("records"),
         charts=charts,
     )
 
@@ -190,24 +196,31 @@ def compare_view(datasets):
 def browse():
     import pandas as pd
     models   = _all_models()
-    ds_name  = request.args.get("dataset", _default_ds() if models else "")
+
+    # Sort models by accuracy descending (highest accuracy = leftmost column)
+    model_accuracies = {n: M.overall(_get(n), _truth())["accuracy"] for n in models}
+    sorted_model_names = sorted(models.keys(), key=lambda n: model_accuracies[n], reverse=True)
+
+    ds_name  = sorted_model_names[0] if sorted_model_names else ""
     card_a_q = request.args.get("card_a", "").strip()
     card_b_q = request.args.get("card_b", "").strip()
     gt_f     = request.args.get("gt", "")
-    pred_f   = request.args.get("pred", "")
     pair_sel = request.args.get("pair", "")
     page     = max(1, int(request.args.get("page", 1)))
     per_page = int(request.args.get("per_page", 50))
     sort_col = request.args.get("sort", "")
     sort_dir = request.args.get("order", "asc")
 
-    # Per-model correctness filters: "1"=must be correct, "0"=must be wrong, ""=any
+    # Per-model correctness filters: ""=any, "1"=correct, "0"=wrong (any), "-1"=under, "+1"=over
     correctness_filters = {n: request.args.get(f"correct_{n}", "") for n in models}
+
+    # Per-model prediction filters
+    pred_filters = {n: request.args.get(f"pred_{n}", "") for n in models}
 
     truth    = _truth()
     pred_df  = _get(ds_name) if ds_name in models else None
-    extra    = {n: _get(n) for n in models if n != ds_name}
-    other_ds = list(extra.keys())
+    other_ds = [n for n in sorted_model_names if n != ds_name]
+    extra    = {n: _get(n) for n in other_ds}
 
     pairs_df = M.pair_table(pred_df, truth, extra=extra) if pred_df is not None else pd.DataFrame()
 
@@ -215,6 +228,11 @@ def browse():
     if not pairs_df.empty:
         for n in other_ds:
             pairs_df[f"correct_{n}"] = pairs_df[f"pred_{n}"] == pairs_df["ground_truth"]
+
+        # Compute n_correct column (number of models that got the pair correct)
+        pairs_df["n_correct"] = pairs_df["correct"].astype(int)
+        for n in other_ds:
+            pairs_df["n_correct"] += pairs_df[f"correct_{n}"].astype(int)
 
     # Apply filters
     if not pairs_df.empty:
@@ -224,18 +242,36 @@ def browse():
             pairs_df = pairs_df[pairs_df["card_b"].str.contains(card_b_q, case=False, na=False)]
         if gt_f in ("-1", "0", "1"):
             pairs_df = pairs_df[pairs_df["ground_truth"] == int(gt_f)]
-        if pred_f in ("-1", "0", "1"):
-            pairs_df = pairs_df[pairs_df["predicted"] == int(pred_f)]
+
+        # Correctness filters (5 states)
         for n, val in correctness_filters.items():
-            if val not in ("1", "0"):
+            if val == "":
                 continue
-            must_correct = (val == "1")
-            if n == ds_name:
-                pairs_df = pairs_df[pairs_df["correct"] == must_correct]
-            elif f"correct_{n}" in pairs_df.columns:
-                pairs_df = pairs_df[pairs_df[f"correct_{n}"] == must_correct]
-        # Sorting
-        if sort_col in pairs_df.columns:
+            col = "predicted" if n == ds_name else f"pred_{n}"
+            if col not in pairs_df.columns:
+                continue
+            if val == "1":
+                pairs_df = pairs_df[pairs_df["ground_truth"] == pairs_df[col]]
+            elif val == "0":
+                pairs_df = pairs_df[pairs_df["ground_truth"] != pairs_df[col]]
+            elif val == "-1":
+                pairs_df = pairs_df[pairs_df[col] < pairs_df["ground_truth"]]
+            elif val == "+1":
+                pairs_df = pairs_df[pairs_df[col] > pairs_df["ground_truth"]]
+
+        # Prediction filters
+        for n, val in pred_filters.items():
+            if val not in ("-1", "0", "1"):
+                continue
+            col = "predicted" if n == ds_name else f"pred_{n}"
+            if col in pairs_df.columns:
+                pairs_df = pairs_df[pairs_df[col] == int(val)]
+
+        # Sorting — valid columns: ground_truth, predicted, pred_<n>, n_correct
+        valid_sort = {"ground_truth", "predicted", "n_correct"}
+        for n in other_ds:
+            valid_sort.add(f"pred_{n}")
+        if sort_col in valid_sort and sort_col in pairs_df.columns:
             pairs_df = pairs_df.sort_values(sort_col, ascending=(sort_dir == "asc"))
 
     total       = len(pairs_df)
@@ -274,14 +310,16 @@ def browse():
         models=models,
         ds_name=ds_name,
         other_ds=other_ds,
+        model_order=sorted_model_names,
         pairs=page_rows,
         ann_ids=ann_ids,
         total=total,
         page=page,
         total_pages=total_pages,
         per_page=per_page,
-        filters=dict(card_a=card_a_q, card_b=card_b_q, gt=gt_f, pred=pred_f),
+        filters=dict(card_a=card_a_q, card_b=card_b_q, gt=gt_f),
         correctness_filters=correctness_filters,
+        pred_filters=pred_filters,
         sort=dict(col=sort_col, order=sort_dir),
         pair_sel=pair_sel,
         selected=selected,

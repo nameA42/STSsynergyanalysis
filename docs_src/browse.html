@@ -34,13 +34,6 @@
     <div class="filter-form" id="filter-form">
       <div class="filter-row">
 
-        <!-- Dataset -->
-        <div class="filter-group">
-          <label class="filter-label">Dataset</label>
-          <select id="f-dataset" class="filter-select">
-          </select>
-        </div>
-
         <!-- Card A -->
         <div class="filter-group">
           <label class="filter-label">Card A (contains)</label>
@@ -64,18 +57,7 @@
           </select>
         </div>
 
-        <!-- Predicted -->
-        <div class="filter-group">
-          <label class="filter-label">Predicted</label>
-          <select id="f-pred" class="filter-select">
-            <option value="">All</option>
-            <option value="-1">-1 (anti)</option>
-            <option value="0">0 (neutral)</option>
-            <option value="1">+1 (synergy)</option>
-          </select>
-        </div>
-
-        <!-- Correctness filter -->
+        <!-- Correctness filter (5-state: any / correct / wrong / under / over) -->
         <div class="filter-group">
           <label class="filter-label">Correctness</label>
           <div class="corr-wrap" id="corr-wrap">
@@ -87,6 +69,23 @@
               <div class="corr-footer">
                 <button type="button" class="btn btn-primary btn-xs" id="corr-apply">Apply</button>
                 <button type="button" class="btn btn-ghost btn-xs" id="corr-clear">Clear all</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prediction filter (per-model predicted value: any / +1 / 0 / -1) -->
+        <div class="filter-group">
+          <label class="filter-label">Prediction</label>
+          <div class="pred-wrap" id="pred-wrap">
+            <button type="button" class="btn btn-secondary btn-sm" id="pred-toggle">
+              Filter by pred &#9660;
+            </button>
+            <div class="pred-panel" id="pred-panel">
+              <div id="pred-rows"></div>
+              <div class="pred-footer">
+                <button type="button" class="btn btn-primary btn-xs" id="pred-apply">Apply</button>
+                <button type="button" class="btn btn-ghost btn-xs" id="pred-clear">Clear all</button>
               </div>
             </div>
           </div>

@@ -89,30 +89,56 @@
     <div id="chart-error-breakdown"></div>
   </div>
 
-  <!-- Per-card accuracy chart -->
+  <!-- Per-card accuracy charts (as Card A and as Card B) -->
   <div class="card chart-card">
     <p class="chart-hint">Click a card bar to browse all its synergy pairs</p>
-    <div id="chart-per-card"></div>
+    <div id="chart-per-card-a"></div>
+  </div>
+  <div class="card chart-card">
+    <p class="chart-hint">Click a card bar to browse all its synergy pairs</p>
+    <div id="chart-per-card-b"></div>
   </div>
 
-  <!-- Problem/top cards summary -->
+  <!-- Problem/top cards summary — as Card A -->
   <div class="chart-grid-2">
     <div class="card section-card">
-      <h2 class="section-title">Problem Cards <span class="badge-count">worst 15</span></h2>
+      <h2 class="section-title">Problem Cards as A <span class="badge-count">worst 15</span></h2>
       <table class="data-table">
         <thead>
           <tr><th>#</th><th>Card</th><th>Accuracy</th><th>Errors</th><th>FP syn</th><th>FN syn</th></tr>
         </thead>
-        <tbody id="worst-cards-tbody"></tbody>
+        <tbody id="worst-cards-a-tbody"></tbody>
       </table>
     </div>
     <div class="card section-card">
-      <h2 class="section-title">Top Cards <span class="badge-count">best 10</span></h2>
+      <h2 class="section-title">Top Cards as A <span class="badge-count">best 10</span></h2>
       <table class="data-table">
         <thead>
           <tr><th>#</th><th>Card</th><th>Accuracy</th><th>Errors</th></tr>
         </thead>
-        <tbody id="best-cards-tbody"></tbody>
+        <tbody id="best-cards-a-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Problem/top cards summary — as Card B -->
+  <div class="chart-grid-2">
+    <div class="card section-card">
+      <h2 class="section-title">Problem Cards as B <span class="badge-count">worst 15</span></h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>#</th><th>Card</th><th>Accuracy</th><th>Errors</th><th>FP syn</th><th>FN syn</th></tr>
+        </thead>
+        <tbody id="worst-cards-b-tbody"></tbody>
+      </table>
+    </div>
+    <div class="card section-card">
+      <h2 class="section-title">Top Cards as B <span class="badge-count">best 10</span></h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>#</th><th>Card</th><th>Accuracy</th><th>Errors</th></tr>
+        </thead>
+        <tbody id="best-cards-b-tbody"></tbody>
       </table>
     </div>
   </div>

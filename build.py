@@ -89,6 +89,7 @@ def main():
         },
         "cards": cards,
     }
+    # model_order added after metrics are computed (see below)
     (DOCS_DATA / "config.json").write_text(
         json.dumps(config_out, indent=2), encoding="utf-8"
     )
@@ -135,19 +136,36 @@ def main():
         json.dumps(metrics_out, indent=2), encoding="utf-8"
     )
 
+    # Add model_order to config.json (sorted by accuracy descending)
+    accuracies = {n: metrics_out[n]["accuracy"] for n in model_names}
+    model_order = sorted(model_names, key=lambda n: accuracies[n], reverse=True)
+    config_out["model_order"] = model_order
+    (DOCS_DATA / "config.json").write_text(
+        json.dumps(config_out, indent=2), encoding="utf-8"
+    )
+    print(f"  model_order: {model_order}")
+
     # ── per_card.json ─────────────────────────────────────────────
     print("\n[5/6] Computing per_card.json...")
-    per_card_out = {}
+    per_card_out = {
+        "as_a": {},
+        "as_b": {},
+    }
     for ds_name, df in model_dfs.items():
-        pc_df = mlib.per_card(df, truth_df)
-        per_card_out[ds_name] = {
+        pc_a_df = mlib.per_card(df, truth_df)
+        pc_b_df = mlib.per_card_as_b(df, truth_df)
+        per_card_out["as_a"][ds_name] = {
             card: nan_safe(row.to_dict())
-            for card, row in pc_df.iterrows()
+            for card, row in pc_a_df.iterrows()
+        }
+        per_card_out["as_b"][ds_name] = {
+            card: nan_safe(row.to_dict())
+            for card, row in pc_b_df.iterrows()
         }
     (DOCS_DATA / "per_card.json").write_text(
         json.dumps(per_card_out, indent=2), encoding="utf-8"
     )
-    print(f"  {len(cards)} cards × {len(model_dfs)} models")
+    print(f"  {len(cards)} cards × {len(model_dfs)} models (as_a and as_b)")
 
     # ── annotations.json ──────────────────────────────────────────
     print("\n[6/6] Loading annotations...")

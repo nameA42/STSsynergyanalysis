@@ -107,5 +107,13 @@
     "Limit Break",
     "Offering",
     "Reaper"
+  ],
+  "model_order": [
+    "gpt4o",
+    "gpt54",
+    "gpt4ominift",
+    "gemini15flash",
+    "gpt4omini",
+    "gemini10pro"
   ]
 }

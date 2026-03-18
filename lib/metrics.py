@@ -85,6 +85,12 @@ def per_card(pred_df: pd.DataFrame, truth_df: pd.DataFrame,
     return pd.DataFrame(rows).set_index("card")
 
 
+def per_card_as_b(pred_df: pd.DataFrame, truth_df: pd.DataFrame,
+                  exclude_diag: bool = True) -> pd.DataFrame:
+    """Per-card metrics when the card appears as Card B (column). Transposes and reuses per_card."""
+    return per_card(pred_df.T, truth_df.T, exclude_diag)
+
+
 def pair_table(pred_df: pd.DataFrame, truth_df: pd.DataFrame,
                extra: dict | None = None,
                exclude_diag: bool = True) -> pd.DataFrame:

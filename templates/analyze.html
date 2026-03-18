@@ -87,22 +87,27 @@
   <script type="application/json" id="chart-error-breakdown-data">{{ charts.error_breakdown|safe }}</script>
 </div>
 
-<!-- Per-card accuracy chart -->
+<!-- Per-card accuracy charts (as Card A and as Card B) -->
 <div class="card chart-card">
   <p class="chart-hint">Click a card bar to browse all its synergy pairs</p>
-  <div id="chart-per-card"></div>
-  <script type="application/json" id="chart-per-card-data">{{ charts.per_card|safe }}</script>
+  <div id="chart-per-card-a"></div>
+  <script type="application/json" id="chart-per-card-a-data">{{ charts.per_card_a | safe }}</script>
+</div>
+<div class="card chart-card">
+  <p class="chart-hint">Click a card bar to browse all its synergy pairs</p>
+  <div id="chart-per-card-b"></div>
+  <script type="application/json" id="chart-per-card-b-data">{{ charts.per_card_b | safe }}</script>
 </div>
 
-<!-- Problem/top cards summary -->
+<!-- Problem/top cards summary — as Card A -->
 <div class="chart-grid-2">
   <div class="card section-card">
-    <h2 class="section-title">Problem Cards <span class="badge-count">worst 15</span></h2>
+    <h2 class="section-title">Problem Cards as A <span class="badge-count">worst 15</span></h2>
     <table class="data-table">
       <thead><tr><th>#</th><th>Card</th><th>Accuracy</th><th>Errors</th><th>FP syn</th><th>FN syn</th></tr></thead>
       <tbody>
-        {% for row in worst_cards %}
-        <tr class="clickable-row" data-href="{{ url_for('browse', card_a=row.card, dataset=ds_name) }}">
+        {% for row in worst_a %}
+        <tr class="clickable-row" data-href="{{ url_for('browse', card_a=row.card) }}">
           <td class="text-muted">{{ loop.index }}</td>
           <td><strong>{{ row.card }}</strong></td>
           <td>
@@ -120,12 +125,60 @@
     </table>
   </div>
   <div class="card section-card">
-    <h2 class="section-title">Top Cards <span class="badge-count">best 10</span></h2>
+    <h2 class="section-title">Top Cards as A <span class="badge-count">best 10</span></h2>
     <table class="data-table">
       <thead><tr><th>#</th><th>Card</th><th>Accuracy</th><th>Errors</th></tr></thead>
       <tbody>
-        {% for row in best_cards %}
-        <tr class="clickable-row" data-href="{{ url_for('browse', card_a=row.card, dataset=ds_name) }}">
+        {% for row in best_a %}
+        <tr class="clickable-row" data-href="{{ url_for('browse', card_a=row.card) }}">
+          <td class="text-muted">{{ loop.index }}</td>
+          <td><strong>{{ row.card }}</strong></td>
+          <td>
+            <div class="acc-bar-wrap">
+              <div class="acc-bar" style="width:{{ (row.accuracy*100)|round(1) }}%;background:#16a34a"></div>
+              <span>{{ "%.1f"|format(row.accuracy*100) }}%</span>
+            </div>
+          </td>
+          <td>{{ row.n_errors }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Problem/top cards summary — as Card B -->
+<div class="chart-grid-2">
+  <div class="card section-card">
+    <h2 class="section-title">Problem Cards as B <span class="badge-count">worst 15</span></h2>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>Card</th><th>Accuracy</th><th>Errors</th><th>FP syn</th><th>FN syn</th></tr></thead>
+      <tbody>
+        {% for row in worst_b %}
+        <tr class="clickable-row" data-href="{{ url_for('browse', card_b=row.card) }}">
+          <td class="text-muted">{{ loop.index }}</td>
+          <td><strong>{{ row.card }}</strong></td>
+          <td>
+            <div class="acc-bar-wrap">
+              <div class="acc-bar" style="width:{{ (row.accuracy*100)|round(1) }}%;background:{{ '#dc2626' if row.accuracy < 0.6 else ('#f97316' if row.accuracy < 0.75 else ('#84cc16' if row.accuracy < 0.9 else '#16a34a')) }}"></div>
+              <span>{{ "%.1f"|format(row.accuracy*100) }}%</span>
+            </div>
+          </td>
+          <td>{{ row.n_errors }}</td>
+          <td>{{ row.false_pos_synergy }}</td>
+          <td>{{ row.false_neg_synergy }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="card section-card">
+    <h2 class="section-title">Top Cards as B <span class="badge-count">best 10</span></h2>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>Card</th><th>Accuracy</th><th>Errors</th></tr></thead>
+      <tbody>
+        {% for row in best_b %}
+        <tr class="clickable-row" data-href="{{ url_for('browse', card_b=row.card) }}">
           <td class="text-muted">{{ loop.index }}</td>
           <td><strong>{{ row.card }}</strong></td>
           <td>
@@ -183,10 +236,16 @@ document.getElementById('chart-error-heatmap').addEventListener('sts:plotly_clic
   window.location.href = `/browse?pair=${encodeURIComponent(pt.y+'|'+pt.x)}&dataset=${DS_NAME}`;
 });
 
-// Per-card accuracy click → browse that card
-document.getElementById('chart-per-card').addEventListener('sts:plotly_click', function(e) {
+// Per-card accuracy (as A) click → browse that card
+document.getElementById('chart-per-card-a').addEventListener('sts:plotly_click', function(e) {
   const pt = e.detail;
-  window.location.href = `/browse?card_a=${encodeURIComponent(pt.y)}&dataset=${DS_NAME}`;
+  window.location.href = `/browse?card_a=${encodeURIComponent(pt.y)}`;
+});
+
+// Per-card accuracy (as B) click → browse that card
+document.getElementById('chart-per-card-b').addEventListener('sts:plotly_click', function(e) {
+  const pt = e.detail;
+  window.location.href = `/browse?card_b=${encodeURIComponent(pt.y)}`;
 });
 
 // Clickable table rows

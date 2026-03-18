@@ -111,7 +111,9 @@
 
   function renderCharts(ds) {
     const m      = METRICS[ds];
-    const pc     = PER_CARD[ds];
+    const pcData = PER_CARD;
+    const pc_a   = (pcData.as_a && pcData.as_a[ds]) ? pcData.as_a[ds] : (pcData[ds] || null);
+    const pc_b   = (pcData.as_b && pcData.as_b[ds]) ? pcData.as_b[ds] : null;
     const cards  = CONFIG.cards;
     const pairs  = PAIRS;
 
@@ -149,19 +151,36 @@
       Plotly.react('chart-error-breakdown', fig.data, fig.layout, CHART_CONFIG);
     }
 
-    // Per-card accuracy
-    if (pc) {
-      const fig = perCardAccuracy(pc, `Per-Card Accuracy — ${ds}`);
-      Plotly.react('chart-per-card', fig.data, fig.layout, CHART_CONFIG);
+    // Per-card accuracy — as Card A
+    if (pc_a) {
+      const fig = perCardAccuracy(pc_a, `Per-Card Accuracy — as Card A — ${ds}`);
+      Plotly.react('chart-per-card-a', fig.data, fig.layout, CHART_CONFIG);
 
-      const pcEl = document.getElementById('chart-per-card');
-      pcEl._dsName = ds;
-      if (!pcEl._clickBound) {
-        pcEl._clickBound = true;
-        pcEl.on('plotly_click', function (data) {
+      const pcAEl = document.getElementById('chart-per-card-a');
+      pcAEl._dsName = ds;
+      if (!pcAEl._clickBound) {
+        pcAEl._clickBound = true;
+        pcAEl.on('plotly_click', function (data) {
           if (!data.points || !data.points.length) return;
           const card = data.points[0].y;
-          window.location.href = `browse.html?card_a=${encodeURIComponent(card)}&ds=${encodeURIComponent(pcEl._dsName)}`;
+          window.location.href = `browse.html?card_a=${encodeURIComponent(card)}&ds=${encodeURIComponent(pcAEl._dsName)}`;
+        });
+      }
+    }
+
+    // Per-card accuracy — as Card B
+    if (pc_b) {
+      const fig = perCardAccuracy(pc_b, `Per-Card Accuracy — as Card B — ${ds}`);
+      Plotly.react('chart-per-card-b', fig.data, fig.layout, CHART_CONFIG);
+
+      const pcBEl = document.getElementById('chart-per-card-b');
+      pcBEl._dsName = ds;
+      if (!pcBEl._clickBound) {
+        pcBEl._clickBound = true;
+        pcBEl.on('plotly_click', function (data) {
+          if (!data.points || !data.points.length) return;
+          const card = data.points[0].y;
+          window.location.href = `browse.html?card_b=${encodeURIComponent(card)}&ds=${encodeURIComponent(pcBEl._dsName)}`;
         });
       }
     }
@@ -207,13 +226,9 @@
   // ── Card tables ────────────────────────────────────────────────────────────
 
   function renderCardTables(ds) {
-    const pc = PER_CARD[ds];
-    if (!pc) return;
-
-    const cards = Object.keys(pc);
-
-    // Sort by accuracy
-    const sorted = [...cards].sort((a, b) => pc[a].accuracy - pc[b].accuracy);
+    const pcData = PER_CARD;
+    const pc_a   = (pcData.as_a && pcData.as_a[ds]) ? pcData.as_a[ds] : (pcData[ds] || null);
+    const pc_b   = (pcData.as_b && pcData.as_b[ds]) ? pcData.as_b[ds] : null;
 
     function accBarHtml(acc) {
       let color = '#16a34a';
@@ -226,33 +241,48 @@
       </div>`;
     }
 
-    // Worst 15
-    const worstTbody = document.getElementById('worst-cards-tbody');
-    worstTbody.innerHTML = sorted.slice(0, 15).map((card, idx) => {
-      const r = pc[card];
-      return `<tr class="clickable-row" style="cursor:pointer"
-                  onclick="window.location.href='browse.html?card_a=${encodeURIComponent(card)}&ds=${encodeURIComponent(ds)}'">
-        <td class="text-muted">${idx + 1}</td>
-        <td><strong>${escHtml(card)}</strong></td>
-        <td>${accBarHtml(r.accuracy)}</td>
-        <td>${r.n_errors}</td>
-        <td>${r.false_pos_synergy ?? '—'}</td>
-        <td>${r.false_neg_synergy ?? '—'}</td>
-      </tr>`;
-    }).join('');
+    function renderWorstTable(pc, tbodyId, role) {
+      const tbody = document.getElementById(tbodyId);
+      if (!pc || !tbody) return;
+      const cards  = Object.keys(pc);
+      const sorted = [...cards].sort((a, b) => pc[a].accuracy - pc[b].accuracy);
+      const param  = role === 'a' ? 'card_a' : 'card_b';
+      tbody.innerHTML = sorted.slice(0, 15).map((card, idx) => {
+        const r = pc[card];
+        return `<tr class="clickable-row" style="cursor:pointer"
+                    onclick="window.location.href='browse.html?${param}=${encodeURIComponent(card)}&ds=${encodeURIComponent(ds)}'">
+          <td class="text-muted">${idx + 1}</td>
+          <td><strong>${escHtml(card)}</strong></td>
+          <td>${accBarHtml(r.accuracy)}</td>
+          <td>${r.n_errors}</td>
+          <td>${r.false_pos_synergy ?? '—'}</td>
+          <td>${r.false_neg_synergy ?? '—'}</td>
+        </tr>`;
+      }).join('');
+    }
 
-    // Best 10
-    const bestTbody = document.getElementById('best-cards-tbody');
-    bestTbody.innerHTML = sorted.slice(-10).reverse().map((card, idx) => {
-      const r = pc[card];
-      return `<tr class="clickable-row" style="cursor:pointer"
-                  onclick="window.location.href='browse.html?card_a=${encodeURIComponent(card)}&ds=${encodeURIComponent(ds)}'">
-        <td class="text-muted">${idx + 1}</td>
-        <td><strong>${escHtml(card)}</strong></td>
-        <td>${accBarHtml(r.accuracy)}</td>
-        <td>${r.n_errors}</td>
-      </tr>`;
-    }).join('');
+    function renderBestTable(pc, tbodyId, role) {
+      const tbody = document.getElementById(tbodyId);
+      if (!pc || !tbody) return;
+      const cards  = Object.keys(pc);
+      const sorted = [...cards].sort((a, b) => pc[a].accuracy - pc[b].accuracy);
+      const param  = role === 'a' ? 'card_a' : 'card_b';
+      tbody.innerHTML = sorted.slice(-10).reverse().map((card, idx) => {
+        const r = pc[card];
+        return `<tr class="clickable-row" style="cursor:pointer"
+                    onclick="window.location.href='browse.html?${param}=${encodeURIComponent(card)}&ds=${encodeURIComponent(ds)}'">
+          <td class="text-muted">${idx + 1}</td>
+          <td><strong>${escHtml(card)}</strong></td>
+          <td>${accBarHtml(r.accuracy)}</td>
+          <td>${r.n_errors}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    renderWorstTable(pc_a, 'worst-cards-a-tbody', 'a');
+    renderBestTable(pc_a,  'best-cards-a-tbody',  'a');
+    renderWorstTable(pc_b, 'worst-cards-b-tbody', 'b');
+    renderBestTable(pc_b,  'best-cards-b-tbody',  'b');
   }
 
   // ── Utilities ──────────────────────────────────────────────────────────────
