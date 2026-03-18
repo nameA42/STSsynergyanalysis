@@ -1,0 +1,13 @@
+[
+  {
+    "pair_id": "Bash|Anger",
+    "card_a": "Bash",
+    "card_b": "Anger",
+    "ground_truth": "1",
+    "note": "test",
+    "tags": "test",
+    "timestamp": "2026-03-17 16:30",
+    "pred_gpt4o": "1",
+    "pred_gpt54": "1"
+  }
+]

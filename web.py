@@ -195,13 +195,14 @@ def browse():
     card_b_q = request.args.get("card_b", "").strip()
     gt_f     = request.args.get("gt", "")
     pred_f   = request.args.get("pred", "")
-    errors   = request.args.get("errors_only", "") == "1"
-    disagree = request.args.get("disagree_only", "") == "1"
     pair_sel = request.args.get("pair", "")
     page     = max(1, int(request.args.get("page", 1)))
     per_page = int(request.args.get("per_page", 50))
     sort_col = request.args.get("sort", "")
     sort_dir = request.args.get("order", "asc")
+
+    # Per-model correctness filters: "1"=must be correct, "0"=must be wrong, ""=any
+    correctness_filters = {n: request.args.get(f"correct_{n}", "") for n in models}
 
     truth    = _truth()
     pred_df  = _get(ds_name) if ds_name in models else None
@@ -209,6 +210,11 @@ def browse():
     other_ds = list(extra.keys())
 
     pairs_df = M.pair_table(pred_df, truth, extra=extra) if pred_df is not None else pd.DataFrame()
+
+    # Compute correct_<n> for every extra dataset
+    if not pairs_df.empty:
+        for n in other_ds:
+            pairs_df[f"correct_{n}"] = pairs_df[f"pred_{n}"] == pairs_df["ground_truth"]
 
     # Apply filters
     if not pairs_df.empty:
@@ -220,13 +226,14 @@ def browse():
             pairs_df = pairs_df[pairs_df["ground_truth"] == int(gt_f)]
         if pred_f in ("-1", "0", "1"):
             pairs_df = pairs_df[pairs_df["predicted"] == int(pred_f)]
-        if errors:
-            pairs_df = pairs_df[~pairs_df["correct"]]
-        if disagree and other_ds:
-            mask = pd.Series(False, index=pairs_df.index)
-            for n in other_ds:
-                mask |= (pairs_df["predicted"] != pairs_df[f"pred_{n}"])
-            pairs_df = pairs_df[mask]
+        for n, val in correctness_filters.items():
+            if val not in ("1", "0"):
+                continue
+            must_correct = (val == "1")
+            if n == ds_name:
+                pairs_df = pairs_df[pairs_df["correct"] == must_correct]
+            elif f"correct_{n}" in pairs_df.columns:
+                pairs_df = pairs_df[pairs_df[f"correct_{n}"] == must_correct]
         # Sorting
         if sort_col in pairs_df.columns:
             pairs_df = pairs_df.sort_values(sort_col, ascending=(sort_dir == "asc"))
@@ -273,9 +280,8 @@ def browse():
         page=page,
         total_pages=total_pages,
         per_page=per_page,
-        filters=dict(card_a=card_a_q, card_b=card_b_q,
-                     gt=gt_f, pred=pred_f,
-                     errors_only=errors, disagree_only=disagree),
+        filters=dict(card_a=card_a_q, card_b=card_b_q, gt=gt_f, pred=pred_f),
+        correctness_filters=correctness_filters,
         sort=dict(col=sort_col, order=sort_dir),
         pair_sel=pair_sel,
         selected=selected,

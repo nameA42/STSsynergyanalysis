@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STS Synergy · Compare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.0.min.js" charset="utf-8"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-brand" href="analyze.html">STS Synergy</a>
+  <div class="nav-links">
+    <a href="analyze.html"  class="nav-link">Analyze</a>
+    <a href="compare.html"  class="nav-link active">Compare</a>
+    <a href="browse.html"   class="nav-link">Browse</a>
+    <a href="annotate.html" class="nav-link">Annotate</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-header">
+    <div class="page-title-row">
+      <h1 class="page-title">Compare</h1>
+      <span class="page-sub" id="compare-sub"></span>
+    </div>
+  </div>
+
+  <!-- Dataset selection -->
+  <div class="card section-card">
+    <h2 class="section-title">Select Datasets to Compare</h2>
+    <div class="compare-form">
+      <div class="checkbox-group" id="checkbox-group"></div>
+      <button type="button" class="btn btn-primary" id="compare-btn">Compare Selected</button>
+    </div>
+  </div>
+
+  <!-- Results (hidden until comparison runs) -->
+  <div id="compare-results" style="display:none">
+
+    <!-- Summary metrics table -->
+    <div class="card section-card">
+      <h2 class="section-title">Metrics Summary</h2>
+      <div class="table-scroll">
+        <table class="data-table" id="metrics-table">
+          <thead id="metrics-thead"></thead>
+          <tbody id="metrics-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Per-class F1 -->
+    <div class="card section-card">
+      <h2 class="section-title">Per-Class F1</h2>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead id="perclass-thead"></thead>
+          <tbody id="perclass-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Agreement stats (2 datasets only) -->
+    <div id="agreement-section" style="display:none">
+      <div class="card section-card">
+        <h2 class="section-title">Agreement Statistics</h2>
+        <div class="metric-row" id="agreement-metrics"></div>
+        <div style="margin-top:12px;">
+          <a href="#" id="browse-disagreements-btn" class="btn btn-secondary btn-sm">Browse disagreements</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="card chart-card">
+      <div id="chart-metrics-cmp"></div>
+    </div>
+
+    <div class="card chart-card">
+      <div id="chart-per-card-cmp"></div>
+    </div>
+
+    <div class="card chart-card" id="chart-delta-wrap" style="display:none">
+      <div id="chart-delta"></div>
+    </div>
+
+    <div class="card chart-card">
+      <div id="chart-agreement"></div>
+    </div>
+
+    <!-- Delta table (2 datasets only) -->
+    <div id="delta-tables" style="display:none" class="chart-grid-2">
+      <div class="card section-card">
+        <h2 class="section-title">Most Improved <span class="text-green" id="improved-label"></span></h2>
+        <table class="data-table">
+          <thead><tr><th>Card</th><th id="improved-h1"></th><th id="improved-h2"></th><th>Delta</th></tr></thead>
+          <tbody id="improved-tbody"></tbody>
+        </table>
+      </div>
+      <div class="card section-card">
+        <h2 class="section-title">Most Degraded <span class="text-red" id="degraded-label"></span></h2>
+        <table class="data-table">
+          <thead><tr><th>Card</th><th id="degraded-h1"></th><th id="degraded-h2"></th><th>Delta</th></tr></thead>
+          <tbody id="degraded-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /compare-results -->
+
+</div>
+
+<div id="toast" class="toast" role="alert"></div>
+
+<script src="static/js/app.js"></script>
+<script src="static/js/charts.js"></script>
+<script src="static/js/compare-app.js"></script>
+</body>
+</html>

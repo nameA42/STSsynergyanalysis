@@ -31,5 +31,19 @@
     "description": "Gemini 1.5 Flash synergy predictions",
     "model": "gemini-1.5-flash-002",
     "date": "2024-12-15"
+  },
+  "gpt4omini": {
+    "file": "data/gpt-4o-mini/synergy_results_gpt-4o-mini_1733867993.csv",
+    "type": "model",
+    "description": "GPT-4o-mini synergy predictions",
+    "model": "gpt-4o-mini",
+    "date": "2024-12-10"
+  },
+  "gpt4ominift": {
+    "file": "data/gpt-4o-mini-finetuned/synergy_results_gpt-4o-mini_1734041332.csv",
+    "type": "model",
+    "description": "GPT-4o-mini fine-tuned synergy predictions",
+    "model": "gpt-4o-mini-finetuned",
+    "date": "2024-12-13"
   }
 }

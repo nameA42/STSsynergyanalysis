@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STS Synergy · Browse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-brand" href="analyze.html">STS Synergy</a>
+  <div class="nav-links">
+    <a href="analyze.html"  class="nav-link">Analyze</a>
+    <a href="compare.html"  class="nav-link">Compare</a>
+    <a href="browse.html"   class="nav-link active">Browse</a>
+    <a href="annotate.html" class="nav-link">Annotate</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-header">
+    <div class="page-title-row">
+      <h1 class="page-title">Browse</h1>
+      <span class="page-sub" id="browse-sub">Loading…</span>
+    </div>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="card filter-card">
+    <div class="filter-form" id="filter-form">
+      <div class="filter-row">
+
+        <!-- Dataset -->
+        <div class="filter-group">
+          <label class="filter-label">Dataset</label>
+          <select id="f-dataset" class="filter-select">
+          </select>
+        </div>
+
+        <!-- Card A -->
+        <div class="filter-group">
+          <label class="filter-label">Card A (contains)</label>
+          <input type="text" id="f-card-a" class="filter-input" placeholder="e.g. Bash" list="card-list">
+        </div>
+
+        <!-- Card B -->
+        <div class="filter-group">
+          <label class="filter-label">Card B (contains)</label>
+          <input type="text" id="f-card-b" class="filter-input" placeholder="e.g. Anger" list="card-list">
+        </div>
+
+        <!-- Ground truth -->
+        <div class="filter-group">
+          <label class="filter-label">Ground Truth</label>
+          <select id="f-gt" class="filter-select">
+            <option value="">All</option>
+            <option value="-1">-1 (anti)</option>
+            <option value="0">0 (neutral)</option>
+            <option value="1">+1 (synergy)</option>
+          </select>
+        </div>
+
+        <!-- Predicted -->
+        <div class="filter-group">
+          <label class="filter-label">Predicted</label>
+          <select id="f-pred" class="filter-select">
+            <option value="">All</option>
+            <option value="-1">-1 (anti)</option>
+            <option value="0">0 (neutral)</option>
+            <option value="1">+1 (synergy)</option>
+          </select>
+        </div>
+
+        <!-- Correctness filter -->
+        <div class="filter-group">
+          <label class="filter-label">Correctness</label>
+          <div class="corr-wrap" id="corr-wrap">
+            <button type="button" class="btn btn-secondary btn-sm corr-toggle" id="corr-toggle">
+              Filter by model &#9660;
+            </button>
+            <div class="corr-panel" id="corr-panel">
+              <div id="corr-rows"></div>
+              <div class="corr-footer">
+                <button type="button" class="btn btn-primary btn-xs" id="corr-apply">Apply</button>
+                <button type="button" class="btn btn-ghost btn-xs" id="corr-clear">Clear all</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-group filter-actions">
+          <button type="button" class="btn btn-primary btn-sm" id="filter-btn">Filter</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="clear-btn">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <datalist id="card-list"></datalist>
+
+  <!-- Detail panel (shown when a row is selected) -->
+  <div class="card detail-panel" id="detail-panel" style="display:none">
+    <div class="detail-header">
+      <div class="detail-pair-name">
+        <span class="detail-card" id="detail-card-a"></span>
+        <span class="detail-arrow">→</span>
+        <span class="detail-card" id="detail-card-b"></span>
+      </div>
+      <button class="detail-close" id="detail-close" title="Close">&times;</button>
+    </div>
+    <div class="detail-body">
+      <div class="detail-values" id="detail-values"></div>
+      <div class="annotation-form-wrap">
+        <h3 class="ann-form-title" id="ann-form-title">Add Annotation</h3>
+        <form id="ann-form" class="ann-form">
+          <input type="hidden" id="ann-pair-id">
+          <div class="ann-field">
+            <label class="ann-label">Note</label>
+            <textarea id="ann-note" class="ann-textarea" placeholder="Research notes, observations..."></textarea>
+          </div>
+          <div class="ann-field">
+            <label class="ann-label">Tags <small class="text-muted">(comma-separated)</small></label>
+            <input type="text" id="ann-tags" class="ann-input" placeholder="e.g. false_negative, interesting">
+          </div>
+          <div class="ann-actions">
+            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+            <button type="button" class="btn btn-danger btn-sm" id="ann-delete-btn" style="display:none">Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results table -->
+  <div class="card section-card">
+    <div class="table-toolbar">
+      <span class="table-count" id="table-count">—</span>
+      <div class="per-page-select">
+        Show
+        <a href="#" class="per-page-opt" data-pp="25">25</a>
+        <a href="#" class="per-page-opt active" data-pp="50">50</a>
+        <a href="#" class="per-page-opt" data-pp="100">100</a>
+        <a href="#" class="per-page-opt" data-pp="200">200</a>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table class="data-table browse-table">
+        <thead id="browse-thead"></thead>
+        <tbody id="browse-tbody"></tbody>
+      </table>
+    </div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+</div>
+
+<div id="toast" class="toast" role="alert"></div>
+
+<script src="static/js/app.js"></script>
+<script src="static/js/browse-app.js"></script>
+</body>
+</html>

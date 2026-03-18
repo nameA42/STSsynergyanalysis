@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STS Synergy · Analyze</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.0.min.js" charset="utf-8"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-brand" href="analyze.html">STS Synergy</a>
+  <div class="nav-links">
+    <a href="analyze.html"  class="nav-link active">Analyze</a>
+    <a href="compare.html"  class="nav-link">Compare</a>
+    <a href="browse.html"   class="nav-link">Browse</a>
+    <a href="annotate.html" class="nav-link">Annotate</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- Dataset selector tabs -->
+  <div class="page-header">
+    <div class="page-title-row">
+      <h1 class="page-title">Analyze</h1>
+      <span class="page-sub" id="ds-sub"></span>
+    </div>
+    <div class="dataset-tabs" id="ds-tabs"></div>
+  </div>
+
+  <!-- Metric cards -->
+  <div class="metric-row" id="metric-row">
+    <div class="metric-card">
+      <div class="metric-value" id="m-accuracy">—</div>
+      <div class="metric-label">Accuracy</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="m-macro-f1">—</div>
+      <div class="metric-label">Macro F1</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="m-weighted-f1">—</div>
+      <div class="metric-label">Weighted F1</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="m-macro-prec">—</div>
+      <div class="metric-label">Macro Precision</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="m-macro-rec">—</div>
+      <div class="metric-label">Macro Recall</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value accent-red" id="m-errors">—</div>
+      <div class="metric-label" id="m-errors-label">Errors</div>
+    </div>
+  </div>
+
+  <!-- Confusion matrix + class distribution -->
+  <div class="chart-grid-2">
+    <div class="card chart-card">
+      <p class="chart-hint">Click a cell to browse those pairs in the Browse tab</p>
+      <div id="chart-confusion"></div>
+    </div>
+    <div class="card chart-card">
+      <div id="chart-class-dist"></div>
+    </div>
+  </div>
+
+  <!-- Per-class metrics table -->
+  <div class="card section-card">
+    <h2 class="section-title">Per-Class Metrics</h2>
+    <table class="data-table" id="per-class-table">
+      <thead>
+        <tr>
+          <th>Class</th><th>Precision</th><th>Recall</th><th>F1</th><th>Support</th>
+        </tr>
+      </thead>
+      <tbody id="per-class-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- Error breakdown -->
+  <div class="card chart-card">
+    <div id="chart-error-breakdown"></div>
+  </div>
+
+  <!-- Per-card accuracy chart -->
+  <div class="card chart-card">
+    <p class="chart-hint">Click a card bar to browse all its synergy pairs</p>
+    <div id="chart-per-card"></div>
+  </div>
+
+  <!-- Problem/top cards summary -->
+  <div class="chart-grid-2">
+    <div class="card section-card">
+      <h2 class="section-title">Problem Cards <span class="badge-count">worst 15</span></h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>#</th><th>Card</th><th>Accuracy</th><th>Errors</th><th>FP syn</th><th>FN syn</th></tr>
+        </thead>
+        <tbody id="worst-cards-tbody"></tbody>
+      </table>
+    </div>
+    <div class="card section-card">
+      <h2 class="section-title">Top Cards <span class="badge-count">best 10</span></h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>#</th><th>Card</th><th>Accuracy</th><th>Errors</th></tr>
+        </thead>
+        <tbody id="best-cards-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Prediction heatmap -->
+  <div class="card chart-card">
+    <p class="chart-hint">Click any cell to jump to that pair in Browse</p>
+    <div id="chart-pred-heatmap"></div>
+  </div>
+
+  <!-- Error heatmap -->
+  <div class="card chart-card">
+    <p class="chart-hint">Click any cell to jump to that pair in Browse</p>
+    <div id="chart-error-heatmap"></div>
+  </div>
+
+</div>
+
+<div id="toast" class="toast" role="alert"></div>
+
+<script src="static/js/app.js"></script>
+<script src="static/js/charts.js"></script>
+<script src="static/js/analyze-app.js"></script>
+</body>
+</html>

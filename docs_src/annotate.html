@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STS Synergy · Annotate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-brand" href="analyze.html">STS Synergy</a>
+  <div class="nav-links">
+    <a href="analyze.html"  class="nav-link">Analyze</a>
+    <a href="compare.html"  class="nav-link">Compare</a>
+    <a href="browse.html"   class="nav-link">Browse</a>
+    <a href="annotate.html" class="nav-link active">Annotate</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-header">
+    <div class="page-title-row">
+      <h1 class="page-title">Annotate</h1>
+      <span class="page-sub" id="ann-sub">0 saved annotations</span>
+    </div>
+  </div>
+
+  <!-- Add annotation form -->
+  <div class="card section-card">
+    <h2 class="section-title">Add / Update Annotation</h2>
+    <form id="ann-add-form" class="ann-add-form">
+      <div class="ann-add-row">
+        <div class="ann-add-field">
+          <label class="ann-label">Card A</label>
+          <input type="text" id="new-card-a" class="ann-input" placeholder="Bash" list="card-list" autocomplete="off">
+        </div>
+        <div class="ann-add-arrow">→</div>
+        <div class="ann-add-field">
+          <label class="ann-label">Card B</label>
+          <input type="text" id="new-card-b" class="ann-input" placeholder="Anger" list="card-list" autocomplete="off">
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="lookup-btn">Look up</button>
+      </div>
+
+      <!-- Pair preview (shown after lookup) -->
+      <div id="pair-preview" class="pair-preview hidden">
+        <div class="detail-values" id="preview-values"></div>
+      </div>
+
+      <div class="ann-field" style="margin-top:16px;">
+        <label class="ann-label">Note</label>
+        <textarea id="new-note" class="ann-textarea" rows="3"
+                  placeholder="Research notes, observations, reasons for this synergy rating..."></textarea>
+      </div>
+      <div class="ann-field">
+        <label class="ann-label">Tags <small class="text-muted">(comma-separated)</small></label>
+        <input type="text" id="new-tags" class="ann-input"
+               placeholder="false_negative, interesting, check_later, paper_example">
+      </div>
+      <div class="ann-actions">
+        <button type="submit" class="btn btn-primary">Save Annotation</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Filter + annotations list -->
+  <div class="card section-card">
+    <div class="ann-list-header">
+      <h2 class="section-title">Saved Annotations</h2>
+      <div class="ann-filter-form">
+        <input type="text" id="filter-card" class="filter-input filter-input-sm"
+               placeholder="Filter by card..." list="card-list">
+        <input type="text" id="filter-tag" class="filter-input filter-input-sm"
+               placeholder="Filter by tag...">
+        <button type="button" class="btn btn-secondary btn-sm" id="filter-ann-btn">Filter</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="clear-ann-btn">Clear</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="export-btn">Export JSON</button>
+        <label class="btn btn-secondary btn-sm" style="cursor:pointer;">
+          Import JSON
+          <input type="file" id="import-input" accept=".json" style="display:none">
+        </label>
+      </div>
+    </div>
+
+    <div id="ann-table-wrap">
+      <div class="empty-state">No annotations yet. Browse card pairs and add notes from the Browse tab.</div>
+    </div>
+  </div>
+
+  <datalist id="card-list"></datalist>
+
+</div>
+
+<div id="toast" class="toast" role="alert"></div>
+
+<script src="static/js/app.js"></script>
+<script src="static/js/annotate-app.js"></script>
+</body>
+</html>

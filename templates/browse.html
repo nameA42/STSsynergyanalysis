@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 
+{% set active_corr = correctness_filters.values() | select('in', ['1','0']) | list | length %}
+
 <div class="page-header">
   <div class="page-title-row">
     <h1 class="page-title">Browse</h1>
-    <span class="page-sub">{{ total | default(0) | int | string }} pairs{% if filters.errors_only %} · errors only{% endif %}{% if filters.disagree_only %} · disagreements only{% endif %}</span>
+    <span class="page-sub">{{ total | default(0) | int }} pairs{% if active_corr %} &middot; {{ active_corr }} correctness filter{{ 's' if active_corr != 1 else '' }}{% endif %}</span>
   </div>
 </div>
 
@@ -60,18 +62,27 @@
         </select>
       </div>
 
-      <!-- Toggles -->
-      <div class="filter-group filter-toggles">
-        <label class="toggle-label">
-          <input type="checkbox" name="errors_only" value="1" {% if filters.errors_only %}checked{% endif %} onchange="this.form.submit()">
-          Errors only
-        </label>
-        {% if other_ds %}
-        <label class="toggle-label">
-          <input type="checkbox" name="disagree_only" value="1" {% if filters.disagree_only %}checked{% endif %} onchange="this.form.submit()">
-          Disagreements only
-        </label>
-        {% endif %}
+      <!-- Correctness filter -->
+      <div class="filter-group">
+        <label class="filter-label">Correctness</label>
+        <div class="corr-wrap" id="corr-wrap">
+          <button type="button" class="btn btn-secondary btn-sm corr-toggle" id="corr-toggle">
+            {% if active_corr %}{{ active_corr }} filter{{ 's' if active_corr != 1 }} active{% else %}Filter by model{% endif %} &#9660;
+          </button>
+          <div class="corr-panel" id="corr-panel">
+            {% for n in models %}
+            <div class="corr-row">
+              <span class="corr-name">{{ n }}</span>
+              <button type="button" class="corr-state-btn" data-ds="{{ n }}">—</button>
+              <input type="hidden" name="correct_{{ n }}" id="corr-{{ n }}" value="{{ correctness_filters[n] }}">
+            </div>
+            {% endfor %}
+            <div class="corr-footer">
+              <button type="submit" class="btn btn-primary btn-xs">Apply</button>
+              <button type="button" class="btn btn-ghost btn-xs" id="corr-clear">Clear all</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="filter-group filter-actions">
@@ -192,16 +203,16 @@
         {% for n in other_ds %}
         <th>{{ n }}</th>
         {% endfor %}
-        <th>Status</th>
+        <th class="corr-col-header" title="Correctness per model ({{ ([ds_name] + other_ds) | join(', ') }})">Correctness</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       {% for row in pairs %}
-      {% set pid = row.card_a + '|' + row.card_b %}
+      {% set pid = row.card_a ~ '|' ~ row.card_b %}
       <tr class="pair-row {% if pair_sel == pid %}selected-row{% endif %}"
           data-pair="{{ pid }}"
-          data-href="{{ url_for('browse', **dict(request.args, pair=pid)) }}">
+          data-href="{{ url_for('browse', **args_with(pair=pid)) }}">
         <td><strong>{{ row.card_a }}</strong></td>
         <td>{{ row.card_b }}</td>
         <td>
@@ -215,19 +226,21 @@
           </span>
         </td>
         {% for n in other_ds %}
-        {% set ov = row['pred_' + n] %}
+        {% set ov = row['pred_' ~ n] %}
         <td>
           <span class="badge badge-{{ 'pos' if ov==1 else ('neg' if ov==-1 else 'neu') }}">
             {{ '+1' if ov==1 else ov }}
           </span>
         </td>
         {% endfor %}
-        <td>
-          {% if row.correct %}
-            <span class="status-dot correct" title="Correct">&#10003;</span>
-          {% else %}
-            <span class="status-dot wrong" title="Wrong ({{ '%+d' % row.error|int if row.error else '' }})">&#10007;</span>
-          {% endif %}
+        <td class="corr-col">
+          <span class="c-icon {% if row.correct %}c-ok{% else %}c-err{% endif %}"
+                title="{{ ds_name }}: {{ 'correct' if row.correct else 'wrong' }}">{{ '✓' if row.correct else '✗' }}</span>
+          {% for n in other_ds %}
+          {% set ok = row['correct_' ~ n] %}
+          <span class="c-icon {% if ok %}c-ok{% else %}c-err{% endif %}"
+                title="{{ n }}: {{ 'correct' if ok else 'wrong' }}">{{ '✓' if ok else '✗' }}</span>
+          {% endfor %}
         </td>
         <td class="action-col">
           {% if pid in ann_ids %}
@@ -265,14 +278,66 @@
 
 {% block scripts %}
 <script>
-// Pair row click → show detail panel
+// ── Correctness filter tri-state dropdown ────────────────────────────────────
+(function() {
+  const panel  = document.getElementById('corr-panel');
+  const toggle = document.getElementById('corr-toggle');
+  const clear  = document.getElementById('corr-clear');
+
+  // Toggle panel open/close
+  toggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    panel.classList.toggle('open');
+  });
+  document.addEventListener('click', function(e) {
+    if (!document.getElementById('corr-wrap').contains(e.target))
+      panel.classList.remove('open');
+  });
+
+  // Initialise buttons from hidden input values
+  document.querySelectorAll('.corr-state-btn').forEach(btn => {
+    const ds  = btn.dataset.ds;
+    const inp = document.getElementById('corr-' + ds);
+    applyState(btn, inp.value);
+
+    btn.addEventListener('click', function() {
+      const cur = inp.value;
+      const next = cur === '' ? '1' : cur === '1' ? '0' : '';
+      inp.value = next;
+      applyState(btn, next);
+    });
+  });
+
+  clear.addEventListener('click', function() {
+    document.querySelectorAll('.corr-state-btn').forEach(btn => {
+      document.getElementById('corr-' + btn.dataset.ds).value = '';
+      applyState(btn, '');
+    });
+  });
+
+  function applyState(btn, val) {
+    btn.classList.remove('state-any', 'state-ok', 'state-err');
+    if (val === '1') {
+      btn.textContent = '✓';
+      btn.classList.add('state-ok');
+    } else if (val === '0') {
+      btn.textContent = '✗';
+      btn.classList.add('state-err');
+    } else {
+      btn.textContent = '—';
+      btn.classList.add('state-any');
+    }
+  }
+})();
+
+// ── Pair row click → show detail panel ──────────────────────────────────────
 document.querySelectorAll('.pair-row').forEach(row => {
   row.addEventListener('click', () => {
     window.location.href = row.dataset.href;
   });
 });
 
-// Annotation form submit
+// ── Annotation form submit ───────────────────────────────────────────────────
 const annForm = document.getElementById('ann-form');
 if (annForm) {
   annForm.addEventListener('submit', function(e) {
