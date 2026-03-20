@@ -431,9 +431,6 @@
 
   function applyFilters() {
     return PAIRS.filter(p => {
-      // Pair filter
-      if (fPair && p.pair_id !== fPair) return false;
-
       // Card A/B substring
       if (fCardA && !p.card_a.toLowerCase().includes(fCardA.toLowerCase())) return false;
       if (fCardB && !p.card_b.toLowerCase().includes(fCardB.toLowerCase())) return false;
@@ -713,6 +710,17 @@
     document.getElementById('detail-card-a').textContent = pair.card_a;
     document.getElementById('detail-card-b').textContent = pair.card_b;
 
+    // Card descriptions
+    const descA = (CONFIG.card_descriptions || {})[pair.card_a] || '';
+    const descB = (CONFIG.card_descriptions || {})[pair.card_b] || '';
+    let descHTML = '';
+    if (descA || descB) {
+      descHTML = `<div class="detail-card-descs">
+        <div class="detail-card-desc"><span class="detail-card-desc-name">${escHtml(pair.card_a)}</span> <span class="detail-card-desc-text">${escHtml(descA)}</span></div>
+        <div class="detail-card-desc"><span class="detail-card-desc-name">${escHtml(pair.card_b)}</span> <span class="detail-card-desc-text">${escHtml(descB)}</span></div>
+      </div>`;
+    }
+
     const valuesDiv = document.getElementById('detail-values');
     const rows = [
       `<div class="detail-value-row detail-truth">
@@ -735,7 +743,7 @@
         </div>`;
       }),
     ];
-    valuesDiv.innerHTML = rows.join('');
+    valuesDiv.innerHTML = descHTML + rows.join('');
 
     // Reasoning
     const reasoningSection = document.getElementById('reasoning-section');

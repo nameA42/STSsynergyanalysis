@@ -114,6 +114,19 @@
 
   <div class="detail-body">
     <div class="detail-values">
+      <!-- Card descriptions -->
+      {% if selected.desc_a or selected.desc_b %}
+      <div class="detail-card-descs">
+        <div class="detail-card-desc">
+          <span class="detail-card-desc-name">{{ selected.card_a }}</span>
+          <span class="detail-card-desc-text">{{ selected.desc_a }}</span>
+        </div>
+        <div class="detail-card-desc">
+          <span class="detail-card-desc-name">{{ selected.card_b }}</span>
+          <span class="detail-card-desc-text">{{ selected.desc_b }}</span>
+        </div>
+      </div>
+      {% endif %}
       <!-- Ground truth -->
       <div class="detail-value-row detail-truth">
         <span class="detail-ds-name">Ground Truth</span>

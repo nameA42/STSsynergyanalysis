@@ -53,6 +53,30 @@ def _all_models() -> dict:
 def _default_ds() -> str:
     return next(iter(_all_models()))
 
+def _card_descriptions() -> dict:
+    """Return {card_name: description} from the Card Names CSV."""
+    import csv
+    from pathlib import Path
+    csv_path = Path(__file__).parent / "data" / "ground_truth" / "StS Synergies - Card Names.csv"
+    result = {}
+    if csv_path.exists():
+        with open(csv_path, encoding="utf-8", newline="") as f:
+            for row in csv.DictReader(f):
+                name = (row.get("Name") or row.get("C") or "").strip()
+                desc = row.get("Description", "").strip()
+                if name and desc:
+                    result[name] = desc
+    return result
+
+_card_desc_cache: dict | None = None
+
+def _get_card_descriptions() -> dict:
+    global _card_desc_cache
+    if _card_desc_cache is None:
+        _card_desc_cache = _card_descriptions()
+    return _card_desc_cache
+
+
 def _model_log_paths() -> dict:
     """Return {model_name: Path | None} for each model's log file."""
     from pathlib import Path
@@ -322,6 +346,7 @@ def browse():
                 if not match.empty:
                     ann_row = match.iloc[0].to_dict()
             reasoning = get_pair_responses(pair_sel, _model_log_paths())
+            descs = _get_card_descriptions()
             selected = {
                 "card_a": ca, "card_b": cb,
                 "pair_id": pair_sel,
@@ -329,6 +354,8 @@ def browse():
                 "predictions": preds,
                 "annotation": ann_row,
                 "reasoning": reasoning,
+                "desc_a": descs.get(ca, ""),
+                "desc_b": descs.get(cb, ""),
             }
 
     return render_template("browse.html",

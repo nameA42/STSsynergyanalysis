@@ -79,6 +79,18 @@ def main():
 
     # ── config.json ───────────────────────────────────────────────
     print("\n[2/6] Writing config.json...")
+    # Load card descriptions from Card Names CSV
+    import csv as _csv
+    card_names_csv = BASE_DIR / "data" / "ground_truth" / "StS Synergies - Card Names.csv"
+    card_descriptions = {}
+    if card_names_csv.exists():
+        with open(card_names_csv, encoding="utf-8", newline="") as f:
+            for row in _csv.DictReader(f):
+                name = (row.get("Name") or row.get("C") or "").strip()
+                desc = row.get("Description", "").strip()
+                if name and desc:
+                    card_descriptions[name] = desc
+
     config_out = {
         "models": {
             name: {
@@ -89,6 +101,7 @@ def main():
             for name, info in model_info.items()
         },
         "cards": cards,
+        "card_descriptions": card_descriptions,
     }
     # model_order added after metrics are computed (see below)
     (DOCS_DATA / "config.json").write_text(
