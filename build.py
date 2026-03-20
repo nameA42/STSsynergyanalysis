@@ -34,6 +34,7 @@ DOCS_SRC  = BASE_DIR / "docs_src"
 
 sys.path.insert(0, str(BASE_DIR))
 from lib import loader, metrics as mlib
+from lib.logs import find_log_for_csv, parse_log
 
 
 def nan_safe(obj):
@@ -173,8 +174,29 @@ def main():
     )
     print(f"  {len(cards)} cards × {len(model_dfs)} models (as_a, as_b, combined)")
 
+    # ── responses.json ────────────────────────────────────────────
+    print("\n[6/7] Parsing model log files for reasoning...")
+    responses_out = {}   # pair_id → {model_name: response_text}
+    for ds_name, info in model_info.items():
+        csv_path = BASE_DIR / info.get("file", "")
+        log_path = find_log_for_csv(csv_path)
+        if log_path is None:
+            print(f"  {ds_name}: no log file found")
+            continue
+        parsed = parse_log(log_path)
+        print(f"  {ds_name}: {len(parsed)} responses parsed")
+        for pair_id, text in parsed.items():
+            if pair_id not in responses_out:
+                responses_out[pair_id] = {}
+            responses_out[pair_id][ds_name] = text
+
+    (DOCS_DATA / "responses.json").write_text(
+        json.dumps(responses_out, ensure_ascii=False), encoding="utf-8"
+    )
+    print(f"  Total pairs with at least one response: {len(responses_out)}")
+
     # ── annotations.json ──────────────────────────────────────────
-    print("\n[6/6] Loading annotations...")
+    print("\n[7/7] Loading annotations...")
     ann_json_path = BASE_DIR / "annotations" / "annotations.json"
     ann_csv_path  = BASE_DIR / "annotations" / "annotations.csv"
 
@@ -236,6 +258,7 @@ def main():
     print(f"  data/metrics.json   : {(DOCS_DATA/'metrics.json').stat().st_size:,} bytes")
     print(f"  data/per_card.json  : {(DOCS_DATA/'per_card.json').stat().st_size:,} bytes")
     print(f"  data/annotations.json: {(DOCS_DATA/'annotations.json').stat().st_size:,} bytes")
+    print(f"  data/responses.json  : {(DOCS_DATA/'responses.json').stat().st_size:,} bytes")
     print("=" * 60)
 
 

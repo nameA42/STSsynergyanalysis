@@ -9,6 +9,7 @@
   let METRICS     = null;
   let PAIRS       = null;
   let ANNOTATIONS = {};  // pair_id → annotation
+  let RESPONSES   = {};  // pair_id → {model_name: response_text}
   let MODEL_ORDER = [];  // model names sorted by accuracy descending
 
   // Filter state
@@ -32,7 +33,9 @@
     fetch('data/metrics.json').then(r => r.json()),
     fetch('data/pairs.json').then(r => r.json()),
     fetch('data/annotations.json').then(r => r.json()),
-  ]).then(([cfg, met, pairs, seedAnn]) => {
+    fetch('data/responses.json').then(r => r.json()).catch(() => ({})),
+  ]).then(([cfg, met, pairs, seedAnn, responses]) => {
+    RESPONSES = responses || {};
     CONFIG  = cfg;
     METRICS = met;
     PAIRS   = pairs;
@@ -733,6 +736,26 @@
       }),
     ];
     valuesDiv.innerHTML = rows.join('');
+
+    // Reasoning
+    const reasoningSection = document.getElementById('reasoning-section');
+    const reasoningItems   = document.getElementById('reasoning-items');
+    const pairResponses    = RESPONSES[pair.pair_id] || {};
+    const modelNames       = Object.keys(pairResponses);
+    if (modelNames.length) {
+      reasoningItems.innerHTML = modelNames.map(n =>
+        `<details class="reasoning-item">
+          <summary class="reasoning-summary">
+            <span class="reasoning-model-name">${escHtml(n)}</span>
+            <span class="reasoning-arrow">▶</span>
+          </summary>
+          <div class="reasoning-body">${escHtml(pairResponses[n])}</div>
+        </details>`
+      ).join('');
+      reasoningSection.style.display = '';
+    } else {
+      reasoningSection.style.display = 'none';
+    }
 
     // Annotation form
     document.getElementById('ann-pair-id').value = pair.pair_id;
