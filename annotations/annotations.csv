@@ -1,2 +1,1 @@
-pair_id,card_a,card_b,ground_truth,note,tags,timestamp,pred_gpt4o,pred_gpt54
-Bash|Anger,Bash,Anger,1,test,test,2026-03-17 16:30,1,1
+pair_id,model,card_a,card_b,ground_truth,note,tags,timestamp,pred_gpt4o,pred_gpt54,pred_gemini10pro,pred_gemini15flash,pred_gpt4omini,pred_gpt4ominift

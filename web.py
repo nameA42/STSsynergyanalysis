@@ -15,7 +15,8 @@ from lib.loader import load_dataset, list_model_datasets, get_ground_truth_name,
 from lib import metrics as M
 from lib import plotly_charts as PC
 from lib.logs import find_log_for_csv, get_pair_responses
-from annotate import add_annotation, _load_annotations, delete_annotation
+from annotate import (add_annotation, _load_annotations, delete_annotation,
+                      get_annotations_for_pair, get_all_tags)
 
 app = Flask(__name__)
 app.secret_key = "sts-synergy-2026"
@@ -331,6 +332,7 @@ def browse():
     # Load annotation flags
     ann_df  = _load_annotations()
     ann_ids = set(ann_df["pair_id"].tolist()) if not ann_df.empty else set()
+    all_tags = get_all_tags()
 
     # Selected pair detail
     selected = None
@@ -340,11 +342,7 @@ def browse():
         if ca in cards and cb in cards:
             gt_val = int(truth.loc[ca, cb])
             preds  = {n: int(_get(n).loc[ca, cb]) for n in models}
-            ann_row = None
-            if not ann_df.empty:
-                match = ann_df[ann_df["pair_id"] == pair_sel]
-                if not match.empty:
-                    ann_row = match.iloc[0].to_dict()
+            annotations = get_annotations_for_pair(pair_sel)  # {model_key: row_dict}
             reasoning = get_pair_responses(pair_sel, _model_log_paths())
             descs = _get_card_descriptions()
             selected = {
@@ -352,7 +350,7 @@ def browse():
                 "pair_id": pair_sel,
                 "ground_truth": gt_val,
                 "predictions": preds,
-                "annotation": ann_row,
+                "annotations": annotations,
                 "reasoning": reasoning,
                 "desc_a": descs.get(ca, ""),
                 "desc_b": descs.get(cb, ""),
@@ -366,6 +364,7 @@ def browse():
         model_order=sorted_model_names,
         pairs=page_rows,
         ann_ids=ann_ids,
+        all_tags=all_tags,
         total=total,
         page=page,
         total_pages=total_pages,
@@ -449,12 +448,63 @@ def card_page():
 
 @app.route("/annotate")
 def annotate_page():
+    import json as _json
+    import plotly.graph_objs as go
+
     models     = _all_models()
     cards      = list(_truth().index)
     tag_filter = request.args.get("tag", "").strip()
     card_filt  = request.args.get("card", "").strip()
+    all_tags   = get_all_tags()
 
-    ann_df = _load_annotations()
+    ann_df_full = _load_annotations()
+
+    # Cross-model tag comparison
+    tag_chart    = None
+    tag_table    = []   # list of {tag, counts: {model_key: int}}
+    if not ann_df_full.empty and all_tags:
+        model_keys = [""] + list(models.keys())
+        counts = {}
+        for mk in model_keys:
+            if "model" in ann_df_full.columns:
+                model_anns = ann_df_full[ann_df_full["model"].fillna("") == mk]
+            else:
+                model_anns = ann_df_full if mk == "" else ann_df_full.iloc[0:0]
+            tc = {}
+            for raw in model_anns["tags"].dropna():
+                for t in str(raw).split(","):
+                    t = t.strip()
+                    if t:
+                        tc[t] = tc.get(t, 0) + 1
+            counts[mk] = tc
+
+        tag_table = [
+            {"tag": tag, "counts": {mk: counts[mk].get(tag, 0) for mk in model_keys}}
+            for tag in all_tags
+            if any(counts[mk].get(tag, 0) > 0 for mk in model_keys)
+        ]
+
+        if tag_table:
+            traces = []
+            for mk in model_keys:
+                label = "General" if mk == "" else mk
+                y_vals = [counts[mk].get(tag, 0) for tag in all_tags]
+                if any(v > 0 for v in y_vals):
+                    traces.append(go.Bar(name=label, x=all_tags, y=y_vals))
+            if traces:
+                fig = go.Figure(data=traces)
+                fig.update_layout(
+                    barmode="group",
+                    margin=dict(l=40, r=20, t=30, b=80),
+                    height=320,
+                    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    font=dict(color="#cdd6f4"),
+                )
+                tag_chart = _json.dumps(fig.to_dict())
+
+    ann_df = ann_df_full.copy() if not ann_df_full.empty else ann_df_full
     if not ann_df.empty:
         if tag_filter:
             ann_df = ann_df[ann_df["tags"].str.contains(tag_filter, case=False, na=False)]
@@ -463,6 +513,8 @@ def annotate_page():
                     ann_df["card_b"].str.contains(card_filt, case=False, na=False))
             ann_df = ann_df[mask]
     annotations = ann_df.to_dict("records") if not ann_df.empty else []
+    pred_cols = [c for c in (ann_df_full.columns if not ann_df_full.empty else [])
+                 if c.startswith("pred_")]
 
     return render_template("annotate.html",
         active="annotate",
@@ -471,8 +523,10 @@ def annotate_page():
         annotations=annotations,
         tag_filter=tag_filter,
         card_filter=card_filt,
-        pred_cols=[c for c in (_load_annotations().columns if not _load_annotations().empty else [])
-                   if c.startswith("pred_")],
+        all_tags=all_tags,
+        tag_table=tag_table,
+        tag_chart=tag_chart,
+        pred_cols=pred_cols,
     )
 
 
@@ -485,6 +539,7 @@ def api_annotate_add():
     card_b = data.get("card_b", "").strip()
     note   = data.get("note", "").strip()
     tags   = data.get("tags", "").strip()
+    model  = data.get("model", "").strip()
 
     truth  = _truth()
     models = _all_models()
@@ -498,7 +553,7 @@ def api_annotate_add():
     try:
         gt    = int(truth.loc[card_a, card_b])
         preds = {n: int(_get(n).loc[card_a, card_b]) for n in models}
-        add_annotation(card_a, card_b, gt, preds, note, tags)
+        add_annotation(card_a, card_b, gt, preds, note, tags, model=model)
         return jsonify({"success": True, "pair_id": f"{card_a}|{card_b}"})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
@@ -506,8 +561,10 @@ def api_annotate_add():
 
 @app.route("/api/annotate/delete", methods=["POST"])
 def api_annotate_delete():
-    pair_id = (request.json or {}).get("pair_id", "")
-    ok = delete_annotation(pair_id)
+    data    = request.json or {}
+    pair_id = data.get("pair_id", "")
+    model   = data.get("model", "").strip()
+    ok = delete_annotation(pair_id, model=model)
     return jsonify({"success": ok})
 
 
@@ -523,19 +580,16 @@ def api_pair(pair_id):
     if ca not in cards or cb not in cards:
         return jsonify({"error": "Card not found"}), 404
 
-    ann_df   = _load_annotations()
-    ann_row  = None
-    if not ann_df.empty:
-        match = ann_df[ann_df["pair_id"] == pair_id]
-        if not match.empty:
-            ann_row = {k: str(v) for k, v in match.iloc[0].to_dict().items()}
+    annotations = get_annotations_for_pair(pair_id)
+    # Convert to JSON-safe dicts
+    annotations_out = {k: {ck: str(cv) for ck, cv in v.items()} for k, v in annotations.items()}
 
     return jsonify({
         "card_a":       ca,
         "card_b":       cb,
         "ground_truth": int(truth.loc[ca, cb]),
         "predictions":  {n: int(_get(n).loc[ca, cb]) for n in models},
-        "annotation":   ann_row,
+        "annotations":  annotations_out,
     })
 
 

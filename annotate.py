@@ -34,8 +34,36 @@ from lib.loader import (
 ANNOTATIONS_FILE = Path(__file__).parent / "annotations" / "annotations.csv"
 
 # Column order in the CSV -- prediction columns are added dynamically
-_FIXED_COLS = ["pair_id", "card_a", "card_b", "ground_truth"]
+# model="" means general (not tied to any specific model)
+_FIXED_COLS = ["pair_id", "model", "card_a", "card_b", "ground_truth"]
 _META_COLS  = ["note", "tags", "timestamp"]
+
+# Default tags drawn from the paper's error taxonomy (Section VIII) and
+# challenge categories (Section V). Always shown as suggestions even when
+# no annotations exist yet.
+DEFAULT_TAGS = [
+    # Error types (§VIII)
+    "description_error",
+    "timing_error",
+    "timing_interruption",
+    "timing_immediacy",
+    "game_state_error",
+    "rule_error",
+    "skip_error",
+    "similarity_error",
+    # Challenge categories (§V)
+    "mixed_effects",
+    "conflicting_synergy",
+    "design_subversion",
+    "resource_management",
+    "scaling",
+    "external_factors",
+    # General
+    "false_positive",
+    "false_negative",
+    "interesting",
+    "paper_example",
+]
 
 
 # -- CSV I/O ------------------------------------------------------------------
@@ -44,11 +72,42 @@ def _load_annotations() -> pd.DataFrame:
     if not ANNOTATIONS_FILE.exists():
         return pd.DataFrame(columns=_FIXED_COLS + _META_COLS)
     df = pd.read_csv(ANNOTATIONS_FILE, dtype=str)
-    # Ensure required columns exist
+    # Ensure required columns exist (backwards-compat: old rows have no model column)
     for col in _FIXED_COLS + _META_COLS:
         if col not in df.columns:
             df[col] = ""
     return df
+
+
+def _ann_key(pair_id: str, model: str) -> tuple:
+    return (pair_id, model.strip())
+
+
+def get_annotations_for_pair(pair_id: str) -> dict:
+    """Return {model_key: row_dict} for all annotations on this pair.
+    model_key is "" for general annotations, or the model name."""
+    df = _load_annotations()
+    if df.empty:
+        return {}
+    rows = df[df["pair_id"] == pair_id]
+    result = {}
+    for _, row in rows.iterrows():
+        key = row.get("model", "").strip()
+        result[key] = row.to_dict()
+    return result
+
+
+def get_all_tags() -> list:
+    """Return sorted list of all unique tags (defaults + any used in annotations)."""
+    tags = set(DEFAULT_TAGS)
+    df = _load_annotations()
+    if not df.empty:
+        for raw in df["tags"].dropna():
+            for t in str(raw).split(","):
+                t = t.strip()
+                if t:
+                    tags.add(t)
+    return sorted(tags)
 
 
 def _save_annotations(df: pd.DataFrame):
@@ -63,22 +122,26 @@ def _build_pred_columns(preds: dict) -> dict:
 
 def add_annotation(card_a: str, card_b: str,
                    gt: int, preds: dict[str, int],
-                   note: str, tags: str) -> bool:
+                   note: str, tags: str,
+                   model: str = "") -> bool:
     """
     Add or update an annotation for a card pair.
-    Called from both annotate.py and browse.py.
+    model="" means general (not tied to any model).
+    Composite key is (pair_id, model).
     Returns True if added/updated, False if nothing to save.
     """
     if not note and not tags:
         return False
 
     df = _load_annotations()
-    pair_id = f"{card_a}|{card_b}"
+    pair_id   = f"{card_a}|{card_b}"
+    model     = model.strip()
     pred_cols = _build_pred_columns(preds)
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
 
     row = {
         "pair_id":      pair_id,
+        "model":        model,
         "card_a":       card_a,
         "card_b":       card_b,
         "ground_truth": str(gt),
@@ -92,11 +155,12 @@ def add_annotation(card_a: str, card_b: str,
     for col in pred_cols:
         if col not in df.columns:
             df[col] = ""
+    if "model" not in df.columns:
+        df["model"] = ""
 
-    # Update if exists, otherwise append
-    mask = df["pair_id"] == pair_id
+    # Update if (pair_id, model) exists, otherwise append
+    mask = (df["pair_id"] == pair_id) & (df["model"] == model)
     if mask.any():
-        # Preserve old note if new one is blank
         if not note:
             row["note"] = df.loc[mask, "note"].iloc[0]
         for col, val in row.items():
@@ -108,10 +172,13 @@ def add_annotation(card_a: str, card_b: str,
     return True
 
 
-def delete_annotation(pair_id: str) -> bool:
+def delete_annotation(pair_id: str, model: str = "") -> bool:
     df = _load_annotations()
+    model = model.strip()
+    if "model" not in df.columns:
+        df["model"] = ""
     before = len(df)
-    df = df[df["pair_id"] != pair_id]
+    df = df[~((df["pair_id"] == pair_id) & (df["model"] == model))]
     if len(df) == before:
         return False
     _save_annotations(df)

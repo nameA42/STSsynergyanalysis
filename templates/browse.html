@@ -168,30 +168,66 @@
     </div>
     {% endif %}
 
-    <!-- Annotation form -->
+    <!-- Annotation section -->
     <div class="annotation-form-wrap">
-      <h3 class="ann-form-title">
-        {% if selected.annotation %}Edit Annotation{% else %}Add Annotation{% endif %}
-      </h3>
+      <h3 class="ann-form-title">Annotations</h3>
+
+      <!-- Existing annotations (read-only list) -->
+      {% if selected.annotations %}
+      <div class="ann-existing-list">
+        {% for model_key, ann in selected.annotations.items() %}
+        <div class="ann-existing-item">
+          <div class="ann-existing-header">
+            <span class="ann-model-badge">{{ 'General' if not model_key else model_key }}</span>
+            <span class="text-muted text-sm">{{ ann.timestamp or '' }}</span>
+          </div>
+          {% if ann.note %}<p class="ann-existing-note">{{ ann.note }}</p>{% endif %}
+          {% if ann.tags %}
+          <div class="ann-existing-tags">
+            {% for tag in ann.tags.split(',') %}
+            <span class="tag-chip">{{ tag.strip() }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Add / edit form -->
+      <h4 class="ann-form-subtitle">Add / Edit</h4>
       <form id="ann-form" class="ann-form">
         <input type="hidden" id="ann-card-a" value="{{ selected.card_a }}">
         <input type="hidden" id="ann-card-b" value="{{ selected.card_b }}">
         <div class="ann-field">
+          <label class="ann-label">Model</label>
+          <select id="ann-model" class="ann-select">
+            <option value="">General</option>
+            {% for ds in model_order %}
+            <option value="{{ ds }}">{{ ds }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="ann-field">
           <label class="ann-label">Note</label>
-          <textarea id="ann-note" class="ann-textarea" placeholder="Research notes, observations...">{{ selected.annotation.note if selected.annotation else '' }}</textarea>
+          <textarea id="ann-note" class="ann-textarea" placeholder="Research notes, observations..."></textarea>
         </div>
         <div class="ann-field">
           <label class="ann-label">Tags <small class="text-muted">(comma-separated)</small></label>
           <input type="text" id="ann-tags" class="ann-input"
-                 placeholder="e.g. false_negative, interesting, check_later"
-                 value="{{ selected.annotation.tags if selected.annotation else '' }}">
+                 placeholder="e.g. false_negative, interesting, check_later">
+          {% if all_tags %}
+          <div class="tag-suggestions">
+            {% for tag in all_tags %}
+            <span class="tag-chip tag-suggest" data-tag="{{ tag }}">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
         </div>
         <div class="ann-actions">
           <button type="submit" class="btn btn-primary btn-sm">Save</button>
-          {% if selected.annotation %}
-          <button type="button" class="btn btn-danger btn-sm" id="ann-delete-btn"
+          <button type="button" class="btn btn-danger btn-sm hidden" id="ann-delete-btn"
                   data-pair-id="{{ selected.pair_id }}">Delete</button>
-          {% endif %}
         </div>
       </form>
     </div>
@@ -460,16 +496,51 @@ document.querySelectorAll('.pair-row').forEach(row => {
   });
 });
 
-// ── Annotation form submit ───────────────────────────────────────────────────
+// ── Annotation form (model-aware) ────────────────────────────────────────────
 const annForm = document.getElementById('ann-form');
 if (annForm) {
+  const ANN_DATA = {{ (selected.annotations if selected else {}) | tojson }};
+  const annModel  = document.getElementById('ann-model');
+  const annNote   = document.getElementById('ann-note');
+  const annTags   = document.getElementById('ann-tags');
+  const annDelBtn = document.getElementById('ann-delete-btn');
+
+  function loadAnnotationForModel(key) {
+    const ann = ANN_DATA[key] || {};
+    annNote.value = ann.note || '';
+    annTags.value = ann.tags || '';
+    if ((ann.note || ann.tags) && annDelBtn) {
+      annDelBtn.classList.remove('hidden');
+    } else if (annDelBtn) {
+      annDelBtn.classList.add('hidden');
+    }
+  }
+
+  if (annModel) {
+    annModel.addEventListener('change', function() { loadAnnotationForModel(this.value); });
+    loadAnnotationForModel(annModel.value);
+  }
+
+  // Tag suggestion chips
+  document.querySelectorAll('.tag-suggest').forEach(chip => {
+    chip.addEventListener('click', function() {
+      const tag = this.dataset.tag;
+      const cur = annTags.value.split(',').map(t => t.trim()).filter(Boolean);
+      if (!cur.includes(tag)) {
+        cur.push(tag);
+        annTags.value = cur.join(', ');
+      }
+    });
+  });
+
   annForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const body = {
       card_a: document.getElementById('ann-card-a').value,
       card_b: document.getElementById('ann-card-b').value,
-      note:   document.getElementById('ann-note').value,
-      tags:   document.getElementById('ann-tags').value,
+      note:   annNote.value,
+      tags:   annTags.value,
+      model:  annModel ? annModel.value : '',
     };
     fetch('/api/annotate/add', {
       method: 'POST',
@@ -478,19 +549,21 @@ if (annForm) {
     })
     .then(r => r.json())
     .then(d => {
-      if (d.success) showToast('Annotation saved', 'success');
+      if (d.success) { showToast('Annotation saved', 'success'); location.reload(); }
       else showToast('Error: ' + d.error, 'error');
     });
   });
 
-  const delBtn = document.getElementById('ann-delete-btn');
-  if (delBtn) {
-    delBtn.addEventListener('click', function() {
+  if (annDelBtn) {
+    annDelBtn.addEventListener('click', function() {
       if (!confirm('Delete this annotation?')) return;
       fetch('/api/annotate/delete', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({pair_id: this.dataset.pairId}),
+        body: JSON.stringify({
+          pair_id: this.dataset.pairId,
+          model:   annModel ? annModel.value : '',
+        }),
       })
       .then(r => r.json())
       .then(d => {

@@ -364,7 +364,25 @@ details[open] .reasoning-arrow { transform: rotate(90deg); }
 
 /* ── Annotation form ───────────────────────────────────────── */
 .annotation-form-wrap { display: flex; flex-direction: column; gap: 12px; }
-.ann-form-title { font-size: .9rem; font-weight: 600; color: var(--text); }
+.ann-form-title { font-size: .9rem; font-weight: 600; color: var(--text); margin: 0 0 4px; }
+.ann-form-subtitle { font-size: .85rem; font-weight: 600; color: var(--text-muted); margin: 8px 0 4px; }
+
+/* Existing annotations in browse detail */
+.ann-existing-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.ann-existing-item { padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-raised, var(--surface)); }
+.ann-existing-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.ann-model-badge { font-size: .72rem; font-weight: 700; padding: 1px 7px; background: var(--primary); color: #fff; border-radius: 10px; }
+.ann-existing-note { margin: 4px 0; font-size: .85rem; color: var(--text); }
+.ann-existing-tags { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 4px; }
+
+/* Model select */
+.ann-select { height: 34px; padding: 0 8px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: .875rem; color: var(--text); background: var(--surface); outline: none; }
+.ann-select:focus { border-color: var(--primary); }
+
+/* Tag suggestions */
+.tag-suggestions { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.tag-suggest { cursor: pointer; opacity: .75; transition: opacity .1s; }
+.tag-suggest:hover { opacity: 1; }
 
 .ann-form, .ann-add-form { display: flex; flex-direction: column; gap: 12px; }
 .ann-field { display: flex; flex-direction: column; gap: 4px; }
@@ -425,10 +443,12 @@ details[open] .reasoning-arrow { transform: rotate(90deg); }
 .page-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
 
 /* ── Color utilities ───────────────────────────────────────── */
-.text-green  { color: var(--green); }
-.text-red    { color: var(--red); }
-.text-muted  { color: var(--text-muted); }
-.text-sm     { font-size: var(--text-sm); }
+.text-green   { color: var(--green); }
+.text-red     { color: var(--red); }
+.text-muted   { color: var(--text-muted); }
+.text-sm      { font-size: var(--text-sm); }
+.text-center  { text-align: center; }
+.hidden       { display: none !important; }
 .empty-state { padding: 32px; text-align: center; color: var(--text-muted); font-size: .9rem; }
 
 /* ── Toast ─────────────────────────────────────────────────── */

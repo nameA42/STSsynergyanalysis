@@ -43,6 +43,13 @@
     </div>
 
     <div class="ann-field" style="margin-top:16px;">
+      <label class="ann-label">Model</label>
+      <select id="new-model" class="ann-select">
+        <option value="">General</option>
+        {% for name in models %}<option value="{{ name }}">{{ name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="ann-field">
       <label class="ann-label">Note</label>
       <textarea id="new-note" class="ann-textarea" rows="3"
                 placeholder="Research notes, observations, reasons for this synergy rating..."></textarea>
@@ -51,12 +58,49 @@
       <label class="ann-label">Tags <small class="text-muted">(comma-separated)</small></label>
       <input type="text" id="new-tags" class="ann-input"
              placeholder="false_negative, interesting, check_later, paper_example">
+      {% if all_tags %}
+      <div class="tag-suggestions">
+        {% for tag in all_tags %}<span class="tag-chip tag-suggest" data-tag="{{ tag }}">{{ tag }}</span>{% endfor %}
+      </div>
+      {% endif %}
     </div>
     <div class="ann-actions">
       <button type="submit" class="btn btn-primary">Save Annotation</button>
     </div>
   </form>
 </div>
+
+<!-- Cross-model tag comparison -->
+{% if tag_table %}
+<div class="card section-card">
+  <h2 class="section-title">Tag Comparison Across Models</h2>
+  {% if tag_chart %}
+  <div id="tag-chart" style="width:100%;height:320px;"></div>
+  {% endif %}
+  <div class="table-scroll" style="margin-top:12px;">
+  <table class="data-table ann-table">
+    <thead>
+      <tr>
+        <th>Tag</th>
+        <th>General</th>
+        {% for name in models %}<th>{{ name }}</th>{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in tag_table %}
+      <tr>
+        <td><span class="tag-chip">{{ row.tag }}</span></td>
+        <td class="text-center">{{ row.counts[''] or '' }}</td>
+        {% for name in models %}
+        <td class="text-center">{{ row.counts.get(name, 0) or '' }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endif %}
 
 <!-- Filter + annotations list -->
 <div class="card section-card">
@@ -80,6 +124,7 @@
     <thead>
       <tr>
         <th>Pair</th>
+        <th>Model</th>
         <th>GT</th>
         {% for col in pred_cols %}<th>{{ col.replace('pred_','') }}</th>{% endfor %}
         <th>Note</th>
@@ -96,6 +141,7 @@
             <strong>{{ ann.card_a }}</strong> → {{ ann.card_b }}
           </a>
         </td>
+        <td class="text-sm">{{ ann.model if ann.model else 'General' }}</td>
         <td>
           <span class="badge badge-{{ 'pos' if ann.ground_truth=='1' else ('neg' if ann.ground_truth=='-1' else 'neu') }}">
             {{ '+1' if ann.ground_truth=='1' else ann.ground_truth }}
@@ -120,7 +166,8 @@
         <td class="text-muted text-sm">{{ ann.timestamp or '' }}</td>
         <td>
           <button class="btn btn-ghost btn-xs ann-delete-btn"
-                  data-pair-id="{{ ann.pair_id }}" title="Delete">&#10007;</button>
+                  data-pair-id="{{ ann.pair_id }}"
+                  data-model="{{ ann.model or '' }}" title="Delete">&#10007;</button>
         </td>
       </tr>
       {% endfor %}
@@ -144,7 +191,28 @@
 <script>
 const DS_NAMES = {{ models.keys() | list | tojson }};
 
-// Look up pair
+// ── Tag chart ──────────────────────────────────────────────────────────────
+{% if tag_chart %}
+(function() {
+  const chartEl = document.getElementById('tag-chart');
+  if (chartEl && typeof Plotly !== 'undefined') {
+    const fig = {{ tag_chart | safe }};
+    Plotly.newPlot(chartEl, fig.data, fig.layout, {responsive: true, displayModeBar: false});
+  }
+})();
+{% endif %}
+
+// ── Tag suggestion chips (add form) ───────────────────────────────────────
+document.querySelectorAll('.tag-suggest').forEach(chip => {
+  chip.addEventListener('click', function() {
+    const tag = this.dataset.tag;
+    const inp = document.getElementById('new-tags');
+    const cur = inp.value.split(',').map(t => t.trim()).filter(Boolean);
+    if (!cur.includes(tag)) { cur.push(tag); inp.value = cur.join(', '); }
+  });
+});
+
+// ── Look up pair ──────────────────────────────────────────────────────────
 document.getElementById('lookup-btn').addEventListener('click', function() {
   const ca = document.getElementById('new-card-a').value.trim();
   const cb = document.getElementById('new-card-b').value.trim();
@@ -174,20 +242,27 @@ document.getElementById('lookup-btn').addEventListener('click', function() {
         }
       });
 
-      if (d.annotation) {
-        document.getElementById('new-note').value = d.annotation.note || '';
-        document.getElementById('new-tags').value = d.annotation.tags || '';
-      } else {
-        document.getElementById('new-note').value = '';
-        document.getElementById('new-tags').value = '';
-      }
+      // Pre-fill note/tags from matching model annotation if exists
+      const model = document.getElementById('new-model').value;
+      const anns = d.annotations || {};
+      const ann = anns[model] || {};
+      document.getElementById('new-note').value = ann.note || '';
+      document.getElementById('new-tags').value = ann.tags || '';
 
       document.getElementById('pair-preview').classList.remove('hidden');
     })
     .catch(() => showToast('Pair not found', 'error'));
 });
 
-// Submit annotation
+// Re-look-up when model changes (if pair already loaded)
+document.getElementById('new-model').addEventListener('change', function() {
+  const preview = document.getElementById('pair-preview');
+  if (!preview.classList.contains('hidden')) {
+    document.getElementById('lookup-btn').click();
+  }
+});
+
+// ── Submit annotation ─────────────────────────────────────────────────────
 document.getElementById('ann-add-form').addEventListener('submit', function(e) {
   e.preventDefault();
   const body = {
@@ -195,6 +270,7 @@ document.getElementById('ann-add-form').addEventListener('submit', function(e) {
     card_b: document.getElementById('new-card-b').value.trim(),
     note:   document.getElementById('new-note').value.trim(),
     tags:   document.getElementById('new-tags').value.trim(),
+    model:  document.getElementById('new-model').value,
   };
   if (!body.card_a || !body.card_b) { showToast('Enter both card names', 'error'); return; }
 
@@ -214,7 +290,7 @@ document.getElementById('ann-add-form').addEventListener('submit', function(e) {
   });
 });
 
-// Delete buttons
+// ── Delete buttons ────────────────────────────────────────────────────────
 document.querySelectorAll('.ann-delete-btn').forEach(btn => {
   btn.addEventListener('click', function(e) {
     e.stopPropagation();
@@ -222,7 +298,7 @@ document.querySelectorAll('.ann-delete-btn').forEach(btn => {
     fetch('/api/annotate/delete', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({pair_id: this.dataset.pairId}),
+      body: JSON.stringify({pair_id: this.dataset.pairId, model: this.dataset.model || ''}),
     })
     .then(r => r.json())
     .then(d => {
