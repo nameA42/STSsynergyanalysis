@@ -323,6 +323,34 @@ a:hover { text-decoration: underline; }
 .detail-verdict.correct { color: var(--green); }
 .detail-verdict.wrong   { color: var(--red); }
 
+/* ── Model reasoning ───────────────────────────────────────── */
+.reasoning-section { display: flex; flex-direction: column; gap: 6px; }
+.reasoning-title { font-size: .9rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.reasoning-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.reasoning-summary {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; cursor: pointer; list-style: none;
+  background: var(--surface); user-select: none;
+  font-size: .85rem; font-weight: 600;
+}
+.reasoning-summary::-webkit-details-marker { display: none; }
+.reasoning-summary:hover { background: var(--border); }
+.reasoning-arrow { font-size: .7rem; color: var(--text-muted); transition: transform .15s; }
+details[open] .reasoning-arrow { transform: rotate(90deg); }
+.reasoning-model-name { color: var(--primary); }
+.reasoning-body {
+  padding: 12px 14px;
+  font-size: .82rem; line-height: 1.65;
+  white-space: pre-wrap; word-break: break-word;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  max-height: 400px; overflow-y: auto;
+}
+
 /* ── Annotation form ───────────────────────────────────────── */
 .annotation-form-wrap { display: flex; flex-direction: column; gap: 12px; }
 .ann-form-title { font-size: .9rem; font-weight: 600; color: var(--text); }

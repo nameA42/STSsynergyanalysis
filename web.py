@@ -14,6 +14,7 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 from lib.loader import load_dataset, list_model_datasets, get_ground_truth_name, load_config
 from lib import metrics as M
 from lib import plotly_charts as PC
+from lib.logs import find_log_for_csv, get_pair_responses
 from annotate import add_annotation, _load_annotations, delete_annotation
 
 app = Flask(__name__)
@@ -51,6 +52,18 @@ def _all_models() -> dict:
 
 def _default_ds() -> str:
     return next(iter(_all_models()))
+
+def _model_log_paths() -> dict:
+    """Return {model_name: Path | None} for each model's log file."""
+    from pathlib import Path
+    config = load_config()
+    result = {}
+    for name, entry in config.items():
+        if entry.get("type") == "ground_truth":
+            continue
+        csv_path = Path(__file__).parent / entry.get("file", "")
+        result[name] = find_log_for_csv(csv_path)
+    return result
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────
@@ -308,12 +321,14 @@ def browse():
                 match = ann_df[ann_df["pair_id"] == pair_sel]
                 if not match.empty:
                     ann_row = match.iloc[0].to_dict()
+            reasoning = get_pair_responses(pair_sel, _model_log_paths())
             selected = {
                 "card_a": ca, "card_b": cb,
                 "pair_id": pair_sel,
                 "ground_truth": gt_val,
                 "predictions": preds,
                 "annotation": ann_row,
+                "reasoning": reasoning,
             }
 
     return render_template("browse.html",

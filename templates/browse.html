@@ -139,6 +139,22 @@
       {% endfor %}
     </div>
 
+    <!-- Model reasoning -->
+    {% if selected.reasoning %}
+    <div class="reasoning-section">
+      <h3 class="reasoning-title">Model Reasoning</h3>
+      {% for ds, text in selected.reasoning.items() %}
+      <details class="reasoning-item">
+        <summary class="reasoning-summary">
+          <span class="reasoning-model-name">{{ ds }}</span>
+          <span class="reasoning-arrow">▶</span>
+        </summary>
+        <div class="reasoning-body">{{ text }}</div>
+      </details>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     <!-- Annotation form -->
     <div class="annotation-form-wrap">
       <h3 class="ann-form-title">

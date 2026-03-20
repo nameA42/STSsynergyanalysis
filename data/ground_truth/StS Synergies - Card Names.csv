@@ -1,0 +1,76 @@
+Name,Rarity,Type,Cost,Cost+,Description,Description+
+Bash,Starter,Attack,2,2,Deal 8 damage. Apply 2 Vulnerable.,Deal 10 damage. Apply 3 Vulnerable.
+Defend,Starter,Skill,1,1,Gain 5 Block.,Gain 8 Block.
+Strike,Starter,Attack,1,1,Deal 6 damage.,Deal 9 damage.
+Anger,Common,Attack,0,0,Deal 6 damage. Add a copy of this card to your discard pile.,Deal 8 damage. Add a copy of this card to your discard pile.
+Armaments,Common,Skill,1,1,Gain 5 Block. Upgrade a card in your hand for the rest of combat.,Gain 5 Block. Upgrade ALL cards in your hand for the rest of combat.
+Body Slam,Common,Attack,1,0,Deal damage equal to your current Block.,Deal damage equal to your current Block.
+Clash,Common,Attack,0,0,Can only be played if every card in your hand is an Attack. Deal 14 damage.,Can only be played if every card in your hand is an Attack. Deal 18 damage.
+Cleave,Common,Attack,1,1,Deal 8 damage to ALL enemies.,Deal 11 damage to ALL enemies.
+Clothesline,Common,Attack,2,2,Deal 12 damage. Apply 2 Weak.,Deal 14 damage. Apply 3 Weak.
+Flex,Common,Skill,0,0,"Gain 2 Strength. At the end of your turn, lose 2 Strength.","Gain 4 Strength. At the end of your turn, lose 4 Strength."
+Havoc,Common,Skill,1,0,Play the top card of your draw pile and Exhaust it.,Play the top card of your draw pile and Exhaust it.
+Headbutt,Common,Attack,1,1,Deal 9 damage. Place a card from your discard pile on top of your draw pile.,Deal 12 damage. Place a card from your discard pile on top of your draw pile.
+Heavy Blade,Common,Attack,2,2,Deal 14 damage. Strength affects Heavy Blade 3 times.,Deal 14 damage. Strength affects Heavy Blade 5 times.
+Iron Wave,Common,Attack,1,1,Gain 5 Block. Deal 5 damage.,Gain 7 Block. Deal 7 damage.
+Perfected Strike,Common,Attack,2,2,"Deal 6 damage. Deals an additional 2 damage for ALL of your cards containing ""Strike"".","Deal 6 damage. Deals an additional 3 damage for ALL of your cards containing ""Strike""."
+Pommel Strike,Common,Attack,1,1,Deal 9 damage. Draw 1 card.,Deal 10 damage. Draw 2 cards.
+Shrug it Off,Common,Skill,1,1,Gain 8 Block. Draw 1 card.,Gain 11 Block. Draw 1 card.
+Sword Boomerang,Common,Attack,1,1,Deal 3 damage to a random enemy 3 times.,Deal 3 damage to a random enemy 4 times.
+Thunderclap,Common,Attack,1,1,Deal 4 damage and apply 1 Vulnerable to ALL enemies.,Deal 7 damage and apply 1 Vulnerable to ALL enemies.
+True Grit,Common,Skill,1,1,Gain 7 Block. Exhaust a random card from your hand.,Gain 9 Block. Exhaust a card from your hand.
+Twin Strike,Common,Attack,1,1,Deal 5 damage twice.,Deal 7 damage twice.
+Warcry,Common,Skill,0,0,Draw 1 card. Place a card from your hand on top of your draw pile. Exhaust.,Draw 2 cards. Place a card from your hand on top of your draw pile. Exhaust.
+Wild Strike,Common,Attack,1,1,Deal 12 damage. Shuffle a Wound into your draw pile.,Deal 17 damage. Shuffle a Wound into your draw pile.
+Battle Trance,Uncommon,Skill,0,0,Draw 3 cards. You cannot draw additional cards this turn.,Draw 4 cards. You cannot draw additional cards this turn.
+Blood for Blood,Uncommon,Attack,4,3,Costs 1 less energy for each time you lose HP in combat. Deal 18 damage.,Costs 1 less energy for each time you lose HP in combat. Deal 22 damage.
+Bloodletting,Uncommon,Skill,0,0,Lose 3 HP. Gain 2 Energy.,Lose 3 HP. Gain 3 Energy.
+Burning Pact,Uncommon,Skill,1,1,Exhaust 1 card. Draw 2 cards.,Exhaust 1 card. Draw 3 cards.
+Carnage,Uncommon,Attack,2,2,Ethereal. Deal 20 damage.,Ethereal. Deal 28 damage.
+Combust,Uncommon,Power,1,1,"At the end of your turn, lose 1 HP and deal 5 damage to ALL enemies.","At the end of your turn, lose 1 HP and deal 7 damage to ALL enemies."
+Dark Embrace,Uncommon,Power,2,1,"Whenever a card is Exhausted, draw 1 card.","Whenever a card is Exhausted, draw 1 card."
+Disarm,Uncommon,Skill,1,1,Enemy loses 2 Strength. Exhaust.,Enemy loses 3 Strength. Exhaust.
+Dropkick,Uncommon,Attack,1,1,"Deal 5 damage. If the enemy is Vulnerable, gain 1 energy and draw 1 card.","Deal 8 damage. If the enemy is Vulnerable, gain 1 energy and draw 1 card."
+Dual Wield,Uncommon,Skill,1,1,Create a copy of an Attack or Power card in your hand.,Create 2 copies of an Attack or Power card in your hand.
+Entrench,Uncommon,Skill,2,1,Double your current Block.,Double your current Block.
+Evolve,Uncommon,Power,1,1,"Whenever you draw a Status card, draw 1 card.","Whenever you draw a Status card, draw 2 cards."
+Feel No Pain,Uncommon,Power,1,1,"Whenever a card is Exhausted, gain 3 Block.","Whenever a card is Exhausted, gain 4 Block."
+Fire Breathing,Uncommon,Power,1,1,"Whenever you draw a Status or Curse card, deal 6 damage to all enemies.","Whenever you draw a Status or Curse card, deal 10 damage to all enemies."
+Flame Barrier,Uncommon,Skill,2,2,"Gain 12 Block. Whenever you are attacked this turn, deal 4 damage to the attacker.","Gain 16 Block. Whenever you are attacked this turn, deal 6 damage to the attacker."
+Ghostly Armor,Uncommon,Skill,1,1,Ethereal. Gain 10 Block.,Ethereal. Gain 13 Block.
+Hemokinesis,Uncommon,Attack,1,1,Lose 2 HP. Deal 15 damage.,Lose 2 HP. Deal 20 damage.
+Infernal Blade,Uncommon,Skill,1,0,Add a random Attack to your hand. It costs 0 this turn. Exhaust.,Add a random Attack to your hand. It costs 0 this turn. Exhaust.
+Inflame,Uncommon,Power,1,1,Gain 2 Strength.,Gain 3 Strength.
+Intimidate,Uncommon,Skill,0,0,Apply 1 Weak to ALL enemies. Exhaust.,Apply 2 Weak to ALL enemies. Exhaust.
+Metallicize,Uncommon,Power,1,1,"At the end of your turn, gain 3 Block.","At the end of your turn, gain 4 Block."
+Power Through,Uncommon,Skill,1,1,Add 2 Wounds to your hand. Gain 15 Block.,Add 2 Wounds to your hand. Gain 20 Block.
+Pummel,Uncommon,Attack,1,1,Deal 2 damage 4 times. Exhaust.,Deal 2 damage 5 times. Exhaust.
+Rage,Uncommon,Skill,0,0,"Whenever you play an Attack this turn, gain 3 Block.","Whenever you play an Attack this turn, gain 5 Block."
+Rampage,Uncommon,Attack,1,1,Deal 8 damage. Increase this card's damage by 5 this combat.,Deal 8 damage. Increase this card's damage by 8 this combat.
+Reckless Charge,Uncommon,Attack,0,0,Deal 10 damage. Shuffle a Dazed into your draw pile.,Deal 10 damage. Shuffle a Dazed into your draw pile.
+Rupture,Uncommon,Power,1,1,"Whenever you lose HP from a card, gain 1 Strength.","Whenever you lose HP from a card, gain 2 Strength."
+Searing Blow,Uncommon,Attack,2,2,Deal 12 damage. Can be upgraded any number of times.,Deal 16 damage. Can be upgraded any number of times.
+Second Wind,Uncommon,Skill,1,1,Exhaust all non-Attack cards in your hand and gain 5 Block for each card Exhausted.,Exhaust all non-Attack cards in your hand and gain 7 Block for each card Exhausted.
+Seeing Red,Uncommon,Skill,1,0,Gain 2 energy. Exhaust.,Gain 2 energy. Exhaust.
+Sentinel,Uncommon,Skill,1,1,"Gain 5 Block. If this card is Exhausted, gain 2 energy.","Gain 8 Block. If this card is Exhausted, gain 3 energy."
+Sever Soul,Uncommon,Attack,2,2,Exhaust all non-Attack cards in your hand. Deal 16 damage.,Exhaust all non-Attack cards in your hand. Deal 22 damage.
+Shockwave,Uncommon,Skill,2,2,Apply 3 Weak and  Vulnerable to ALL enemies. Exhaust.,Apply 5 Weak and  Vulnerable to ALL enemies. Exhaust.
+Spot Weakness,Uncommon,Skill,1,1,"If the enemy intends to attack, gain 4 Strength.","If the enemy intends to attack, gain 4 Strength."
+Uppercut,Uncommon,Attack,2,2,Deal 13 damage. Apply 1 Weak. Apply 1 Vulnerable.,Deal 13 damage. Apply 2 Weak. Apply 2 Vulnerable.
+Whirlwind,Uncommon,Attack,X,X,Deal 5 damage to ALL enemies X times.,Deal 8 damage to ALL enemies X times.
+Barricade,Rare,Power,3,2,Block is not removed at the start of your turn.,Block is not removed at the start of your turn.
+Berserk,Rare,Power,0,0,"Gain 2 Vulnerable. At the start of your turn, gain 1 Energy.","Gain 1 Vulnerable. At the start of your turn, gain 1 Energy."
+Bludgeon,Rare,Attack,3,3,Deal 32 damage.,Deal 42 damage.
+Brutality,Rare,Power,0,0,"At the start of your turn, lose 1 HP and draw 1 card.","Innate. At the start of your turn, lose 1 HP and draw 1 card."
+Corruption,Rare,Power,3,2,"Skills cost 0. Whenever you play a Skill, Exhaust it.","Skills cost 0. Whenever you play a Skill, Exhaust it."
+Demon Form,Rare,Power,3,3,"At the start of each turn, gain 2 Strength.","At the start of each turn, gain 3 Strength."
+Double Tap,Rare,Skill,1,1,"This turn, your next Attack is played twice.","This turn, your next 2 Attacks are played twice."
+Exhume,Rare,Skill,1,0,Put a card from your Exhaust pile into your hand. Exhaust.,Put a card from your Exhaust pile into your hand. Exhaust.
+Feed,Rare,Attack,1,1,"Deal 10 damage. If this kills a non-minion enemy, gain 3 permanent Max HP. Exhaust.","Deal 12 damage. If this kills a non-minion enemy, gain 4 permanent Max HP. Exhaust."
+Fiend Fire,Rare,Attack,2,2,Exhaust all cards in your hand. Deal 7 damage for each Exhausted card. Exhaust.,Exhaust all cards in your hand. Deal 10 damage for each Exhausted card. Exhaust.
+Immolate,Rare,Attack,2,2,Deal 21 damage to ALL enemies. Add a Burn into your discard pile.,Deal 28 damage to ALL enemies. Add a Burn into your discard pile.
+Impervious,Rare,Skill,2,2,Gain 30 Block. Exhaust.,Gain 40 Block. Exhaust.
+Juggernaut,Rare,Power,2,2,"Whenever you gain  Block, deal 5 damage to a random enemy.","Whenever you gain  Block, deal 7 damage to a random enemy."
+Limit Break,Rare,Skill,1,1,Double your Strength. Exhaust.,Double your Strength.
+Offering,Rare,Skill,0,0,Lose 6 HP. Gain 2 energy. Draw 3 cards. Exhaust.,Lose 6 HP. Gain 2 energy. Draw 5 cards. Exhaust.
+Reaper,Rare,Attack,2,2,Deal 4 damage to ALL enemies. Heal HP equal to unblocked damage. Exhaust.,Deal 5 damage to ALL enemies. Heal HP equal to unblocked damage. Exhaust.
