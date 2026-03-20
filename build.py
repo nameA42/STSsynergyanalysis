@@ -154,6 +154,8 @@ def main():
     accuracies = {n: metrics_out[n]["accuracy"] for n in model_names}
     model_order = sorted(model_names, key=lambda n: accuracies[n], reverse=True)
     config_out["model_order"] = model_order
+    from annotate import DEFAULT_TAGS
+    config_out["default_tags"] = DEFAULT_TAGS
     (DOCS_DATA / "config.json").write_text(
         json.dumps(config_out, indent=2), encoding="utf-8"
     )

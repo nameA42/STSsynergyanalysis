@@ -120,8 +120,15 @@
       </div>
       <div class="annotation-form-wrap">
         <h3 class="ann-form-title" id="ann-form-title">Add Annotation</h3>
+        <div class="ann-existing" id="ann-existing" style="display:none"></div>
         <form id="ann-form" class="ann-form">
           <input type="hidden" id="ann-pair-id">
+          <div class="ann-field">
+            <label class="ann-label">Model</label>
+            <select id="ann-model" class="ann-select">
+              <option value="">General</option>
+            </select>
+          </div>
           <div class="ann-field">
             <label class="ann-label">Note</label>
             <textarea id="ann-note" class="ann-textarea" placeholder="Research notes, observations..."></textarea>
@@ -129,6 +136,7 @@
           <div class="ann-field">
             <label class="ann-label">Tags <small class="text-muted">(comma-separated)</small></label>
             <input type="text" id="ann-tags" class="ann-input" placeholder="e.g. false_negative, interesting">
+            <div class="tag-suggestions" id="tag-suggestions"></div>
           </div>
           <div class="ann-actions">
             <button type="submit" class="btn btn-primary btn-sm">Save</button>

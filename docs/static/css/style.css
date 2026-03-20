@@ -420,8 +420,18 @@ details[open] .reasoning-arrow { transform: rotate(90deg); }
   background: #eff6ff; color: var(--primary);
   border: 1px solid #bfdbfe; border-radius: 10px;
   font-size: .72rem; font-weight: 500; white-space: nowrap;
-  margin: 1px;
+  margin: 1px; cursor: pointer; user-select: none;
 }
+.tag-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tag-chip.small { font-size: .65rem; padding: 0 5px; }
+
+/* Existing annotations summary */
+.ann-existing { margin-bottom: 10px; }
+.ann-existing-title { font-size: .75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.ann-existing-item { padding: 6px 8px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 4px; }
+.ann-existing-model { font-size: .72rem; font-weight: 700; color: var(--primary); margin-right: 6px; }
+.ann-existing-note { font-size: .82rem; color: var(--text); }
+.ann-existing-tags { margin-top: 3px; }
 
 .pair-preview {
   padding: 12px; border: 1px solid var(--border);

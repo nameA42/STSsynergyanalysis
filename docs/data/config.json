@@ -192,5 +192,25 @@
     "gemini15flash",
     "gpt4omini",
     "gemini10pro"
+  ],
+  "default_tags": [
+    "description_error",
+    "timing_error",
+    "timing_interruption",
+    "timing_immediacy",
+    "game_state_error",
+    "rule_error",
+    "skip_error",
+    "similarity_error",
+    "mixed_effects",
+    "conflicting_synergy",
+    "design_subversion",
+    "resource_management",
+    "scaling",
+    "external_factors",
+    "false_positive",
+    "false_negative",
+    "interesting",
+    "paper_example"
   ]
 }

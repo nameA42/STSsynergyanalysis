@@ -8,7 +8,7 @@
   let CONFIG      = null;
   let METRICS     = null;
   let PAIRS       = null;
-  let ANNOTATIONS = {};  // pair_id → annotation
+  let ANNOTATIONS = {};  // annKey(pair_id, model) → annotation
   let RESPONSES   = {};  // pair_id → {model_name: response_text}
   let MODEL_ORDER = [];  // model names sorted by accuracy descending
 
@@ -64,6 +64,26 @@
     // Build prediction filter rows
     buildPredFilter();
 
+    // Populate model dropdown in annotation form
+    const annModelSel = document.getElementById('ann-model');
+    MODEL_ORDER.forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      annModelSel.appendChild(opt);
+    });
+
+    // Populate tag suggestion chips
+    const tagSugDiv = document.getElementById('tag-suggestions');
+    const allTags = CONFIG.default_tags || [];
+    allTags.forEach(tag => {
+      const chip = document.createElement('span');
+      chip.className = 'tag-chip';
+      chip.textContent = tag;
+      chip.addEventListener('click', () => toggleTagChip(tag));
+      tagSugDiv.appendChild(chip);
+    });
+
     // Restore state from URL params
     readUrlParams();
 
@@ -79,18 +99,38 @@
 
   // ── Annotations (localStorage) ─────────────────────────────────────────────
 
+  function annKey(pairId, model) {
+    return pairId + '||' + (model || '');
+  }
+
+  function getAnnsForPair(pairId) {
+    // Returns {model: annObject} for all annotations of this pair
+    const result = {};
+    Object.values(ANNOTATIONS).forEach(a => {
+      if (a.pair_id === pairId) result[a.model || ''] = a;
+    });
+    return result;
+  }
+
   function loadAnnotations(seedArr) {
     const stored = localStorage.getItem(ANN_KEY);
     if (stored) {
       try {
         const arr = JSON.parse(stored);
         ANNOTATIONS = {};
-        arr.forEach(a => { ANNOTATIONS[a.pair_id] = a; });
+        arr.forEach(a => {
+          // Migrate old format (no model field) → general
+          const model = a.model || '';
+          ANNOTATIONS[annKey(a.pair_id, model)] = { ...a, model };
+        });
       } catch (_) { ANNOTATIONS = {}; }
     } else {
       // Seed from static file
       ANNOTATIONS = {};
-      (seedArr || []).forEach(a => { ANNOTATIONS[a.pair_id] = a; });
+      (seedArr || []).forEach(a => {
+        const model = a.model || '';
+        ANNOTATIONS[annKey(a.pair_id, model)] = { ...a, model };
+      });
     }
   }
 
@@ -375,16 +415,34 @@
       pushUrlParams();
     });
 
+    // Tag input → sync chip active state
+    document.getElementById('ann-tags').addEventListener('input', updateTagChipState);
+
+    // Annotation model dropdown change → load that model's annotation
+    document.getElementById('ann-model').addEventListener('change', function () {
+      const pairId = document.getElementById('ann-pair-id').value;
+      if (!pairId) return;
+      const model = this.value;
+      const ann = ANNOTATIONS[annKey(pairId, model)];
+      document.getElementById('ann-note').value = ann?.note || '';
+      document.getElementById('ann-tags').value = ann?.tags || '';
+      document.getElementById('ann-form-title').textContent = ann ? 'Edit Annotation' : 'Add Annotation';
+      document.getElementById('ann-delete-btn').style.display = ann ? '' : 'none';
+    });
+
     // Annotation form submit
     document.getElementById('ann-form').addEventListener('submit', function (e) {
       e.preventDefault();
       const pairId = document.getElementById('ann-pair-id').value;
       if (!pairId) return;
+      const model  = document.getElementById('ann-model').value;
       const note   = document.getElementById('ann-note').value.trim();
       const tags   = document.getElementById('ann-tags').value.trim();
       const pair   = PAIRS.find(p => p.pair_id === pairId);
-      ANNOTATIONS[pairId] = {
+      const key    = annKey(pairId, model);
+      ANNOTATIONS[key] = {
         pair_id:      pairId,
+        model,
         card_a:       pair?.card_a || '',
         card_b:       pair?.card_b || '',
         ground_truth: String(pair?.gt ?? ''),
@@ -395,21 +453,60 @@
       showToast('Annotation saved', 'success');
       document.getElementById('ann-form-title').textContent = 'Edit Annotation';
       document.getElementById('ann-delete-btn').style.display = '';
+      renderExistingAnnotations(pairId);
     });
 
     // Delete annotation
     document.getElementById('ann-delete-btn').addEventListener('click', function () {
       const pairId = document.getElementById('ann-pair-id').value;
       if (!pairId || !confirm('Delete annotation?')) return;
-      delete ANNOTATIONS[pairId];
+      const model = document.getElementById('ann-model').value;
+      delete ANNOTATIONS[annKey(pairId, model)];
       saveAnnotations();
       showToast('Deleted', 'success');
       document.getElementById('ann-form-title').textContent = 'Add Annotation';
       this.style.display = 'none';
       document.getElementById('ann-note').value = '';
       document.getElementById('ann-tags').value = '';
+      renderExistingAnnotations(pairId);
       applyAndRender();
     });
+  }
+
+  function toggleTagChip(tag) {
+    const input = document.getElementById('ann-tags');
+    const current = input.value.split(',').map(t => t.trim()).filter(Boolean);
+    const idx = current.indexOf(tag);
+    if (idx === -1) current.push(tag);
+    else current.splice(idx, 1);
+    input.value = current.join(', ');
+    updateTagChipState();
+  }
+
+  function updateTagChipState() {
+    const current = document.getElementById('ann-tags').value
+      .split(',').map(t => t.trim()).filter(Boolean);
+    document.querySelectorAll('#tag-suggestions .tag-chip').forEach(chip => {
+      chip.classList.toggle('active', current.includes(chip.textContent));
+    });
+  }
+
+  function renderExistingAnnotations(pairId) {
+    const el = document.getElementById('ann-existing');
+    const pairAnns = getAnnsForPair(pairId);
+    const entries = Object.entries(pairAnns);
+    if (!entries.length) { el.style.display = 'none'; return; }
+    el.style.display = '';
+    el.innerHTML = '<div class="ann-existing-title">Saved annotations</div>' +
+      entries.map(([model, a]) => {
+        const label = model || 'General';
+        const tags  = a.tags ? a.tags.split(',').map(t => `<span class="tag-chip small">${escHtml(t.trim())}</span>`).join('') : '';
+        return `<div class="ann-existing-item">
+          <span class="ann-existing-model">${escHtml(label)}</span>
+          <span class="ann-existing-note">${escHtml(a.note || '')}</span>
+          ${tags ? `<div class="ann-existing-tags">${tags}</div>` : ''}
+        </div>`;
+      }).join('');
   }
 
   function collectAndFilter() {
@@ -765,13 +862,16 @@
       reasoningSection.style.display = 'none';
     }
 
-    // Annotation form
+    // Annotation form — reset to General
     document.getElementById('ann-pair-id').value = pair.pair_id;
-    const ann = ANNOTATIONS[pair.pair_id];
-    document.getElementById('ann-note').value     = ann?.note  || '';
-    document.getElementById('ann-tags').value     = ann?.tags  || '';
+    document.getElementById('ann-model').value = '';
+    const ann = ANNOTATIONS[annKey(pair.pair_id, '')];
+    document.getElementById('ann-note').value = ann?.note || '';
+    document.getElementById('ann-tags').value = ann?.tags || '';
     document.getElementById('ann-form-title').textContent = ann ? 'Edit Annotation' : 'Add Annotation';
     document.getElementById('ann-delete-btn').style.display = ann ? '' : 'none';
+    updateTagChipState();
+    renderExistingAnnotations(pair.pair_id);
   }
 
   // ── Badge helpers ──────────────────────────────────────────────────────────
