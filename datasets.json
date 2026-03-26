@@ -45,5 +45,12 @@
     "description": "GPT-4o-mini fine-tuned synergy predictions",
     "model": "gpt-4o-mini-finetuned",
     "date": "2024-12-13"
+  },
+  "gemini3flash": {
+    "file": "data/gemini3flash/synergy_results_gemini-3-flash-preview_1774495044.csv",
+    "type": "model",
+    "description": "Gemini 3 Flash Preview synergy predictions",
+    "model": "gemini-3-flash-preview",
+    "date": "2026-03-25"
   }
 }
