@@ -1,0 +1,168 @@
+# Decimal Ground Truth Accuracy Analysis
+
+How well do models predict pairs when the ground truth is expressed on
+a finer decimal scale (−2 to +2 in 0.5 steps) vs the 3-class labels
+they were trained to produce (−1, 0, +1).
+
+## Decimal GT Value Distribution
+
+| Value | Count | % |
+|-------|-------|---|
+| -2.0 | 1 | 0.0% |
+| -1.5 | 1 | 0.0% |
+| -1.0 | 17 | 0.3% |
+| -0.5 | 110 | 2.0% |
+| +0.0 | 4588 | 81.6% |
+| +0.5 | 354 | 6.3% |
+| +1.0 | 419 | 7.4% |
+| +1.5 | 46 | 0.8% |
+| +2.0 | 89 | 1.6% |
+
+## Integer GT Distribution for Half-Value Pairs
+
+The decimal GT is an average of multiple human raters; the integer GT is the final consensus label.
+This table shows how half-value pairs mapped to the integer GT used for all accuracy measurements.
+
+| Decimal GT | n | Integer GT = −1 | Integer GT = 0 | Integer GT = +1 |
+|------------|---|-----------------|----------------|-----------------|
+| +0.5 | 354 | 6 (1.7%) | 25 (7.1%) | 323 (91.2%) |
+| −0.5 | 110 | 71 (64.5%) | 34 (30.9%) | 5 (4.5%) |
+
+**Key asymmetry:** Positive half-values were overwhelmingly rounded up to +1 in the integer GT (91.2%),
+making the `positive_half` mask effectively a set of consensus positive pairs — explaining why models
+perform reasonably on them. Negative half-values were split: 64.5% became −1 but 30.9% became 0,
+reflecting genuine annotator disagreement about weak anti-synergies. This label ambiguity is the
+primary driver of the catastrophically low accuracy on the `negative_half` mask across all models.
+
+## Mask Definitions
+
+| Mask | Decimal GT values | Expected prediction |
+|------|-------------------|---------------------|
+| `neutral` | [0.0] | +0 |
+| `positive_half` | [0.5] | +1 |
+| `positive_clear` | [1.0, 1.5, 2.0] | +1 |
+| `all_positive` | [0.5, 1.0, 1.5, 2.0] | +1 |
+| `negative_half` | [-0.5] | -1 |
+| `negative_clear` | [-1.0, -1.5, -2.0] | -1 |
+| `all_negative` | [-0.5, -1.0, -1.5, -2.0] | -1 |
+
+## Mask: `neutral`
+
+Decimal GT values: [0.0] → expected model output: **+0**  
+Pairs in mask: **4588**
+
+| Model | n | Accuracy | Prec (target) | Recall (target) | F1 (target) | Macro F1 | Pred −1 | Pred 0 | Pred +1 |
+|-------|---|----------|---------------|-----------------|-------------|----------|---------|--------|---------|
+| gpt4o | 4588 | 83.7% | 98.3% | 84.0% | 90.6% | 33.5% | 283 (6%) | 3841 (84%) | 464 (10%) |
+| gpt54 | 4588 | 84.2% | 98.2% | 84.5% | 90.8% | 32.7% | 392 (9%) | 3863 (84%) | 333 (7%) |
+| gemini10pro | 4588 | 35.7% | 98.2% | 35.8% | 52.5% | 8.4% | 419 (9%) | 1638 (36%) | 2499 (54%) |
+| gemini15flash | 4588 | 83.4% | 98.0% | 83.5% | 90.2% | 32.7% | 203 (4%) | 3828 (83%) | 557 (12%) |
+| gpt4omini | 4588 | 69.2% | 98.3% | 69.4% | 81.4% | 22.6% | 183 (4%) | 3173 (69%) | 1231 (27%) |
+| gpt4ominift | 4588 | 86.7% | 98.2% | 86.9% | 92.2% | 33.3% | 139 (3%) | 3979 (87%) | 470 (10%) |
+| gemini3flash | 4588 | 84.6% | 98.2% | 84.9% | 91.1% | 33.9% | 370 (8%) | 3882 (85%) | 336 (7%) |
+
+## Mask: `positive_half`
+
+Decimal GT values: [0.5] → expected model output: **+1**  
+Pairs in mask: **354**
+
+| Model | n | Accuracy | Prec (target) | Recall (target) | F1 (target) | Macro F1 | Pred −1 | Pred 0 | Pred +1 |
+|-------|---|----------|---------------|-----------------|-------------|----------|---------|--------|---------|
+| gpt4o | 354 | 54.0% | 95.3% | 56.3% | 70.8% | 29.7% | 13 (4%) | 150 (42%) | 191 (54%) |
+| gpt54 | 354 | 46.0% | 93.9% | 47.4% | 63.0% | 27.0% | 17 (5%) | 174 (49%) | 163 (46%) |
+| gemini10pro | 354 | 71.5% | 90.5% | 70.9% | 79.5% | 14.5% | 17 (5%) | 79 (22%) | 253 (71%) |
+| gemini15flash | 354 | 28.5% | 94.1% | 29.4% | 44.8% | 22.3% | 18 (5%) | 235 (66%) | 101 (29%) |
+| gpt4omini | 354 | 49.7% | 92.6% | 50.5% | 65.3% | 31.6% | 11 (3%) | 167 (47%) | 176 (50%) |
+| gpt4ominift | 354 | 33.9% | 98.3% | 36.5% | 53.3% | 22.9% | 14 (4%) | 220 (62%) | 120 (34%) |
+| gemini3flash | 354 | 63.6% | 94.7% | 65.9% | 77.7% | 33.5% | 4 (1%) | 125 (35%) | 225 (64%) |
+
+## Mask: `positive_clear`
+
+Decimal GT values: [1.0, 1.5, 2.0] → expected model output: **+1**  
+Pairs in mask: **554**
+
+| Model | n | Accuracy | Prec (target) | Recall (target) | F1 (target) | Macro F1 | Pred −1 | Pred 0 | Pred +1 |
+|-------|---|----------|---------------|-----------------|-------------|----------|---------|--------|---------|
+| gpt4o | 554 | 85.7% | 100.0% | 85.9% | 92.4% | 31.7% | 9 (2%) | 70 (13%) | 475 (86%) |
+| gpt54 | 554 | 85.2% | 100.0% | 85.4% | 92.1% | 31.6% | 9 (2%) | 73 (13%) | 472 (85%) |
+| gemini10pro | 554 | 88.3% | 100.0% | 88.4% | 93.9% | 23.5% | 18 (3%) | 46 (8%) | 489 (88%) |
+| gemini15flash | 554 | 65.5% | 100.0% | 65.6% | 79.3% | 26.8% | 8 (1%) | 183 (33%) | 363 (66%) |
+| gpt4omini | 554 | 84.1% | 99.8% | 84.1% | 91.3% | 30.4% | 7 (1%) | 81 (15%) | 466 (84%) |
+| gpt4ominift | 554 | 65.2% | 100.0% | 65.3% | 79.0% | 26.7% | 6 (1%) | 187 (34%) | 361 (65%) |
+| gemini3flash | 554 | 88.6% | 100.0% | 88.8% | 94.1% | 32.6% | 9 (2%) | 54 (10%) | 491 (89%) |
+
+## Mask: `all_positive`
+
+Decimal GT values: [0.5, 1.0, 1.5, 2.0] → expected model output: **+1**  
+Pairs in mask: **908**
+
+| Model | n | Accuracy | Prec (target) | Recall (target) | F1 (target) | Macro F1 | Pred −1 | Pred 0 | Pred +1 |
+|-------|---|----------|---------------|-----------------|-------------|----------|---------|--------|---------|
+| gpt4o | 908 | 73.3% | 98.6% | 75.0% | 85.2% | 33.0% | 22 (2%) | 220 (24%) | 666 (73%) |
+| gpt54 | 908 | 69.9% | 98.4% | 71.3% | 82.7% | 32.2% | 26 (3%) | 247 (27%) | 635 (70%) |
+| gemini10pro | 908 | 81.7% | 96.8% | 82.0% | 88.8% | 15.7% | 35 (4%) | 125 (14%) | 742 (82%) |
+| gemini15flash | 908 | 51.1% | 98.7% | 52.3% | 68.4% | 27.7% | 26 (3%) | 418 (46%) | 464 (51%) |
+| gpt4omini | 908 | 70.7% | 97.8% | 71.7% | 82.7% | 34.5% | 18 (2%) | 248 (27%) | 642 (71%) |
+| gpt4ominift | 908 | 53.0% | 99.6% | 54.7% | 70.6% | 26.6% | 20 (2%) | 407 (45%) | 481 (53%) |
+| gemini3flash | 908 | 78.9% | 98.3% | 80.4% | 88.4% | 35.3% | 13 (1%) | 179 (20%) | 716 (79%) |
+
+## Mask: `negative_half`
+
+Decimal GT values: [-0.5] → expected model output: **-1**  
+Pairs in mask: **110**
+
+| Model | n | Accuracy | Prec (target) | Recall (target) | F1 (target) | Macro F1 | Pred −1 | Pred 0 | Pred +1 |
+|-------|---|----------|---------------|-----------------|-------------|----------|---------|--------|---------|
+| gpt4o | 110 | 26.4% | 65.5% | 26.8% | 38.0% | 27.9% | 29 (26%) | 71 (65%) | 10 (9%) |
+| gpt54 | 110 | 39.1% | 58.1% | 35.2% | 43.9% | 30.6% | 43 (39%) | 56 (51%) | 11 (10%) |
+| gemini10pro | 110 | 25.5% | 67.9% | 26.8% | 38.4% | 25.6% | 28 (25%) | 30 (27%) | 52 (47%) |
+| gemini15flash | 110 | 23.6% | 61.5% | 22.5% | 33.0% | 27.4% | 26 (24%) | 62 (56%) | 22 (20%) |
+| gpt4omini | 110 | 21.8% | 50.0% | 16.9% | 25.3% | 19.4% | 24 (22%) | 52 (47%) | 34 (31%) |
+| gpt4ominift | 110 | 15.5% | 52.9% | 12.7% | 20.5% | 21.8% | 17 (15%) | 77 (70%) | 16 (15%) |
+| gemini3flash | 110 | 51.8% | 68.4% | 54.9% | 60.9% | 39.2% | 57 (52%) | 46 (42%) | 7 (6%) |
+
+## Mask: `negative_clear`
+
+Decimal GT values: [-1.0, -1.5, -2.0] → expected model output: **-1**  
+Pairs in mask: **19**
+
+| Model | n | Accuracy | Prec (target) | Recall (target) | F1 (target) | Macro F1 | Pred −1 | Pred 0 | Pred +1 |
+|-------|---|----------|---------------|-----------------|-------------|----------|---------|--------|---------|
+| gpt4o | 19 | 73.7% | 100.0% | 77.8% | 87.5% | 29.2% | 14 (74%) | 4 (21%) | 1 (5%) |
+| gpt54 | 19 | 63.2% | 91.7% | 61.1% | 73.3% | 24.4% | 12 (63%) | 4 (21%) | 3 (16%) |
+| gemini10pro | 19 | 42.1% | 100.0% | 44.4% | 61.5% | 27.2% | 8 (42%) | 2 (11%) | 9 (47%) |
+| gemini15flash | 19 | 47.4% | 100.0% | 50.0% | 66.7% | 38.9% | 9 (47%) | 7 (37%) | 3 (16%) |
+| gpt4omini | 19 | 52.6% | 100.0% | 55.6% | 71.4% | 23.8% | 10 (53%) | 3 (16%) | 6 (32%) |
+| gpt4ominift | 19 | 47.4% | 100.0% | 50.0% | 66.7% | 44.4% | 9 (47%) | 8 (42%) | 2 (11%) |
+| gemini3flash | 19 | 84.2% | 93.8% | 83.3% | 88.2% | 29.4% | 16 (84%) | 1 (5%) | 2 (11%) |
+
+## Mask: `all_negative`
+
+Decimal GT values: [-0.5, -1.0, -1.5, -2.0] → expected model output: **-1**  
+Pairs in mask: **129**
+
+| Model | n | Accuracy | Prec (target) | Recall (target) | F1 (target) | Macro F1 | Pred −1 | Pred 0 | Pred +1 |
+|-------|---|----------|---------------|-----------------|-------------|----------|---------|--------|---------|
+| gpt4o | 129 | 33.3% | 76.7% | 37.1% | 50.0% | 31.3% | 43 (33%) | 75 (58%) | 11 (9%) |
+| gpt54 | 129 | 42.6% | 65.5% | 40.4% | 50.0% | 31.3% | 55 (43%) | 60 (47%) | 14 (11%) |
+| gemini10pro | 129 | 27.9% | 75.0% | 30.3% | 43.2% | 27.5% | 36 (28%) | 32 (25%) | 61 (47%) |
+| gemini15flash | 129 | 27.1% | 71.4% | 28.1% | 40.3% | 30.7% | 35 (27%) | 69 (53%) | 25 (19%) |
+| gpt4omini | 129 | 26.4% | 64.7% | 24.7% | 35.8% | 22.4% | 34 (26%) | 55 (43%) | 40 (31%) |
+| gpt4ominift | 129 | 20.2% | 69.2% | 20.2% | 31.3% | 27.2% | 26 (20%) | 85 (66%) | 18 (14%) |
+| gemini3flash | 129 | 56.6% | 74.0% | 60.7% | 66.7% | 39.8% | 73 (57%) | 47 (36%) | 9 (7%) |
+
+## Half-value vs Clear-value Accuracy Summary
+
+| Model | Pos half acc | Pos clear acc | Neg half acc | Neg clear acc |
+|-------|-------------|--------------|-------------|--------------|
+| gpt4o | 54.0% (n=354) | 85.7% (n=554) | 26.4% (n=110) | 73.7% (n=19) |
+| gpt54 | 46.0% (n=354) | 85.2% (n=554) | 39.1% (n=110) | 63.2% (n=19) |
+| gemini10pro | 71.5% (n=354) | 88.3% (n=554) | 25.5% (n=110) | 42.1% (n=19) |
+| gemini15flash | 28.5% (n=354) | 65.5% (n=554) | 23.6% (n=110) | 47.4% (n=19) |
+| gpt4omini | 49.7% (n=354) | 84.1% (n=554) | 21.8% (n=110) | 52.6% (n=19) |
+| gpt4ominift | 33.9% (n=354) | 65.2% (n=554) | 15.5% (n=110) | 47.4% (n=19) |
+| gemini3flash | 63.6% (n=354) | 88.6% (n=554) | 51.8% (n=110) | 84.2% (n=19) |
+
+---
+
+*Generated by `decimal_accuracy.py`*
