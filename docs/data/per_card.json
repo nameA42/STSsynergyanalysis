@@ -5263,6 +5263,758 @@
         "false_neg_anti": 0.0,
         "n_total": 74.0
       }
+    },
+    "llama4maverick": {
+      "Bash": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.529502625888168,
+        "n_errors": 15.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 8.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Defend": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.5986666666666666,
+        "n_errors": 13.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 4.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Strike": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.30123456790123454,
+        "n_errors": 13.0,
+        "false_pos_synergy": 12.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Anger": {
+        "accuracy": 0.6216216216216216,
+        "macro_f1": 0.3226528328755976,
+        "n_errors": 28.0,
+        "false_pos_synergy": 20.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 5.0,
+        "n_total": 74.0
+      },
+      "Armaments": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.29292929292929293,
+        "n_errors": 16.0,
+        "false_pos_synergy": 0.0,
+        "false_neg_synergy": 16.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Body Slam": {
+        "accuracy": 0.918918918918919,
+        "macro_f1": 0.3192488262910798,
+        "n_errors": 6.0,
+        "false_pos_synergy": 4.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Clash": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.2957393483709273,
+        "n_errors": 15.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 7.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Cleave": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.3142857142857143,
+        "n_errors": 8.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Clothesline": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.2957393483709273,
+        "n_errors": 15.0,
+        "false_pos_synergy": 14.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Flex": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.5430242272347535,
+        "n_errors": 13.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 5.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Havoc": {
+        "accuracy": 0.6081081081081081,
+        "macro_f1": 0.27635327635327633,
+        "n_errors": 29.0,
+        "false_pos_synergy": 23.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 2.0,
+        "n_total": 74.0
+      },
+      "Headbutt": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.43542568542568544,
+        "n_errors": 20.0,
+        "false_pos_synergy": 14.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Heavy Blade": {
+        "accuracy": 0.9459459459459459,
+        "macro_f1": 0.32407407407407407,
+        "n_errors": 4.0,
+        "false_pos_synergy": 4.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Iron Wave": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.7554423344140807,
+        "n_errors": 11.0,
+        "false_pos_synergy": 11.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Perfected Strike": {
+        "accuracy": 0.918918918918919,
+        "macro_f1": 0.3192488262910798,
+        "n_errors": 6.0,
+        "false_pos_synergy": 2.0,
+        "false_neg_synergy": 4.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Pommel Strike": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.6911474087517645,
+        "n_errors": 17.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 8.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Shrug it Off": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.6456956344349245,
+        "n_errors": 22.0,
+        "false_pos_synergy": 15.0,
+        "false_neg_synergy": 4.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 2.0,
+        "n_total": 74.0
+      },
+      "Sword Boomerang": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.3190476190476191,
+        "n_errors": 7.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Thunderclap": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.5585585585585585,
+        "n_errors": 12.0,
+        "false_pos_synergy": 10.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "True Grit": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.6017528223410576,
+        "n_errors": 20.0,
+        "false_pos_synergy": 11.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 7.0,
+        "n_total": 74.0
+      },
+      "Twin Strike": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.30656934306569344,
+        "n_errors": 11.0,
+        "false_pos_synergy": 10.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Warcry": {
+        "accuracy": 0.581081081081081,
+        "macro_f1": 0.33135993135993136,
+        "n_errors": 31.0,
+        "false_pos_synergy": 22.0,
+        "false_neg_synergy": 5.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 5.0,
+        "n_total": 74.0
+      },
+      "Wild Strike": {
+        "accuracy": 0.6891891891891891,
+        "macro_f1": 0.376449598572703,
+        "n_errors": 23.0,
+        "false_pos_synergy": 6.0,
+        "false_neg_synergy": 7.0,
+        "false_pos_anti": 5.0,
+        "false_neg_anti": 6.0,
+        "n_total": 74.0
+      },
+      "Battle Trance": {
+        "accuracy": 0.6621621621621622,
+        "macro_f1": 0.6494009866102889,
+        "n_errors": 25.0,
+        "false_pos_synergy": 19.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 4.0,
+        "false_neg_anti": 2.0,
+        "n_total": 74.0
+      },
+      "Blood for Blood": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.3117505995203837,
+        "n_errors": 9.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Bloodletting": {
+        "accuracy": 0.47297297297297297,
+        "macro_f1": 0.31172308280742017,
+        "n_errors": 39.0,
+        "false_pos_synergy": 34.0,
+        "false_neg_synergy": 5.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Burning Pact": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.45714285714285713,
+        "n_errors": 22.0,
+        "false_pos_synergy": 16.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 5.0,
+        "n_total": 74.0
+      },
+      "Carnage": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.30392156862745096,
+        "n_errors": 12.0,
+        "false_pos_synergy": 10.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Combust": {
+        "accuracy": 0.8108108108108109,
+        "macro_f1": 0.3830749354005168,
+        "n_errors": 14.0,
+        "false_pos_synergy": 12.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Dark Embrace": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.9034391534391535,
+        "n_errors": 10.0,
+        "false_pos_synergy": 6.0,
+        "false_neg_synergy": 4.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Disarm": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.3367521367521367,
+        "n_errors": 16.0,
+        "false_pos_synergy": 13.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 2.0,
+        "n_total": 74.0
+      },
+      "Dropkick": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.37239462714219546,
+        "n_errors": 16.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 5.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 2.0,
+        "n_total": 74.0
+      },
+      "Dual Wield": {
+        "accuracy": 0.24324324324324326,
+        "macro_f1": 0.16138763197586728,
+        "n_errors": 56.0,
+        "false_pos_synergy": 55.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Entrench": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.2900763358778626,
+        "n_errors": 17.0,
+        "false_pos_synergy": 12.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 5.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Evolve": {
+        "accuracy": 0.6756756756756757,
+        "macro_f1": 0.40740740740740744,
+        "n_errors": 24.0,
+        "false_pos_synergy": 11.0,
+        "false_neg_synergy": 9.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 2.0,
+        "n_total": 74.0
+      },
+      "Feel No Pain": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.5798631476050831,
+        "n_errors": 9.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Fire Breathing": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.554093567251462,
+        "n_errors": 10.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Flame Barrier": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.3609917355371901,
+        "n_errors": 20.0,
+        "false_pos_synergy": 19.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 2.0,
+        "n_total": 74.0
+      },
+      "Ghostly Armor": {
+        "accuracy": 0.8108108108108109,
+        "macro_f1": 0.5431111111111111,
+        "n_errors": 14.0,
+        "false_pos_synergy": 12.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Hemokinesis": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.3511016346837242,
+        "n_errors": 12.0,
+        "false_pos_synergy": 11.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Infernal Blade": {
+        "accuracy": 0.25675675675675674,
+        "macro_f1": 0.13620071684587814,
+        "n_errors": 55.0,
+        "false_pos_synergy": 50.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 4.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Inflame": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.5230923694779116,
+        "n_errors": 16.0,
+        "false_pos_synergy": 14.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Intimidate": {
+        "accuracy": 0.6756756756756757,
+        "macro_f1": 0.2989579590370104,
+        "n_errors": 24.0,
+        "false_pos_synergy": 21.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Metallicize": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.5986557302346776,
+        "n_errors": 9.0,
+        "false_pos_synergy": 6.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Power Through": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.6601675797615211,
+        "n_errors": 16.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 5.0,
+        "n_total": 74.0
+      },
+      "Pummel": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.3880837359098228,
+        "n_errors": 8.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Rage": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.5325743200506009,
+        "n_errors": 15.0,
+        "false_pos_synergy": 11.0,
+        "false_neg_synergy": 4.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Rampage": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.42041691018897326,
+        "n_errors": 18.0,
+        "false_pos_synergy": 10.0,
+        "false_neg_synergy": 7.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Reckless Charge": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.4322344322344322,
+        "n_errors": 21.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 5.0,
+        "false_neg_anti": 5.0,
+        "n_total": 74.0
+      },
+      "Rupture": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.37428160919540227,
+        "n_errors": 22.0,
+        "false_pos_synergy": 22.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Searing Blow": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.31678486997635935,
+        "n_errors": 7.0,
+        "false_pos_synergy": 6.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Second Wind": {
+        "accuracy": 0.5135135135135135,
+        "macro_f1": 0.3862967229902714,
+        "n_errors": 36.0,
+        "false_pos_synergy": 18.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 16.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Seeing Red": {
+        "accuracy": 0.5540540540540541,
+        "macro_f1": 0.35916311507167764,
+        "n_errors": 33.0,
+        "false_pos_synergy": 29.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Sentinel": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.6907062011796589,
+        "n_errors": 22.0,
+        "false_pos_synergy": 6.0,
+        "false_neg_synergy": 15.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Sever Soul": {
+        "accuracy": 0.5540540540540541,
+        "macro_f1": 0.39316239316239315,
+        "n_errors": 33.0,
+        "false_pos_synergy": 11.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 21.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Shockwave": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.4702842377260981,
+        "n_errors": 22.0,
+        "false_pos_synergy": 19.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Spot Weakness": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.5198412698412699,
+        "n_errors": 16.0,
+        "false_pos_synergy": 15.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Uppercut": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.47521636506687653,
+        "n_errors": 22.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 13.0,
+        "false_pos_anti": 4.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Whirlwind": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.29292929292929293,
+        "n_errors": 16.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 8.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Barricade": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.6388888888888888,
+        "n_errors": 20.0,
+        "false_pos_synergy": 17.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Berserk": {
+        "accuracy": 0.44594594594594594,
+        "macro_f1": 0.2694736842105263,
+        "n_errors": 41.0,
+        "false_pos_synergy": 30.0,
+        "false_neg_synergy": 8.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Bludgeon": {
+        "accuracy": 0.918918918918919,
+        "macro_f1": 0.3192488262910798,
+        "n_errors": 6.0,
+        "false_pos_synergy": 4.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Brutality": {
+        "accuracy": 0.6486486486486487,
+        "macro_f1": 0.3640070429061255,
+        "n_errors": 26.0,
+        "false_pos_synergy": 12.0,
+        "false_neg_synergy": 11.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 3.0,
+        "n_total": 74.0
+      },
+      "Corruption": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.5287486617545185,
+        "n_errors": 16.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 6.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 2.0,
+        "n_total": 74.0
+      },
+      "Demon Form": {
+        "accuracy": 0.581081081081081,
+        "macro_f1": 0.37849381320268827,
+        "n_errors": 31.0,
+        "false_pos_synergy": 11.0,
+        "false_neg_synergy": 20.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Double Tap": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.5788923719958202,
+        "n_errors": 10.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Exhume": {
+        "accuracy": 0.581081081081081,
+        "macro_f1": 0.24501424501424504,
+        "n_errors": 31.0,
+        "false_pos_synergy": 29.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Feed": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.36172839506172844,
+        "n_errors": 11.0,
+        "false_pos_synergy": 10.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Fiend Fire": {
+        "accuracy": 0.6756756756756757,
+        "macro_f1": 0.32552800734618914,
+        "n_errors": 24.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 14.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Immolate": {
+        "accuracy": 0.6756756756756757,
+        "macro_f1": 0.39221830526178353,
+        "n_errors": 24.0,
+        "false_pos_synergy": 10.0,
+        "false_neg_synergy": 5.0,
+        "false_pos_anti": 8.0,
+        "false_neg_anti": 6.0,
+        "n_total": 74.0
+      },
+      "Impervious": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.7080928126768534,
+        "n_errors": 12.0,
+        "false_pos_synergy": 11.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Juggernaut": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.5793611793611794,
+        "n_errors": 8.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Limit Break": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.5198412698412699,
+        "n_errors": 16.0,
+        "false_pos_synergy": 15.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Offering": {
+        "accuracy": 0.43243243243243246,
+        "macro_f1": 0.5054216098992219,
+        "n_errors": 42.0,
+        "false_pos_synergy": 35.0,
+        "false_neg_synergy": 7.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Reaper": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.3557714550080962,
+        "n_errors": 15.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 6.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      }
     }
   },
   "as_b": {
@@ -10529,6 +11281,758 @@
         "false_neg_anti": 15.0,
         "n_total": 74.0
       }
+    },
+    "llama4maverick": {
+      "Bash": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.5665990534144693,
+        "n_errors": 7.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Defend": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.3932631578947368,
+        "n_errors": 17.0,
+        "false_pos_synergy": 12.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 4.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Strike": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5306159420289855,
+        "n_errors": 11.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Anger": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.4830466830466831,
+        "n_errors": 16.0,
+        "false_pos_synergy": 13.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Armaments": {
+        "accuracy": 0.581081081081081,
+        "macro_f1": 0.5141414141414141,
+        "n_errors": 31.0,
+        "false_pos_synergy": 25.0,
+        "false_neg_synergy": 4.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Body Slam": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.4692086229899586,
+        "n_errors": 19.0,
+        "false_pos_synergy": 5.0,
+        "false_neg_synergy": 14.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Clash": {
+        "accuracy": 0.5540540540540541,
+        "macro_f1": 0.4930709125755565,
+        "n_errors": 33.0,
+        "false_pos_synergy": 18.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 8.0,
+        "false_neg_anti": 7.0,
+        "n_total": 74.0
+      },
+      "Cleave": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5332602339181286,
+        "n_errors": 11.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Clothesline": {
+        "accuracy": 0.918918918918919,
+        "macro_f1": 0.5987179487179487,
+        "n_errors": 6.0,
+        "false_pos_synergy": 3.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Flex": {
+        "accuracy": 0.6486486486486487,
+        "macro_f1": 0.3539915966386555,
+        "n_errors": 26.0,
+        "false_pos_synergy": 14.0,
+        "false_neg_synergy": 10.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Havoc": {
+        "accuracy": 0.6081081081081081,
+        "macro_f1": 0.4088635644191199,
+        "n_errors": 29.0,
+        "false_pos_synergy": 26.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Headbutt": {
+        "accuracy": 0.581081081081081,
+        "macro_f1": 0.3707412042831317,
+        "n_errors": 31.0,
+        "false_pos_synergy": 24.0,
+        "false_neg_synergy": 5.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Heavy Blade": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.560963167023773,
+        "n_errors": 7.0,
+        "false_pos_synergy": 5.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Iron Wave": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.5496706192358366,
+        "n_errors": 9.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Perfected Strike": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.5762762762762762,
+        "n_errors": 19.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 8.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 3.0,
+        "n_total": 74.0
+      },
+      "Pommel Strike": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.6786609380594343,
+        "n_errors": 16.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 6.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Shrug it Off": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.5562678062678063,
+        "n_errors": 20.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 5.0,
+        "false_pos_anti": 5.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Sword Boomerang": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5168067226890757,
+        "n_errors": 11.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Thunderclap": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.5136681500317865,
+        "n_errors": 10.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "True Grit": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.5679996917860995,
+        "n_errors": 21.0,
+        "false_pos_synergy": 5.0,
+        "false_neg_synergy": 5.0,
+        "false_pos_anti": 7.0,
+        "false_neg_anti": 8.0,
+        "n_total": 74.0
+      },
+      "Twin Strike": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.5665990534144693,
+        "n_errors": 7.0,
+        "false_pos_synergy": 5.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Warcry": {
+        "accuracy": 0.6216216216216216,
+        "macro_f1": 0.5254728132387707,
+        "n_errors": 28.0,
+        "false_pos_synergy": 22.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Wild Strike": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.5411970292704238,
+        "n_errors": 13.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 4.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Battle Trance": {
+        "accuracy": 0.6081081081081081,
+        "macro_f1": 0.47617089800253537,
+        "n_errors": 29.0,
+        "false_pos_synergy": 21.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 6.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Blood for Blood": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.7776676986584107,
+        "n_errors": 15.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 4.0,
+        "n_total": 74.0
+      },
+      "Bloodletting": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.44405797101449274,
+        "n_errors": 19.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 5.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 7.0,
+        "n_total": 74.0
+      },
+      "Burning Pact": {
+        "accuracy": 0.6891891891891891,
+        "macro_f1": 0.5306928938507885,
+        "n_errors": 23.0,
+        "false_pos_synergy": 11.0,
+        "false_neg_synergy": 7.0,
+        "false_pos_anti": 6.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Carnage": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.5542028985507247,
+        "n_errors": 12.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Combust": {
+        "accuracy": 0.6891891891891891,
+        "macro_f1": 0.3212545030726849,
+        "n_errors": 23.0,
+        "false_pos_synergy": 22.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Dark Embrace": {
+        "accuracy": 0.6351351351351351,
+        "macro_f1": 0.6617760617760619,
+        "n_errors": 27.0,
+        "false_pos_synergy": 23.0,
+        "false_neg_synergy": 4.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Disarm": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.4743589743589744,
+        "n_errors": 10.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Dropkick": {
+        "accuracy": 0.8918918918918919,
+        "macro_f1": 0.7902282588190909,
+        "n_errors": 8.0,
+        "false_pos_synergy": 4.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Dual Wield": {
+        "accuracy": 0.4594594594594595,
+        "macro_f1": 0.41215106732348117,
+        "n_errors": 40.0,
+        "false_pos_synergy": 34.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 4.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Entrench": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.5455974842767296,
+        "n_errors": 12.0,
+        "false_pos_synergy": 10.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Evolve": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.4345450225706819,
+        "n_errors": 16.0,
+        "false_pos_synergy": 10.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Feel No Pain": {
+        "accuracy": 0.6351351351351351,
+        "macro_f1": 0.3156785243741766,
+        "n_errors": 27.0,
+        "false_pos_synergy": 25.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Fire Breathing": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.46762277270751845,
+        "n_errors": 16.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Flame Barrier": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.3586885245901639,
+        "n_errors": 20.0,
+        "false_pos_synergy": 18.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Ghostly Armor": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5252525252525252,
+        "n_errors": 11.0,
+        "false_pos_synergy": 4.0,
+        "false_neg_synergy": 4.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Hemokinesis": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.4637071651090343,
+        "n_errors": 18.0,
+        "false_pos_synergy": 16.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Infernal Blade": {
+        "accuracy": 0.35135135135135137,
+        "macro_f1": 0.23391812865497075,
+        "n_errors": 48.0,
+        "false_pos_synergy": 47.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Inflame": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.32449340405276755,
+        "n_errors": 17.0,
+        "false_pos_synergy": 17.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Intimidate": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.4509379509379509,
+        "n_errors": 10.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Metallicize": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.383587786259542,
+        "n_errors": 13.0,
+        "false_pos_synergy": 11.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Power Through": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.4885791715060008,
+        "n_errors": 13.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 4.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Pummel": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.5653108929406264,
+        "n_errors": 9.0,
+        "false_pos_synergy": 5.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Rage": {
+        "accuracy": 0.40540540540540543,
+        "macro_f1": 0.2676470588235294,
+        "n_errors": 44.0,
+        "false_pos_synergy": 38.0,
+        "false_neg_synergy": 6.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Rampage": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.4458616780045352,
+        "n_errors": 22.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 15.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Reckless Charge": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.5789122455789123,
+        "n_errors": 9.0,
+        "false_pos_synergy": 5.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Rupture": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.3981705676620931,
+        "n_errors": 22.0,
+        "false_pos_synergy": 13.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 9.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Searing Blow": {
+        "accuracy": 0.918918918918919,
+        "macro_f1": 0.5830508474576271,
+        "n_errors": 6.0,
+        "false_pos_synergy": 6.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Second Wind": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.6395756833945329,
+        "n_errors": 18.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 5.0,
+        "false_pos_anti": 6.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Seeing Red": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.493841642228739,
+        "n_errors": 18.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 6.0,
+        "n_total": 74.0
+      },
+      "Sentinel": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.575609756097561,
+        "n_errors": 9.0,
+        "false_pos_synergy": 2.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 5.0,
+        "n_total": 74.0
+      },
+      "Sever Soul": {
+        "accuracy": 0.6756756756756757,
+        "macro_f1": 0.5194444444444445,
+        "n_errors": 24.0,
+        "false_pos_synergy": 10.0,
+        "false_neg_synergy": 8.0,
+        "false_pos_anti": 7.0,
+        "false_neg_anti": 6.0,
+        "n_total": 74.0
+      },
+      "Shockwave": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.34858387799564267,
+        "n_errors": 22.0,
+        "false_pos_synergy": 20.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Spot Weakness": {
+        "accuracy": 0.6486486486486487,
+        "macro_f1": 0.3265536723163842,
+        "n_errors": 26.0,
+        "false_pos_synergy": 14.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 10.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Uppercut": {
+        "accuracy": 0.918918918918919,
+        "macro_f1": 0.5836065573770491,
+        "n_errors": 6.0,
+        "false_pos_synergy": 4.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Whirlwind": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.489357033135835,
+        "n_errors": 21.0,
+        "false_pos_synergy": 14.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 6.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Barricade": {
+        "accuracy": 0.9054054054054054,
+        "macro_f1": 0.5714548295193457,
+        "n_errors": 7.0,
+        "false_pos_synergy": 7.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Berserk": {
+        "accuracy": 0.6486486486486487,
+        "macro_f1": 0.30034235916588853,
+        "n_errors": 26.0,
+        "false_pos_synergy": 15.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 4.0,
+        "false_neg_anti": 7.0,
+        "n_total": 74.0
+      },
+      "Bludgeon": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5306159420289855,
+        "n_errors": 11.0,
+        "false_pos_synergy": 9.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Brutality": {
+        "accuracy": 0.6621621621621622,
+        "macro_f1": 0.352046783625731,
+        "n_errors": 25.0,
+        "false_pos_synergy": 16.0,
+        "false_neg_synergy": 6.0,
+        "false_pos_anti": 4.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Corruption": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.6185483870967742,
+        "n_errors": 15.0,
+        "false_pos_synergy": 10.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 3.0,
+        "n_total": 74.0
+      },
+      "Demon Form": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.32449340405276755,
+        "n_errors": 17.0,
+        "false_pos_synergy": 17.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 0.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Double Tap": {
+        "accuracy": 0.6081081081081081,
+        "macro_f1": 0.3673959673959674,
+        "n_errors": 29.0,
+        "false_pos_synergy": 20.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 5.0,
+        "false_neg_anti": 1.0,
+        "n_total": 74.0
+      },
+      "Exhume": {
+        "accuracy": 0.6891891891891891,
+        "macro_f1": 0.4597138554216868,
+        "n_errors": 23.0,
+        "false_pos_synergy": 20.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Feed": {
+        "accuracy": 0.47297297297297297,
+        "macro_f1": 0.31813941090230574,
+        "n_errors": 39.0,
+        "false_pos_synergy": 33.0,
+        "false_neg_synergy": 4.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 4.0,
+        "n_total": 74.0
+      },
+      "Fiend Fire": {
+        "accuracy": 0.527027027027027,
+        "macro_f1": 0.36511752136752135,
+        "n_errors": 35.0,
+        "false_pos_synergy": 30.0,
+        "false_neg_synergy": 4.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 5.0,
+        "n_total": 74.0
+      },
+      "Immolate": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.5097826086956522,
+        "n_errors": 12.0,
+        "false_pos_synergy": 10.0,
+        "false_neg_synergy": 2.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Impervious": {
+        "accuracy": 0.8108108108108109,
+        "macro_f1": 0.4689950106913756,
+        "n_errors": 14.0,
+        "false_pos_synergy": 11.0,
+        "false_neg_synergy": 0.0,
+        "false_pos_anti": 3.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Juggernaut": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.30763636363636365,
+        "n_errors": 21.0,
+        "false_pos_synergy": 14.0,
+        "false_neg_synergy": 6.0,
+        "false_pos_anti": 1.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Limit Break": {
+        "accuracy": 0.7432432432432432,
+        "macro_f1": 0.4287985039738195,
+        "n_errors": 19.0,
+        "false_pos_synergy": 16.0,
+        "false_neg_synergy": 1.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 0.0,
+        "n_total": 74.0
+      },
+      "Offering": {
+        "accuracy": 0.5540540540540541,
+        "macro_f1": 0.4713804713804714,
+        "n_errors": 33.0,
+        "false_pos_synergy": 23.0,
+        "false_neg_synergy": 7.0,
+        "false_pos_anti": 2.0,
+        "false_neg_anti": 2.0,
+        "n_total": 74.0
+      },
+      "Reaper": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.7295461243737106,
+        "n_errors": 17.0,
+        "false_pos_synergy": 8.0,
+        "false_neg_synergy": 3.0,
+        "false_pos_anti": 5.0,
+        "false_neg_anti": 6.0,
+        "n_total": 74.0
+      }
     }
   },
   "combined": {
@@ -13693,6 +15197,458 @@
         "accuracy": 0.722972972972973,
         "macro_f1": 0.4803220509560888,
         "n_errors": 41.0,
+        "n_total": 148.0
+      }
+    },
+    "llama4maverick": {
+      "Bash": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5523488519064673,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "Defend": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.5220915032679739,
+        "n_errors": 30.0,
+        "n_total": 148.0
+      },
+      "Strike": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.46429629629629626,
+        "n_errors": 24.0,
+        "n_total": 148.0
+      },
+      "Anger": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.41047243737826694,
+        "n_errors": 44.0,
+        "n_total": 148.0
+      },
+      "Armaments": {
+        "accuracy": 0.6824324324324325,
+        "macro_f1": 0.560288652234055,
+        "n_errors": 47.0,
+        "n_total": 148.0
+      },
+      "Body Slam": {
+        "accuracy": 0.831081081081081,
+        "macro_f1": 0.4820463164689744,
+        "n_errors": 25.0,
+        "n_total": 148.0
+      },
+      "Clash": {
+        "accuracy": 0.6756756756756757,
+        "macro_f1": 0.5024830952574039,
+        "n_errors": 48.0,
+        "n_total": 148.0
+      },
+      "Cleave": {
+        "accuracy": 0.8716216216216216,
+        "macro_f1": 0.49774547412342685,
+        "n_errors": 19.0,
+        "n_total": 148.0
+      },
+      "Clothesline": {
+        "accuracy": 0.8581081081081081,
+        "macro_f1": 0.4889986824769434,
+        "n_errors": 21.0,
+        "n_total": 148.0
+      },
+      "Flex": {
+        "accuracy": 0.7364864864864865,
+        "macro_f1": 0.49107692307692313,
+        "n_errors": 39.0,
+        "n_total": 148.0
+      },
+      "Havoc": {
+        "accuracy": 0.6081081081081081,
+        "macro_f1": 0.38221038221038217,
+        "n_errors": 58.0,
+        "n_total": 148.0
+      },
+      "Headbutt": {
+        "accuracy": 0.6554054054054054,
+        "macro_f1": 0.40322083525967023,
+        "n_errors": 51.0,
+        "n_total": 148.0
+      },
+      "Heavy Blade": {
+        "accuracy": 0.9256756756756757,
+        "macro_f1": 0.5345506187867722,
+        "n_errors": 11.0,
+        "n_total": 148.0
+      },
+      "Iron Wave": {
+        "accuracy": 0.8648648648648649,
+        "macro_f1": 0.8391184573002755,
+        "n_errors": 20.0,
+        "n_total": 148.0
+      },
+      "Perfected Strike": {
+        "accuracy": 0.831081081081081,
+        "macro_f1": 0.5740794674433118,
+        "n_errors": 25.0,
+        "n_total": 148.0
+      },
+      "Pommel Strike": {
+        "accuracy": 0.777027027027027,
+        "macro_f1": 0.7026949658528606,
+        "n_errors": 33.0,
+        "n_total": 148.0
+      },
+      "Shrug it Off": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.6068975915677779,
+        "n_errors": 42.0,
+        "n_total": 148.0
+      },
+      "Sword Boomerang": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.48288288288288284,
+        "n_errors": 18.0,
+        "n_total": 148.0
+      },
+      "Thunderclap": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5574358974358975,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "True Grit": {
+        "accuracy": 0.722972972972973,
+        "macro_f1": 0.5858763471355644,
+        "n_errors": 41.0,
+        "n_total": 148.0
+      },
+      "Twin Strike": {
+        "accuracy": 0.8783783783783784,
+        "macro_f1": 0.49322916666666666,
+        "n_errors": 18.0,
+        "n_total": 148.0
+      },
+      "Warcry": {
+        "accuracy": 0.6013513513513513,
+        "macro_f1": 0.4263961577394413,
+        "n_errors": 59.0,
+        "n_total": 148.0
+      },
+      "Wild Strike": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.47946919018872025,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Battle Trance": {
+        "accuracy": 0.6351351351351351,
+        "macro_f1": 0.5980858187554767,
+        "n_errors": 54.0,
+        "n_total": 148.0
+      },
+      "Blood for Blood": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.7420634920634921,
+        "n_errors": 24.0,
+        "n_total": 148.0
+      },
+      "Bloodletting": {
+        "accuracy": 0.6081081081081081,
+        "macro_f1": 0.37878787878787884,
+        "n_errors": 58.0,
+        "n_total": 148.0
+      },
+      "Burning Pact": {
+        "accuracy": 0.6959459459459459,
+        "macro_f1": 0.5014907573047108,
+        "n_errors": 45.0,
+        "n_total": 148.0
+      },
+      "Carnage": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.5137207425343019,
+        "n_errors": 24.0,
+        "n_total": 148.0
+      },
+      "Combust": {
+        "accuracy": 0.75,
+        "macro_f1": 0.34882539682539687,
+        "n_errors": 37.0,
+        "n_total": 148.0
+      },
+      "Dark Embrace": {
+        "accuracy": 0.75,
+        "macro_f1": 0.8031089971388479,
+        "n_errors": 37.0,
+        "n_total": 148.0
+      },
+      "Disarm": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.4075268817204301,
+        "n_errors": 26.0,
+        "n_total": 148.0
+      },
+      "Dropkick": {
+        "accuracy": 0.8378378378378378,
+        "macro_f1": 0.5912039781334387,
+        "n_errors": 24.0,
+        "n_total": 148.0
+      },
+      "Dual Wield": {
+        "accuracy": 0.35135135135135137,
+        "macro_f1": 0.3131981187536743,
+        "n_errors": 96.0,
+        "n_total": 148.0
+      },
+      "Entrench": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.4848534025749216,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Evolve": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.4222549742078114,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Feel No Pain": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.4726107226107226,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Fire Breathing": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.514367816091954,
+        "n_errors": 26.0,
+        "n_total": 148.0
+      },
+      "Flame Barrier": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.359835390946502,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Ghostly Armor": {
+        "accuracy": 0.831081081081081,
+        "macro_f1": 0.5587495160665892,
+        "n_errors": 25.0,
+        "n_total": 148.0
+      },
+      "Hemokinesis": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.4413708314123252,
+        "n_errors": 30.0,
+        "n_total": 148.0
+      },
+      "Infernal Blade": {
+        "accuracy": 0.30405405405405406,
+        "macro_f1": 0.19874333890081922,
+        "n_errors": 103.0,
+        "n_total": 148.0
+      },
+      "Inflame": {
+        "accuracy": 0.777027027027027,
+        "macro_f1": 0.5050966846151241,
+        "n_errors": 33.0,
+        "n_total": 148.0
+      },
+      "Intimidate": {
+        "accuracy": 0.7702702702702703,
+        "macro_f1": 0.36192714453584013,
+        "n_errors": 34.0,
+        "n_total": 148.0
+      },
+      "Metallicize": {
+        "accuracy": 0.8513513513513513,
+        "macro_f1": 0.5376543209876543,
+        "n_errors": 22.0,
+        "n_total": 148.0
+      },
+      "Power Through": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.6177536231884058,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Pummel": {
+        "accuracy": 0.8851351351351351,
+        "macro_f1": 0.5276021080368907,
+        "n_errors": 17.0,
+        "n_total": 148.0
+      },
+      "Rage": {
+        "accuracy": 0.6013513513513513,
+        "macro_f1": 0.40197612691398943,
+        "n_errors": 59.0,
+        "n_total": 148.0
+      },
+      "Rampage": {
+        "accuracy": 0.7297297297297297,
+        "macro_f1": 0.4391935225268559,
+        "n_errors": 40.0,
+        "n_total": 148.0
+      },
+      "Reckless Charge": {
+        "accuracy": 0.7972972972972973,
+        "macro_f1": 0.5202554278416347,
+        "n_errors": 30.0,
+        "n_total": 148.0
+      },
+      "Rupture": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.38386281782508197,
+        "n_errors": 44.0,
+        "n_total": 148.0
+      },
+      "Searing Blow": {
+        "accuracy": 0.9121621621621622,
+        "macro_f1": 0.5388245388245388,
+        "n_errors": 13.0,
+        "n_total": 148.0
+      },
+      "Second Wind": {
+        "accuracy": 0.6351351351351351,
+        "macro_f1": 0.5105297832877634,
+        "n_errors": 54.0,
+        "n_total": 148.0
+      },
+      "Seeing Red": {
+        "accuracy": 0.6554054054054054,
+        "macro_f1": 0.42019084184969796,
+        "n_errors": 51.0,
+        "n_total": 148.0
+      },
+      "Sentinel": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.6174620522161506,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      },
+      "Sever Soul": {
+        "accuracy": 0.6148648648648649,
+        "macro_f1": 0.47751224986997337,
+        "n_errors": 57.0,
+        "n_total": 148.0
+      },
+      "Shockwave": {
+        "accuracy": 0.7027027027027027,
+        "macro_f1": 0.4634729157396878,
+        "n_errors": 44.0,
+        "n_total": 148.0
+      },
+      "Spot Weakness": {
+        "accuracy": 0.7162162162162162,
+        "macro_f1": 0.4871794871794872,
+        "n_errors": 42.0,
+        "n_total": 148.0
+      },
+      "Uppercut": {
+        "accuracy": 0.8108108108108109,
+        "macro_f1": 0.5240027045300879,
+        "n_errors": 28.0,
+        "n_total": 148.0
+      },
+      "Whirlwind": {
+        "accuracy": 0.75,
+        "macro_f1": 0.4773489278752437,
+        "n_errors": 37.0,
+        "n_total": 148.0
+      },
+      "Barricade": {
+        "accuracy": 0.8175675675675675,
+        "macro_f1": 0.6855945801390622,
+        "n_errors": 27.0,
+        "n_total": 148.0
+      },
+      "Berserk": {
+        "accuracy": 0.5472972972972973,
+        "macro_f1": 0.2991570459959685,
+        "n_errors": 67.0,
+        "n_total": 148.0
+      },
+      "Bludgeon": {
+        "accuracy": 0.8851351351351351,
+        "macro_f1": 0.5149877503963107,
+        "n_errors": 17.0,
+        "n_total": 148.0
+      },
+      "Brutality": {
+        "accuracy": 0.6554054054054054,
+        "macro_f1": 0.3583173179585735,
+        "n_errors": 51.0,
+        "n_total": 148.0
+      },
+      "Corruption": {
+        "accuracy": 0.7905405405405406,
+        "macro_f1": 0.6160558464223386,
+        "n_errors": 31.0,
+        "n_total": 148.0
+      },
+      "Demon Form": {
+        "accuracy": 0.6756756756756757,
+        "macro_f1": 0.3925925925925926,
+        "n_errors": 48.0,
+        "n_total": 148.0
+      },
+      "Double Tap": {
+        "accuracy": 0.7364864864864865,
+        "macro_f1": 0.5042453987730061,
+        "n_errors": 39.0,
+        "n_total": 148.0
+      },
+      "Exhume": {
+        "accuracy": 0.6351351351351351,
+        "macro_f1": 0.3938709677419355,
+        "n_errors": 54.0,
+        "n_total": 148.0
+      },
+      "Feed": {
+        "accuracy": 0.6621621621621622,
+        "macro_f1": 0.3798581739368306,
+        "n_errors": 50.0,
+        "n_total": 148.0
+      },
+      "Fiend Fire": {
+        "accuracy": 0.6013513513513513,
+        "macro_f1": 0.4082082082082082,
+        "n_errors": 59.0,
+        "n_total": 148.0
+      },
+      "Immolate": {
+        "accuracy": 0.7567567567567568,
+        "macro_f1": 0.45878251541968357,
+        "n_errors": 36.0,
+        "n_total": 148.0
+      },
+      "Impervious": {
+        "accuracy": 0.8243243243243243,
+        "macro_f1": 0.6234998064266356,
+        "n_errors": 26.0,
+        "n_total": 148.0
+      },
+      "Juggernaut": {
+        "accuracy": 0.8040540540540541,
+        "macro_f1": 0.4729895420122611,
+        "n_errors": 29.0,
+        "n_total": 148.0
+      },
+      "Limit Break": {
+        "accuracy": 0.7635135135135135,
+        "macro_f1": 0.5058375840012954,
+        "n_errors": 35.0,
+        "n_total": 148.0
+      },
+      "Offering": {
+        "accuracy": 0.49324324324324326,
+        "macro_f1": 0.47600738568480505,
+        "n_errors": 75.0,
+        "n_total": 148.0
+      },
+      "Reaper": {
+        "accuracy": 0.7837837837837838,
+        "macro_f1": 0.6621078763258859,
+        "n_errors": 32.0,
         "n_total": 148.0
       }
     }

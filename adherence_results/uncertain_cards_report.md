@@ -46,6 +46,7 @@ final vote reversed direction.
 | gpt4omini | 11 | 18.2% | 15.6% | 1 (9%) | 4 (36%) | 6 (55%) |
 | gpt4ominift | 11 | 0.0% | 0.0% | 1 (9%) | 9 (82%) | 1 (9%) |
 | gemini3flash | 11 | 9.1% | 6.7% | 1 (9%) | 5 (45%) | 5 (45%) |
+| llama4maverick | 11 | 18.2% | 11.1% | 0 (0%) | 4 (36%) | 7 (64%) |
 
 ### Notes
 
@@ -82,6 +83,7 @@ the other way in the final integer GT.
 | gpt4omini | 1 | 0.0% | 0.0% | 0 (0%) | 1 (100%) | 0 (0%) |
 | gpt4ominift | 1 | 100.0% | 100.0% | 0 (0%) | 0 (0%) | 1 (100%) |
 | gemini3flash | 1 | 0.0% | 0.0% | 1 (100%) | 0 (0%) | 0 (0%) |
+| llama4maverick | 1 | 100.0% | 100.0% | 0 (0%) | 0 (0%) | 1 (100%) |
 
 ### Notes
 

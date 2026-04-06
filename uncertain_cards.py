@@ -33,18 +33,7 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
 from lib.loader import load_dataset, get_ground_truth_name, list_model_datasets
-
-DECIMAL_GT_PATH = (
-    ROOT / "data" / "ground_truth_decimals" / "StS Synergies - All Cards (1).csv"
-)
-
-
-# ── data loading ──────────────────────────────────────────────────────────────
-
-def load_decimal_gt(common_index) -> pd.DataFrame:
-    df = pd.read_csv(DECIMAL_GT_PATH, index_col=0)
-    shared = df.index.intersection(common_index)
-    return df.loc[shared, shared]
+from lib.masks import DECIMAL_GT_PATH, load_and_align
 
 
 # ── mask logic ────────────────────────────────────────────────────────────────
@@ -54,16 +43,11 @@ def find_flipped_pairs(dec_gt: pd.DataFrame, int_gt: pd.DataFrame) -> dict:
     Return two dicts of {(row_card, col_card): (dec_val, int_val)} for:
       half_flipped  : dec in {+0.5, -0.5}, int sign != dec sign
       solid_flipped : dec in {+1, +1.5, +2, -1, -1.5, -2}, int sign != dec sign
-
-    'Opposite sign' means dec_val and int_val have opposite non-zero signs.
-    dec=0 is excluded (neutral has no direction to flip from).
     """
     half_vals  = {0.5, -0.5}
     solid_vals = {1.0, 1.5, 2.0, -1.0, -1.5, -2.0}
-
     half_flipped  = {}
     solid_flipped = {}
-
     cards = dec_gt.index.tolist()
     for r_card in cards:
         for c_card in cards:
@@ -71,23 +55,17 @@ def find_flipped_pairs(dec_gt: pd.DataFrame, int_gt: pd.DataFrame) -> dict:
                 continue
             dec_val = dec_gt.loc[r_card, c_card]
             int_val = int_gt.loc[r_card, c_card]
-
             if pd.isna(dec_val):
                 continue
-
-            # Opposite sign: one is positive, the other is negative
             dec_sign = np.sign(dec_val)
             int_sign = np.sign(int_val)
-            # "Flipped" means strictly opposite sign (e.g. +0.5 -> -1, not +0.5 -> 0)
             if dec_sign == 0 or int_sign == 0 or int_sign == dec_sign:
-                continue  # neutral dec, neutral int, or same direction -> not flipped
-
+                continue
             key = (r_card, c_card)
             if dec_val in half_vals:
                 half_flipped[key] = (dec_val, int_val)
             elif dec_val in solid_vals:
                 solid_flipped[key] = (dec_val, int_val)
-
     return {"half_flipped": half_flipped, "solid_flipped": solid_flipped}
 
 
@@ -266,13 +244,10 @@ def main():
 
     gt_name  = get_ground_truth_name()
     gt       = load_dataset(gt_name)
-    dec_gt   = load_decimal_gt(gt.index)
     models   = list_model_datasets()
 
-    # Align both GTs to common cards
-    common      = dec_gt.index.intersection(gt.index)
-    dec_aligned = dec_gt.loc[common, common]
-    int_aligned = gt.loc[common, common]
+    from lib.masks import EDGE_MASK_PATH, load_and_align
+    int_aligned, dec_aligned, _, common = load_and_align(gt, DECIMAL_GT_PATH, EDGE_MASK_PATH)
 
     print(f"\nCommon cards: {len(common)}")
     print(f"Models: {list(models.keys())}\n")

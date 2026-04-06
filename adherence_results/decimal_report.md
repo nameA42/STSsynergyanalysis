@@ -18,22 +18,6 @@ they were trained to produce (−1, 0, +1).
 | +1.5 | 46 | 0.8% |
 | +2.0 | 89 | 1.6% |
 
-## Integer GT Distribution for Half-Value Pairs
-
-The decimal GT is an average of multiple human raters; the integer GT is the final consensus label.
-This table shows how half-value pairs mapped to the integer GT used for all accuracy measurements.
-
-| Decimal GT | n | Integer GT = −1 | Integer GT = 0 | Integer GT = +1 |
-|------------|---|-----------------|----------------|-----------------|
-| +0.5 | 354 | 6 (1.7%) | 25 (7.1%) | 323 (91.2%) |
-| −0.5 | 110 | 71 (64.5%) | 34 (30.9%) | 5 (4.5%) |
-
-**Key asymmetry:** Positive half-values were overwhelmingly rounded up to +1 in the integer GT (91.2%),
-making the `positive_half` mask effectively a set of consensus positive pairs — explaining why models
-perform reasonably on them. Negative half-values were split: 64.5% became −1 but 30.9% became 0,
-reflecting genuine annotator disagreement about weak anti-synergies. This label ambiguity is the
-primary driver of the catastrophically low accuracy on the `negative_half` mask across all models.
-
 ## Mask Definitions
 
 | Mask | Decimal GT values | Expected prediction |
@@ -60,6 +44,7 @@ Pairs in mask: **4588**
 | gpt4omini | 4588 | 69.2% | 98.3% | 69.4% | 81.4% | 22.6% | 183 (4%) | 3173 (69%) | 1231 (27%) |
 | gpt4ominift | 4588 | 86.7% | 98.2% | 86.9% | 92.2% | 33.3% | 139 (3%) | 3979 (87%) | 470 (10%) |
 | gemini3flash | 4588 | 84.6% | 98.2% | 84.9% | 91.1% | 33.9% | 370 (8%) | 3882 (85%) | 336 (7%) |
+| llama4maverick | 4588 | 74.7% | 98.1% | 74.8% | 84.9% | 30.9% | 154 (3%) | 3429 (75%) | 1005 (22%) |
 
 ## Mask: `positive_half`
 
@@ -75,6 +60,7 @@ Pairs in mask: **354**
 | gpt4omini | 354 | 49.7% | 92.6% | 50.5% | 65.3% | 31.6% | 11 (3%) | 167 (47%) | 176 (50%) |
 | gpt4ominift | 354 | 33.9% | 98.3% | 36.5% | 53.3% | 22.9% | 14 (4%) | 220 (62%) | 120 (34%) |
 | gemini3flash | 354 | 63.6% | 94.7% | 65.9% | 77.7% | 33.5% | 4 (1%) | 125 (35%) | 225 (64%) |
+| llama4maverick | 354 | 65.8% | 95.3% | 68.7% | 79.9% | 34.0% | 10 (3%) | 111 (31%) | 233 (66%) |
 
 ## Mask: `positive_clear`
 
@@ -90,6 +76,7 @@ Pairs in mask: **554**
 | gpt4omini | 554 | 84.1% | 99.8% | 84.1% | 91.3% | 30.4% | 7 (1%) | 81 (15%) | 466 (84%) |
 | gpt4ominift | 554 | 65.2% | 100.0% | 65.3% | 79.0% | 26.7% | 6 (1%) | 187 (34%) | 361 (65%) |
 | gemini3flash | 554 | 88.6% | 100.0% | 88.8% | 94.1% | 32.6% | 9 (2%) | 54 (10%) | 491 (89%) |
+| llama4maverick | 554 | 87.2% | 99.8% | 87.2% | 93.1% | 31.0% | 10 (2%) | 61 (11%) | 483 (87%) |
 
 ## Mask: `all_positive`
 
@@ -105,6 +92,7 @@ Pairs in mask: **908**
 | gpt4omini | 908 | 70.7% | 97.8% | 71.7% | 82.7% | 34.5% | 18 (2%) | 248 (27%) | 642 (71%) |
 | gpt4ominift | 908 | 53.0% | 99.6% | 54.7% | 70.6% | 26.6% | 20 (2%) | 407 (45%) | 481 (53%) |
 | gemini3flash | 908 | 78.9% | 98.3% | 80.4% | 88.4% | 35.3% | 13 (1%) | 179 (20%) | 716 (79%) |
+| llama4maverick | 908 | 78.9% | 98.3% | 80.4% | 88.4% | 34.5% | 20 (2%) | 172 (19%) | 716 (79%) |
 
 ## Mask: `negative_half`
 
@@ -120,6 +108,7 @@ Pairs in mask: **110**
 | gpt4omini | 110 | 21.8% | 50.0% | 16.9% | 25.3% | 19.4% | 24 (22%) | 52 (47%) | 34 (31%) |
 | gpt4ominift | 110 | 15.5% | 52.9% | 12.7% | 20.5% | 21.8% | 17 (15%) | 77 (70%) | 16 (15%) |
 | gemini3flash | 110 | 51.8% | 68.4% | 54.9% | 60.9% | 39.2% | 57 (52%) | 46 (42%) | 7 (6%) |
+| llama4maverick | 110 | 29.1% | 84.4% | 38.0% | 52.4% | 36.5% | 32 (29%) | 51 (46%) | 27 (25%) |
 
 ## Mask: `negative_clear`
 
@@ -135,6 +124,7 @@ Pairs in mask: **19**
 | gpt4omini | 19 | 52.6% | 100.0% | 55.6% | 71.4% | 23.8% | 10 (53%) | 3 (16%) | 6 (32%) |
 | gpt4ominift | 19 | 47.4% | 100.0% | 50.0% | 66.7% | 44.4% | 9 (47%) | 8 (42%) | 2 (11%) |
 | gemini3flash | 19 | 84.2% | 93.8% | 83.3% | 88.2% | 29.4% | 16 (84%) | 1 (5%) | 2 (11%) |
+| llama4maverick | 19 | 47.4% | 100.0% | 50.0% | 66.7% | 30.6% | 9 (47%) | 3 (16%) | 7 (37%) |
 
 ## Mask: `all_negative`
 
@@ -150,6 +140,7 @@ Pairs in mask: **129**
 | gpt4omini | 129 | 26.4% | 64.7% | 24.7% | 35.8% | 22.4% | 34 (26%) | 55 (43%) | 40 (31%) |
 | gpt4ominift | 129 | 20.2% | 69.2% | 20.2% | 31.3% | 27.2% | 26 (20%) | 85 (66%) | 18 (14%) |
 | gemini3flash | 129 | 56.6% | 74.0% | 60.7% | 66.7% | 39.8% | 73 (57%) | 47 (36%) | 9 (7%) |
+| llama4maverick | 129 | 31.8% | 87.8% | 40.4% | 55.4% | 37.9% | 41 (32%) | 54 (42%) | 34 (26%) |
 
 ## Half-value vs Clear-value Accuracy Summary
 
@@ -162,6 +153,7 @@ Pairs in mask: **129**
 | gpt4omini | 49.7% (n=354) | 84.1% (n=554) | 21.8% (n=110) | 52.6% (n=19) |
 | gpt4ominift | 33.9% (n=354) | 65.2% (n=554) | 15.5% (n=110) | 47.4% (n=19) |
 | gemini3flash | 63.6% (n=354) | 88.6% (n=554) | 51.8% (n=110) | 84.2% (n=19) |
+| llama4maverick | 65.8% (n=354) | 87.2% (n=554) | 29.1% (n=110) | 47.4% (n=19) |
 
 ---
 

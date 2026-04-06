@@ -52,5 +52,12 @@
     "description": "Gemini 3 Flash Preview synergy predictions",
     "model": "gemini-3-flash-preview",
     "date": "2026-03-25"
+  },
+  "llama4maverick": {
+    "file": "data/Llama/synergy_results_meta-llamaLlama-4-Maverick-17B-128E-Instruct-FP8_1775451197.csv",
+    "type": "model",
+    "description": "Llama 4 Maverick 17B synergy predictions",
+    "model": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+    "date": "2026-04-06"
   }
 }
